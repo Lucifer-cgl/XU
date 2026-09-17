@@ -114,7 +114,7 @@ function enhanceArticle(article) {
     link.rel = "noopener noreferrer";
   }
   for (const image of article.querySelectorAll("img")) image.loading = "lazy";
-  tocPanel.innerHTML = headings.length ? `<div class="toc-title">本文目录</div>${headings.map((heading) => `<a class="toc-level-${heading.tagName.slice(1)}" href="#${encodeURIComponent(heading.id)}">${escapeHtml(heading.textContent)}</a>`).join("")}` : "";
+  tocPanel.innerHTML = headings.length ? `<div class="toc-title">本文目录</div>${headings.map((heading) => `<a class="toc-level-${heading.tagName.slice(1)}" href="${routeFor(currentDocument.id)}" data-section="${encodeURIComponent(heading.id)}">${escapeHtml(heading.textContent)}</a>`).join("")}` : "";
 }
 
 function articleTools(doc) {
@@ -208,6 +208,13 @@ themeToggle.addEventListener("click", () => {
   localStorage.setItem("xu-theme", next);
 });
 document.documentElement.dataset.theme = localStorage.getItem("xu-theme") || "light";
+tocPanel.addEventListener("click", (event) => {
+  const link = event.target.closest("a[data-section]");
+  if (!link) return;
+  event.preventDefault();
+  const target = document.getElementById(decodeURIComponent(link.dataset.section));
+  target?.scrollIntoView({ behavior: "smooth", block: "start" });
+});
 window.addEventListener("hashchange", route);
 
 try {

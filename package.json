@@ -13,8 +13,7 @@
     "dompurify": "3.4.15",
     "katex": "0.16.22",
     "marked": "15.0.12",
-    "marked-katex-extension": "5.1.10",
-    "pagedjs": "0.4.3"
+    "marked-katex-extension": "5.1.10"
   },
   "devDependencies": {
     "vite": "6.4.3",
