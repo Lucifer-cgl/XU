@@ -7,7 +7,7 @@
 @media print {
   :root { color-scheme: light; }
   body { background: #fff !important; color: #111 !important; }
-  .site-header, .sidebar, .toc-panel, .no-print, .noscript { display: none !important; }
+  .skip-link, .site-header, .sidebar, .toc-panel, .no-print, .noscript { display: none !important; }
   .site-layout { display: block !important; }
   .main-content { padding: 0 !important; }
   .article { max-width: none; font-size: 10.5pt; line-height: 1.72; }
