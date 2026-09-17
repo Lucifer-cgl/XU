@@ -3,6 +3,8 @@ import { marked } from "marked";
 import markedKatex from "marked-katex-extension";
 import "katex/dist/katex.min.css";
 import "./styles.css";
+import supportMemeUrl from "../支持/支持一下.png";
+import wechatQrUrl from "../支持/微信二维码.jpeg";
 
 const main = document.querySelector("#main-content");
 const nav = document.querySelector("#course-nav");
@@ -54,11 +56,20 @@ function renderHome() {
   document.title = catalog.site.title;
   main.innerHTML = `
     <section class="hero">
-      <p class="eyebrow">XU · COURSE LIBRARY</p>
+      <p class="eyebrow">墟 · XU · LUCIFER OPEN KNOWLEDGE</p>
       <h1>把知识整理成<br><em>清晰、可靠、可带走</em>的页面。</h1>
       <p class="hero-copy">Markdown 自动完成专业排版；完整 HTML 保留作者原有设计并直接打开。目录层级由文件夹自动生成。</p>
       <label class="search-box"><span>搜索</span><input id="search-input" type="search" placeholder="课程、章节或正文关键词" autocomplete="off" /></label>
       <div id="search-results" class="search-results" aria-live="polite"></div>
+    </section>
+    <section class="brand-story" aria-labelledby="brand-story-title">
+      <div class="brand-glyph" aria-hidden="true">墟</div>
+      <div class="brand-story-copy">
+        <p class="eyebrow">WHY “墟”</p>
+        <h2 id="brand-story-title">知识有所归，也由此再出发。</h2>
+        <p>“墟”取意于“归墟”。我们借《山海经》中万物流转、终有所归的意象，表达知识的另一种轮回：它被记录、分享与修订，又在下一颗好奇心中重新生长。</p>
+        <p>这里不是知识的终点，而是一处开放的汇流之地。</p>
+      </div>
     </section>
     <section class="course-grid" aria-label="课程列表">
       ${catalog.courses.map((course, index) => `
@@ -68,6 +79,26 @@ function renderHome() {
           <p>${escapeHtml(course.description || `${course.documents.length} 篇内容`)}</p>
           <a href="${course.documents[0] ? hrefFor(course.documents[0]) : "#/"}">开始阅读 <span aria-hidden="true">→</span></a>
         </article>`).join("")}
+    </section>
+    <section class="open-source-section" aria-labelledby="open-source-title">
+      <div class="open-source-copy">
+        <p class="eyebrow">OPEN SOURCE, OPEN FUTURE</p>
+        <h2 id="open-source-title">让有用的内容，抵达更多人。</h2>
+        <p>开源即是未来，分享带来进步。你可以把有用的文章放进对应文件夹，让它们成为知识库的一部分，分享给 everybody。</p>
+        <p>这个站点保持纯静态，不设置账号、评论服务器或数据库。想交流、提建议、补充文章，可以直接前往 GitHub 仓库。</p>
+        <a class="github-link" href="https://github.com/Lucifer-cgl/XU" target="_blank" rel="noopener noreferrer"><span>GitHub</span><strong>Lucifer-cgl / XU</strong><span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="support-panel">
+        <div class="support-copy">
+          <p class="eyebrow">SUPPORT THE WORK</p>
+          <h2>码字不易，感谢每一次回应。</h2>
+          <p>点赞、收藏、加关注，就是最直接的支持。觉得有用的话，随缘支持一下～ 欢迎私信订阅更多有趣内容。</p>
+        </div>
+        <div class="support-images">
+          <figure><img src="${supportMemeUrl}" alt="支持作者的趣味表情图" loading="lazy"><figcaption>喜欢的话，给创作一点鼓励</figcaption></figure>
+          <figure><img src="${wechatQrUrl}" alt="作者的微信支持二维码" loading="lazy"><figcaption>随缘支持 · 量力而行</figcaption></figure>
+        </div>
+      </div>
     </section>`;
   const input = document.querySelector("#search-input");
   input.addEventListener("focus", ensureSearchIndex, { once: true });

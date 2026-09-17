@@ -163,7 +163,7 @@ for (const document of documents) {
 }
 const courses = [...courseMap.values()].sort((a, b) => a.order - b.order || natural.compare(a.name, b.name));
 const catalogDocuments = documents.map(({ searchText, ...document }) => document);
-const catalog = { site: { title: "XU 课程知识库", generatedAt: new Date().toISOString() }, courses, documents: catalogDocuments };
+const catalog = { site: { title: "墟 · XU 开源知识库", generatedAt: new Date().toISOString() }, courses, documents: catalogDocuments };
 const searchIndex = documents.map(({ id, title, description, coursePath, type, searchText }) => ({ id, title, description, coursePath, type, text: searchText }));
 
 const downloadCourses = new Map(courses.map((course) => [course.id, {
