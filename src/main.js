@@ -1,6 +1,6 @@
 import DOMPurify from "dompurify";
 import { marked } from "marked";
-import renderMathInElement from "katex/contrib/auto-render";
+import markedKatex from "marked-katex-extension";
 import "katex/dist/katex.min.css";
 import "./styles.css";
 
@@ -15,7 +15,14 @@ let searchIndex;
 let currentSource = "";
 let currentDocument;
 
-marked.setOptions({ gfm: true, breaks: false });
+marked.use(
+  { gfm: true, breaks: false },
+  markedKatex({
+    throwOnError: false,
+    nonStandard: true,
+    output: "htmlAndMathml"
+  })
+);
 const escapeHtml = (value = "") => value.replace(/[&<>'\"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]);
 const routeFor = (id) => `#/read/${encodeURIComponent(id)}`;
 const hrefFor = (doc) => doc.type === "html" ? doc.path : routeFor(doc.id);
@@ -107,16 +114,6 @@ function enhanceArticle(article) {
     link.rel = "noopener noreferrer";
   }
   for (const image of article.querySelectorAll("img")) image.loading = "lazy";
-  renderMathInElement(article, {
-    delimiters: [
-      { left: "$$", right: "$$", display: true },
-      { left: "$", right: "$", display: false },
-      { left: "\\[", right: "\\]", display: true },
-      { left: "\\(", right: "\\)", display: false }
-    ],
-    throwOnError: false,
-    output: "htmlAndMathml"
-  });
   tocPanel.innerHTML = headings.length ? `<div class="toc-title">本文目录</div>${headings.map((heading) => `<a class="toc-level-${heading.tagName.slice(1)}" href="#${encodeURIComponent(heading.id)}">${escapeHtml(heading.textContent)}</a>`).join("")}` : "";
 }
 
@@ -143,7 +140,7 @@ async function renderArticle(id) {
     const markdownBody = currentSource.replace(/^---\n[\s\S]*?\n---\n/, "");
     const unsafe = doc.type === "markdown" ? marked.parse(markdownBody) : extractHtmlBody(currentSource);
     const safe = DOMPurify.sanitize(unsafe, {
-      USE_PROFILES: { html: true },
+      USE_PROFILES: { html: true, mathMl: true },
       FORBID_TAGS: ["script", "iframe", "object", "embed", "form"],
       FORBID_ATTR: ["onerror", "onclick", "onload"]
     });
