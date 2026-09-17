@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阳光城2023年度GDP核算案例</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .background-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 1200px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(to right, #1a2a6c, #b21f1f);
+            border-radius: 10px;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .section-title {
+            color: #1a2a6c;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #fdbb2d;
+            font-size: 1.6rem;
+        }
+        
+        .participants {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .participant-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #1a2a6c;
+            transition: transform 0.3s;
+        }
+        
+        .participant-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .participant-card h3 {
+            color: #b21f1f;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .participant-card p {
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        
+        .data-container {
+            display: flex;
+            overflow-x: auto;
+            padding: 15px;
+            gap: 18px;
+            min-height: 55vh;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .data-section {
+            min-width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 18px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .data-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .data-section h2 {
+            color: #1a2a6c;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #fdbb2d;
+            font-size: 1.5rem;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding-left: 16px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 20px;
+            font-size: 0.95rem;
+        }
+        
+        li:before {
+            content: "•";
+            color: #1a2a6c;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+        
+        .highlight {
+            background-color: #fff9c4;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .two-line {
+            display: block;
+            margin-top: 4px;
+        }
+        
+        .scroll-hint {
+            text-align: center;
+            color: white;
+            margin: 8px 0;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 15px;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .data-container {
+                flex-direction: column;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            
+            .data-section {
+                min-width: 90%;
+                margin: 0 auto 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景设定部分 -->
+    <div class="background-section">
+        <div class="header">
+            <h1>阳光城2023年度GDP核算案例</h1>
+            <p>封闭经济体GDP核算展示</p>
+        </div>
+        
+        <h2 class="section-title">1. 背景设定</h2>
+        <p>阳光城是一个封闭经济体，生产三种产品：</p>
+        <ul>
+            <li>小麦（农产品）</li>
+            <li>面粉（中间产品）</li>
+            <li>面包（最终产品）</li>
+        </ul>
+        
+        <h3 class="section-title">参与者包括：</h3>
+        <div class="participants">
+            <div class="participant-card">
+                <h3>农场</h3>
+                <p>生产小麦</p>
+            </div>
+            <div class="participant-card">
+                <h3>面粉厂</h3>
+                <p>购买小麦，生产面粉</p>
+            </div>
+            <div class="participant-card">
+                <h3>面包店</h3>
+                <p>购买面粉，生产面包</p>
+            </div>
+            <div class="participant-card">
+                <h3>家庭</h3>
+                <p>提供劳动力并消费面包</p>
+            </div>
+            <div class="participant-card">
+                <h3>政府</h3>
+                <p>征税并提供公共服务</p>
+            </div>
+            <div class="participant-card">
+                <h3>二手交易市场</h3>
+                <p>一辆二手货车交易</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 数据展示部分 -->
+    <div class="scroll-hint">← 左右滚动查看所有数据 →</div>
+    
+    <div class="data-container">
+        <!-- 农场数据 -->
+        <section class="data-section">
+            <h2>（1）农场数据</h2>
+            <ul>
+                <li><span class="highlight">总产出</span>
+                    <span class="two-line">生产小麦价值 1000亿元</span>
+                </li>
+                <li><span class="highlight">中间投入</span>
+                    <span class="two-line">购买种子、化肥、农药等 200亿元</span>
+                </li>
+                <li>支付工人工资：350亿元</li>
+                <li>支付政府生产税：80亿元</li>
+                <li>折旧：70亿元</li>
+            </ul>
+        </section>
+        
+        <!-- 面粉厂数据 -->
+        <section class="data-section">
+            <h2>（2）面粉厂数据</h2>
+            <ul>
+                <li><span class="highlight">总产出</span>
+                    <span class="two-line">生产面粉价值 1500亿元</span>
+                </li>
+                <li><span class="highlight">中间投入</span>
+                    <span class="two-line">向农场购买小麦 1000亿元</span>
+                </li>
+                <li>支付工人工资：250亿元</li>
+                <li>支付政府生产税：40亿元</li>
+                <li>折旧：50亿元</li>
+            </ul>
+        </section>
+        
+        <!-- 面包店数据 -->
+        <section class="data-section">
+            <h2>（3）面包店数据</h2>
+            <ul>
+                <li><span class="highlight">总产出</span>
+                    <span class="two-line">生产面包价值 3000亿元</span>
+                </li>
+                <li><span class="highlight">中间投入</span>
+                    <span class="two-line">向面粉厂购买面粉 1500亿元</span>
+                </li>
+                <li>支付工人工资：700亿元</li>
+                <li>支付政府生产税：150亿元</li>
+                <li>折旧：100亿元</li>
+                <li><span class="highlight">存货变动</span>
+                    <span class="two-line">年终库存增加价值 200亿元</span>
+                </li>
+            </ul>
+        </section>
+        
+        <!-- 二手交易 -->
+        <section class="data-section">
+            <h2>（4）二手交易</h2>
+            <ul>
+                <li>面包店以 <span class="highlight">500亿元</span>
+                    <span class="two-line">向农场出售一辆二手货车</span>
+                </li>
+                <li>支付中介服务费 <span class="highlight">50亿元</span></li>
+            </ul>
+        </section>
+        
+        <!-- 政府与家庭 -->
+        <section class="data-section">
+            <h2>（5）政府与家庭</h2>
+            <ul>
+                <li>政府征收生产税：
+                    <span class="two-line">农场80 + 面粉厂40 + 面包店150 = <span class="highlight">270亿元</span></span>
+                </li>
+                <li>家庭支付所得税：<span class="highlight">180亿元</span></li>
+                <li>政府向家庭提供失业救济金：
+                    <span class="two-line">（转移支付）<span class="highlight">120亿元</span></span>
+                </li>
+                <li>家庭消费：
+                    <span class="two-line">购买面包价值 <span class="highlight">2600亿元</span></span>
+                </li>
+            </ul>
+        </section>
+    </div>
+    
+    <div class="footer">
+        阳光城2023年度GDP核算案例展示
+    </div>
+    
+    <script>
+        // 添加滚动提示效果
+        const hint = document.querySelector('.scroll-hint');
+        let opacity = 0.8;
+        let direction = -0.01;
+        
+        setInterval(() => {
+            opacity += direction;
+            if (opacity <= 0.4 || opacity >= 0.9) direction *= -1;
+            hint.style.opacity = opacity;
+        }, 100);
+    </script>
+</body>
+</html>
