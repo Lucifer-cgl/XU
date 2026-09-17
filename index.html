@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="XU 课程知识库" />
+    <meta name="theme-color" content="#f7f4ed" />
+    <title>XU 课程知识库</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到正文</a>
+    <div id="app">
+      <header class="site-header">
+        <a class="brand" href="#/" aria-label="返回知识库首页">
+          <span class="brand-mark" aria-hidden="true">XU</span>
+          <span><strong>课程知识库</strong><small>Knowledge Library</small></span>
+        </a>
+        <div class="header-actions">
+          <button id="nav-toggle" class="icon-button mobile-only" type="button" aria-label="打开目录" aria-expanded="false">目录</button>
+          <button id="theme-toggle" class="icon-button" type="button" aria-label="切换明暗主题">主题</button>
+        </div>
+      </header>
+      <div class="site-layout">
+        <aside id="sidebar" class="sidebar" aria-label="课程目录">
+          <div class="sidebar-heading">内容目录</div>
+          <nav id="course-nav"></nav>
+        </aside>
+        <main id="main-content" class="main-content" tabindex="-1">
+          <div class="loading-state">正在读取知识库目录……</div>
+        </main>
+        <aside id="toc-panel" class="toc-panel" aria-label="本文目录"></aside>
+      </div>
+    </div>
+    <noscript><div class="noscript">本知识库需要 JavaScript 才能按需读取 Markdown。请启用 JavaScript，或直接下载仓库中的原始文件。</div></noscript>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

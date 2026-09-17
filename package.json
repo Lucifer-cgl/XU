@@ -1,0 +1,21 @@
+{
+  "name": "xu-knowledge-base",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "content:build": "node scripts/build-content.mjs",
+    "dev": "npm run content:build && vite",
+    "build": "npm run content:build && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "dompurify": "3.4.15",
+    "katex": "0.16.22",
+    "marked": "15.0.12",
+    "pagedjs": "0.4.3"
+  },
+  "devDependencies": {
+    "vite": "6.1.0"
+  }
+}

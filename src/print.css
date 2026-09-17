@@ -1,0 +1,25 @@
+@page {
+  size: A4;
+  margin: 18mm 16mm 20mm;
+  @bottom-center { content: counter(page) " / " counter(pages); font-size: 9pt; color: #66706a; }
+}
+
+@media print {
+  :root { color-scheme: light; }
+  body { background: #fff !important; color: #111 !important; }
+  .site-header, .sidebar, .toc-panel, .no-print, .noscript { display: none !important; }
+  .site-layout { display: block !important; }
+  .main-content { padding: 0 !important; }
+  .article { max-width: none; font-size: 10.5pt; line-height: 1.72; }
+  .article h1 { font-size: 24pt; }
+  .article h2 { font-size: 16pt; }
+  .article h3 { font-size: 13pt; }
+  .article h1, .article h2, .article h3, .article h4 { break-after: avoid; page-break-after: avoid; }
+  .article p, .article li { orphans: 3; widows: 3; }
+  .article img, .article pre, .article blockquote, .katex-display { break-inside: avoid; page-break-inside: avoid; }
+  .table-scroll { overflow: visible; }
+  .article table { font-size: 9pt; }
+  .article thead { display: table-header-group; }
+  .article tr { break-inside: avoid; page-break-inside: avoid; }
+  .article a { color: #111; text-decoration: none; }
+}
