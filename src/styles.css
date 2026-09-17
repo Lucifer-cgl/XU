@@ -48,15 +48,23 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .sidebar { border-right: 1px solid var(--line); }
 .toc-panel { border-left: 1px solid var(--line); }
 .sidebar-heading, .toc-title { margin-bottom: 16px; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-.course-group { position: relative; margin-bottom: 8px; }
-.course-group summary { display: flex; justify-content: space-between; gap: 12px; padding: 8px 42px 8px 4px; font-weight: 700; cursor: pointer; }
+.sidebar-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.tree-actions { display: inline-flex; gap: 3px; letter-spacing: 0; text-transform: none; }
+.tree-actions button { padding: 2px 5px; border: 0; border-radius: 5px; background: transparent; color: var(--muted); font-size: 10px; cursor: pointer; }
+.tree-actions button:hover, .tree-actions button:focus-visible { background: var(--accent-soft); color: var(--accent); outline: none; }
+.course-tree { margin: 0; padding: 0; list-style: none; }
+.course-tree .course-tree { margin: 2px 0 4px 9px; padding-left: 9px; border-left: 1px solid var(--line); }
+.course-node { min-width: 0; }
+.course-group { position: relative; margin-bottom: 4px; }
+.course-group summary { display: flex; justify-content: space-between; gap: 8px; min-width: 0; padding: 7px 38px 7px 3px; border-radius: 7px; font-weight: 700; cursor: pointer; }
+.course-group summary:hover, .course-group.active-branch > summary { background: color-mix(in srgb, var(--accent-soft) 58%, transparent); }
 .course-group summary > span:last-child { color: var(--muted); font-size: 12px; }
-.course-download-trigger { position: absolute; z-index: 1; top: 5px; right: 2px; display: grid; place-items: center; width: 32px; height: 32px; padding: 0 0 8px; border: 0; border-radius: 50%; background: transparent; color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; }
+.course-download-trigger { position: absolute; z-index: 1; top: 3px; right: 1px; display: grid; place-items: center; width: 30px; height: 30px; padding: 0 0 8px; border: 0; border-radius: 50%; background: transparent; color: var(--muted); font-size: 21px; line-height: 1; cursor: pointer; }
 .course-download-trigger:hover, .course-download-trigger:focus-visible { background: var(--accent-soft); color: var(--accent); outline: none; }
-.course-title { display: grid; min-width: 0; }
+.course-title { display: grid; min-width: 0; overflow-wrap: anywhere; }
 .course-title small { color: var(--muted); font-size: 10px; font-weight: 500; }
 .course-title strong { overflow: hidden; text-overflow: ellipsis; }
-.course-links { display: grid; gap: 3px; margin: 3px 0 12px; }
+.course-links { display: grid; gap: 3px; margin: 3px 0 7px; }
 .course-links a { display: flex; align-items: flex-start; gap: 8px; padding: 7px 9px; border-radius: 8px; color: var(--muted); font-size: 13px; line-height: 1.45; text-decoration: none; }
 .course-links a:hover, .course-links a.active { background: var(--accent-soft); color: var(--ink); }
 .format-badge { flex: 0 0 auto; margin-top: 2px; color: var(--accent); font-size: 9px; font-weight: 800; letter-spacing: .04em; }

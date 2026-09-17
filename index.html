@@ -22,7 +22,13 @@
       </header>
       <div class="site-layout">
         <aside id="sidebar" class="sidebar" aria-label="课程目录">
-          <div class="sidebar-heading">内容目录</div>
+          <div class="sidebar-heading">
+            <span>内容目录</span>
+            <span class="tree-actions">
+              <button type="button" data-tree-action="expand" aria-label="展开全部目录">展开</button>
+              <button type="button" data-tree-action="collapse" aria-label="收起全部目录">收起</button>
+            </span>
+          </div>
           <nav id="course-nav"></nav>
         </aside>
         <main id="main-content" class="main-content" tabindex="-1">

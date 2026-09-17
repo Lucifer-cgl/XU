@@ -253,6 +253,8 @@ GitHub Actions 会在 push 和 pull request 时执行 `npm ci` 与 `npm run buil
 
 交流与缺陷统一放在 [GitHub Issues](https://github.com/Lucifer-cgl/XU/issues)，避免为了评论功能引入后端。
 
+课程投稿、来源声明、默认非商业共享与 Fork 复用的具体约定，见 [开放投稿、版权与复用说明](content/自我介绍/开放投稿、版权与复用说明.md)。
+
 ## 边界
 
 - 不提供账号、在线编辑、服务端评论、支付或数据库。

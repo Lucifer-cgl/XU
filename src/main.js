@@ -35,18 +35,53 @@ async function loadJson(url) {
   return response.json();
 }
 
+function buildCourseTree(courses) {
+  const roots = [];
+  for (const course of courses) {
+    const parts = course.id.split("/");
+    let siblings = roots;
+    const path = [];
+    parts.forEach((part, index) => {
+      path.push(part);
+      let node = siblings.find((item) => item.segment === part);
+      if (!node) {
+        node = { segment: part, path: path.join("/"), course: null, children: [] };
+        siblings.push(node);
+      }
+      if (index === parts.length - 1) node.course = course;
+      siblings = node.children;
+    });
+  }
+  return roots;
+}
+
+function branchDocumentCount(node) {
+  return (node.course?.documents.length || 0) + node.children.reduce((total, child) => total + branchDocumentCount(child), 0);
+}
+
+function branchContains(node, activeId) {
+  return Boolean(activeId) && (node.course?.documents.some((doc) => doc.id === activeId) || node.children.some((child) => branchContains(child, activeId)));
+}
+
+function renderCourseNodes(nodes, activeId, depth = 0) {
+  return `<ul class="course-tree course-tree-level-${depth}">${nodes.map((node) => {
+    const activeBranch = branchContains(node, activeId);
+    const course = node.course;
+    const label = course?.name || node.segment;
+    const groupId = node.path.split("/")[0];
+    return `<li class="course-node">
+      <details class="course-group ${activeBranch ? "active-branch" : ""}" ${depth === 0 || activeBranch ? "open" : ""}>
+        <summary><span class="course-title"><strong>${escapeHtml(label)}</strong></span><span class="course-count">${branchDocumentCount(node)}</span></summary>
+        ${course ? `<button type="button" class="course-download-trigger no-print" data-download-group="${encodeURIComponent(groupId)}" data-download-course="${encodeURIComponent(course.id)}" aria-label="下载 ${escapeHtml(course.name)} 所在分类的原始文件" title="下载原始文件">⋯</button>` : ""}
+        ${course?.documents.length ? `<div class="course-links">${course.documents.map((doc) => `<a href="${hrefFor(doc)}" class="${doc.id === activeId ? "active" : ""}"><span class="format-badge">${doc.type === "markdown" ? "MD" : "HTML"}</span>${escapeHtml(doc.title)}</a>`).join("")}</div>` : ""}
+        ${node.children.length ? renderCourseNodes(node.children, activeId, depth + 1) : ""}
+      </details>
+    </li>`;
+  }).join("")}</ul>`;
+}
+
 function renderNavigation(activeId = "") {
-  nav.innerHTML = catalog.courses.map((course) => {
-    const groupId = course.id.split("/")[0];
-    return `
-    <details class="course-group" open>
-      <summary><span class="course-title">${course.id.split("/").map((part, index, parts) => index === parts.length - 1 ? `<strong>${escapeHtml(part)}</strong>` : `<small>${escapeHtml(part)} /</small>`).join("")}</span><span>${course.documents.length}</span></summary>
-      <button type="button" class="course-download-trigger no-print" data-download-group="${encodeURIComponent(groupId)}" data-download-course="${encodeURIComponent(course.id)}" aria-label="下载 ${escapeHtml(course.name)} 所在分类的原始文件" title="下载原始文件">⋯</button>
-      <div class="course-links">
-        ${course.documents.map((doc) => `<a href="${hrefFor(doc)}" class="${doc.id === activeId ? "active" : ""}"><span class="format-badge">${doc.type === "markdown" ? "MD" : "HTML"}</span>${escapeHtml(doc.title)}</a>`).join("")}
-      </div>
-    </details>`;
-  }).join("");
+  nav.innerHTML = renderCourseNodes(buildCourseTree(catalog.courses), activeId);
 }
 
 function renderHome() {
@@ -267,6 +302,12 @@ nav.addEventListener("click", async (event) => {
   } finally {
     button.disabled = false;
   }
+});
+sidebar.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-tree-action]");
+  if (!button) return;
+  const expand = button.dataset.treeAction === "expand";
+  nav.querySelectorAll("details.course-group").forEach((details) => { details.open = expand; });
 });
 window.addEventListener("hashchange", route);
 

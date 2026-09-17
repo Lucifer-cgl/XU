@@ -7,6 +7,7 @@ const publicRoot = path.join(root, "public");
 const publishedContent = path.join(publicRoot, "content");
 const generatedRoot = path.join(publicRoot, "generated");
 const supported = new Set([".md", ".html", ".htm"]);
+const maxCourseDepth = 10;
 const downloadLimits = { maxBatchFiles: 50, maxBatchBytes: 100 * 1024 * 1024 };
 const slash = (value) => value.split(path.sep).join("/");
 const natural = new Intl.Collator("zh-CN", { numeric: true, sensitivity: "base" });
@@ -78,7 +79,8 @@ function validateHtml(file, source) {
 }
 function validateMarkdown(file, body) {
   const errors = [];
-  const headings = [...body.matchAll(/^(#{1,6})\s+(.+)$/gm)];
+  const prose = body.replace(/^ {0,3}(```|~~~)[^\n]*\n[\s\S]*?^ {0,3}\1[ \t]*$/gm, "");
+  const headings = [...prose.matchAll(/^(#{1,6})\s+(.+)$/gm)];
   const h1Count = headings.filter(([, hashes]) => hashes.length === 1).length;
   if (h1Count !== 1) errors.push(`必须且只能有一个一级标题，当前为 ${h1Count} 个`);
   let previous = 0;
@@ -87,10 +89,10 @@ function validateMarkdown(file, body) {
     if (previous && level > previous + 1) errors.push(`标题层级跳跃：${heading.trim()}`);
     previous = level;
   }
-  for (const image of body.matchAll(/!\[([^\]]*)\]\(([^)]+)\)/g)) {
+  for (const image of prose.matchAll(/!\[([^\]]*)\]\(([^)]+)\)/g)) {
     if (!image[1].trim()) errors.push(`图片缺少替代文本：${image[2]}`);
   }
-  for (const link of body.matchAll(/\[[^\]]+\]\((http:\/\/[^)]+)\)/g)) errors.push(`外部链接必须使用 HTTPS：${link[1]}`);
+  for (const link of prose.matchAll(/\[[^\]]+\]\((http:\/\/[^)]+)\)/g)) errors.push(`外部链接必须使用 HTTPS：${link[1]}`);
   return errors.map((message) => `${slash(path.relative(root, file))}: ${message}`);
 }
 
@@ -124,6 +126,7 @@ for (const file of contentFiles) {
   else validationErrors.push(...validateHtml(file, body));
   const segments = relative.split("/");
   const fileName = segments.pop();
+  if (segments.length > maxCourseDepth) validationErrors.push(`${relative}: 目录层级为 ${segments.length}，最多允许 ${maxCourseDepth} 层`);
   const coursePath = segments.join("/") || "未分类";
   const fallback = path.basename(fileName, extension);
   const text = stripMarkup(body, type);
