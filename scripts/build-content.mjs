@@ -1,4 +1,4 @@
-import { access, cp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { access, cp, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = process.cwd();
@@ -7,6 +7,7 @@ const publicRoot = path.join(root, "public");
 const publishedContent = path.join(publicRoot, "content");
 const generatedRoot = path.join(publicRoot, "generated");
 const supported = new Set([".md", ".html", ".htm"]);
+const downloadLimits = { maxBatchFiles: 50, maxBatchBytes: 100 * 1024 * 1024 };
 const slash = (value) => value.split(path.sep).join("/");
 const natural = new Intl.Collator("zh-CN", { numeric: true, sensitivity: "base" });
 
@@ -21,7 +22,7 @@ async function walk(directory) {
   for (const entry of entries) {
     const full = path.join(directory, entry.name);
     if (entry.isDirectory()) files.push(...await walk(full));
-    else files.push(full);
+    else if (entry.isFile()) files.push(full);
   }
   return files;
 }
@@ -165,6 +166,42 @@ const catalogDocuments = documents.map(({ searchText, ...document }) => document
 const catalog = { site: { title: "XU 课程知识库", generatedAt: new Date().toISOString() }, courses, documents: catalogDocuments };
 const searchIndex = documents.map(({ id, title, description, coursePath, type, searchText }) => ({ id, title, description, coursePath, type, text: searchText }));
 
+const downloadCourses = new Map(courses.map((course) => [course.id, {
+  id: course.id,
+  name: course.name,
+  groupId: course.id.split("/")[0],
+  fileCount: 0,
+  totalBytes: 0,
+  files: []
+}]));
+const courseRoots = [...downloadCourses.keys()].sort((a, b) => b.length - a.length || natural.compare(a, b));
+for (const file of [...allFiles].sort((a, b) => natural.compare(slash(path.relative(contentRoot, a)), slash(path.relative(contentRoot, b))))) {
+  const relative = slash(path.relative(contentRoot, file));
+  const owner = courseRoots.find((courseId) => relative.startsWith(`${courseId}/`));
+  if (!owner) continue;
+  const size = (await stat(file)).size;
+  const course = downloadCourses.get(owner);
+  course.files.push({
+    path: relative,
+    relativePath: slash(path.relative(path.join(contentRoot, owner), file)),
+    url: `/content/${relative.split("/").map(encodeURIComponent).join("/")}`,
+    size
+  });
+  course.fileCount += 1;
+  course.totalBytes += size;
+}
+const downloadGroups = new Map();
+for (const course of downloadCourses.values()) {
+  if (!downloadGroups.has(course.groupId)) downloadGroups.set(course.groupId, { id: course.groupId, name: course.groupId, courses: [] });
+  downloadGroups.get(course.groupId).courses.push(course);
+}
+const downloads = {
+  generatedAt: catalog.site.generatedAt,
+  limits: downloadLimits,
+  groups: [...downloadGroups.values()].sort((a, b) => natural.compare(a.name, b.name))
+};
+
 await writeFile(path.join(generatedRoot, "catalog.json"), JSON.stringify(catalog, null, 2));
 await writeFile(path.join(generatedRoot, "search-index.json"), JSON.stringify(searchIndex));
+await writeFile(path.join(generatedRoot, "downloads.json"), JSON.stringify(downloads));
 console.log(`内容构建完成：${courses.length} 个课程目录，${documents.length} 篇文档（Markdown ${documents.filter(d => d.type === "markdown").length}，HTML ${documents.filter(d => d.type === "html").length}）。`);

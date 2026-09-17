@@ -34,13 +34,17 @@ async function loadJson(url) {
 }
 
 function renderNavigation(activeId = "") {
-  nav.innerHTML = catalog.courses.map((course) => `
+  nav.innerHTML = catalog.courses.map((course) => {
+    const groupId = course.id.split("/")[0];
+    return `
     <details class="course-group" open>
       <summary><span class="course-title">${course.id.split("/").map((part, index, parts) => index === parts.length - 1 ? `<strong>${escapeHtml(part)}</strong>` : `<small>${escapeHtml(part)} /</small>`).join("")}</span><span>${course.documents.length}</span></summary>
+      <button type="button" class="course-download-trigger no-print" data-download-group="${encodeURIComponent(groupId)}" data-download-course="${encodeURIComponent(course.id)}" aria-label="下载 ${escapeHtml(course.name)} 所在分类的原始文件" title="下载原始文件">⋯</button>
       <div class="course-links">
         ${course.documents.map((doc) => `<a href="${hrefFor(doc)}" class="${doc.id === activeId ? "active" : ""}"><span class="format-badge">${doc.type === "markdown" ? "MD" : "HTML"}</span>${escapeHtml(doc.title)}</a>`).join("")}
       </div>
-    </details>`).join("");
+    </details>`;
+  }).join("");
 }
 
 function renderHome() {
@@ -214,6 +218,24 @@ tocPanel.addEventListener("click", (event) => {
   event.preventDefault();
   const target = document.getElementById(decodeURIComponent(link.dataset.section));
   target?.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+nav.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-download-group]");
+  if (!button) return;
+  event.preventDefault();
+  event.stopPropagation();
+  button.disabled = true;
+  try {
+    const { openDownloadManager } = await import("./download.js");
+    await openDownloadManager({
+      groupId: decodeURIComponent(button.dataset.downloadGroup),
+      courseId: decodeURIComponent(button.dataset.downloadCourse)
+    });
+  } catch (error) {
+    renderError(`下载功能加载失败：${error.message}`);
+  } finally {
+    button.disabled = false;
+  }
 });
 window.addEventListener("hashchange", route);
 
