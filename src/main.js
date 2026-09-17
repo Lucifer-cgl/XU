@@ -71,15 +71,6 @@ function renderHome() {
         <p>这里不是知识的终点，而是一处开放的汇流之地。</p>
       </div>
     </section>
-    <section class="course-grid" aria-label="课程列表">
-      ${catalog.courses.map((course, index) => `
-        <article class="course-card">
-          <span class="course-number">${String(index + 1).padStart(2, "0")}</span>
-          <h2>${escapeHtml(course.name)}</h2>
-          <p>${escapeHtml(course.description || `${course.documents.length} 篇内容`)}</p>
-          <a href="${course.documents[0] ? hrefFor(course.documents[0]) : "#/"}">开始阅读 <span aria-hidden="true">→</span></a>
-        </article>`).join("")}
-    </section>
     <section class="open-source-section" aria-labelledby="open-source-title">
       <div class="open-source-copy">
         <p class="eyebrow">OPEN SOURCE, OPEN FUTURE</p>
@@ -99,6 +90,15 @@ function renderHome() {
           <figure><img src="${wechatQrUrl}" alt="作者的微信支持二维码" loading="lazy"><figcaption>随缘支持 · 量力而行</figcaption></figure>
         </div>
       </div>
+    </section>
+    <section class="course-grid" aria-label="课程列表">
+      ${catalog.courses.map((course, index) => `
+        <article class="course-card">
+          <span class="course-number">${String(index + 1).padStart(2, "0")}</span>
+          <h2>${escapeHtml(course.name)}</h2>
+          <p>${escapeHtml(course.description || `${course.documents.length} 篇内容`)}</p>
+          <a href="${course.documents[0] ? hrefFor(course.documents[0]) : "#/"}">开始阅读 <span aria-hidden="true">→</span></a>
+        </article>`).join("")}
     </section>`;
   const input = document.querySelector("#search-input");
   input.addEventListener("focus", ensureSearchIndex, { once: true });

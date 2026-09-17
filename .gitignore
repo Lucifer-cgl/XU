@@ -5,3 +5,7 @@ public/generated/
 .wrangler/
 .dev.vars
 *.log
+
+# Local-only Git helpers
+/push-content.cmd
+/push-all.cmd

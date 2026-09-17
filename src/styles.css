@@ -84,7 +84,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .brand-story-copy h2, .open-source-section h2 { margin: 8px 0 16px; font: 650 clamp(27px, 4vw, 40px)/1.25 var(--serif); letter-spacing: -.02em; }
 .brand-story-copy p:not(.eyebrow), .open-source-copy > p:not(.eyebrow), .support-copy > p:not(.eyebrow) { color: var(--muted); }
 .brand-story-copy p:last-child { margin-bottom: 0; color: var(--warm); font-weight: 700; }
-.open-source-section { display: grid; grid-template-columns: minmax(0, .92fr) minmax(360px, 1.08fr); gap: 20px; max-width: 1000px; margin: 72px auto 0; }
+.open-source-section { display: grid; grid-template-columns: minmax(0, .92fr) minmax(360px, 1.08fr); gap: 20px; max-width: 1000px; margin: 0 auto 72px; }
 .open-source-copy, .support-panel { padding: clamp(26px, 4vw, 42px); border: 1px solid var(--line); border-radius: 20px; background: var(--surface); box-shadow: var(--shadow); }
 .github-link { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; margin-top: 26px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); text-decoration: none; }
 .github-link:hover { border-color: var(--accent); background: var(--accent-soft); }
@@ -191,7 +191,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .brand small { font-size: 8px; }
   .brand-story { grid-template-columns: 1fr; margin-bottom: 48px; }
   .brand-glyph { width: 120px; }
-  .open-source-section { grid-template-columns: 1fr; margin-top: 48px; }
+  .open-source-section { grid-template-columns: 1fr; margin-bottom: 48px; }
   .support-images { gap: 8px; }
   .article { font-size: 16px; }
   .article h1 { font-size: 34px; }
