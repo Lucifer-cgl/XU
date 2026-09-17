@@ -1,6 +1,8 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "xu-knowledge-base",
-  "pages_build_output_dir": "./dist",
-  "compatibility_date": "2026-09-17"
+  "name": "xu",
+  "compatibility_date": "2026-09-17",
+  "assets": {
+    "directory": "./dist"
+  }
 }

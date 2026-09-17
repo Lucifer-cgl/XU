@@ -16,6 +16,7 @@
     "pagedjs": "0.4.3"
   },
   "devDependencies": {
-    "vite": "6.1.0"
+    "vite": "6.4.3",
+    "wrangler": "4.133.0"
   }
 }
