@@ -171,7 +171,7 @@ function renderCourseNodes(nodes, activeId, depth = 0) {
       <details class="course-group ${activeBranch ? "active-branch" : ""}" ${depth === 0 || activeBranch ? "open" : ""}>
         <summary><span class="course-title"><strong>${escapeHtml(label)}</strong></span><span class="course-count">${branchDocumentCount(node)}</span></summary>
         ${course ? `<button type="button" class="course-download-trigger no-print" data-download-group="${encodeURIComponent(groupId)}" data-download-course="${encodeURIComponent(course.id)}" aria-label="下载 ${escapeHtml(course.name)} 所在分类的原始文件" title="下载原始文件">⋯</button>` : ""}
-        ${course?.documents.length ? `<div class="course-links">${course.documents.map((doc) => `<a href="${hrefFor(doc)}" class="${doc.id === activeId ? "active" : ""}"><span class="format-badge">${doc.type === "markdown" ? "MD" : "HTML"}</span>${escapeHtml(doc.title)}</a>`).join("")}</div>` : ""}
+        ${course?.documents.length ? `<div class="course-links">${course.documents.map((doc) => `<a href="${hrefFor(doc)}" class="${doc.id === activeId ? "active" : ""}" title="${escapeHtml(doc.title)}"><span class="format-badge">${doc.type === "markdown" ? "MD" : "HTML"}</span><span class="course-link-title">${escapeHtml(doc.title)}</span></a>`).join("")}</div>` : ""}
         ${node.children.length ? renderCourseNodes(node.children, activeId, depth + 1) : ""}
       </details>
     </li>`;
@@ -282,7 +282,7 @@ function enhanceArticle(article) {
     link.rel = "noopener noreferrer";
   }
   for (const image of article.querySelectorAll("img")) image.loading = "lazy";
-  tocPanel.innerHTML = headings.length ? `<div class="toc-title">本文目录</div>${headings.map((heading) => `<a class="toc-level-${heading.tagName.slice(1)}" href="${routeFor(currentDocument.id)}" data-section="${encodeURIComponent(heading.id)}">${escapeHtml(heading.textContent)}</a>`).join("")}` : "";
+  tocPanel.innerHTML = headings.length ? `<div class="toc-title">本文目录</div>${headings.map((heading) => `<a class="toc-level-${heading.tagName.slice(1)}" href="${routeFor(currentDocument.id)}" data-section="${encodeURIComponent(heading.id)}" title="${escapeHtml(heading.textContent)}">${escapeHtml(heading.textContent)}</a>`).join("")}` : "";
 }
 
 function articleTools(doc) {

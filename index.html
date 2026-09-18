@@ -17,12 +17,18 @@
         </a>
         <div class="header-actions">
           <button id="nav-toggle" class="icon-button mobile-only" type="button" aria-label="打开目录" aria-expanded="false">目录</button>
-          <button id="left-panel-toggle" class="icon-button desktop-panel-button" type="button" aria-controls="sidebar" aria-expanded="true" title="收起或展开课程目录">课程栏</button>
-          <button id="right-panel-toggle" class="icon-button desktop-panel-button right-panel-button" type="button" aria-controls="toc-panel" aria-expanded="true" title="收起或展开本文目录">本文栏</button>
           <button id="theme-toggle" class="icon-button" type="button" aria-label="切换明暗主题">主题</button>
         </div>
       </header>
       <div id="site-layout" class="site-layout">
+        <button id="left-panel-toggle" class="panel-edge-toggle panel-edge-toggle-left" type="button" aria-controls="sidebar" aria-expanded="true" title="收起课程目录">
+          <span class="panel-layout-icon panel-layout-icon-left" aria-hidden="true"></span>
+          <span class="sr-only">收起或展开课程目录</span>
+        </button>
+        <button id="right-panel-toggle" class="panel-edge-toggle panel-edge-toggle-right" type="button" aria-controls="toc-panel" aria-expanded="true" title="收起本文目录">
+          <span class="panel-layout-icon panel-layout-icon-right" aria-hidden="true"></span>
+          <span class="sr-only">收起或展开本文目录</span>
+        </button>
         <aside id="sidebar" class="sidebar" aria-label="课程目录">
           <div class="sidebar-heading">
             <span>内容目录</span>
