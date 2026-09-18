@@ -1,6 +1,6 @@
 @page {
   size: A4;
-  margin: 12mm 16mm 20mm;
+  margin: 16mm 20mm 20mm;
   @top-center {
     content: "";
     width: 100%;
