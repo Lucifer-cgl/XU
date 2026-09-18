@@ -10,12 +10,110 @@ const main = document.querySelector("#main-content");
 const nav = document.querySelector("#course-nav");
 const tocPanel = document.querySelector("#toc-panel");
 const sidebar = document.querySelector("#sidebar");
+const siteLayout = document.querySelector("#site-layout");
 const navToggle = document.querySelector("#nav-toggle");
+const leftPanelToggle = document.querySelector("#left-panel-toggle");
+const rightPanelToggle = document.querySelector("#right-panel-toggle");
+const leftPanelResizer = document.querySelector("#left-panel-resizer");
+const rightPanelResizer = document.querySelector("#right-panel-resizer");
 const themeToggle = document.querySelector("#theme-toggle");
 let catalog;
 let searchIndex;
 let currentSource = "";
 let currentDocument;
+
+const layoutLimits = {
+  left: { min: 190, max: 420, default: 260 },
+  right: { min: 170, max: 360, default: 220 }
+};
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+let layoutState = loadLayoutState();
+
+function loadLayoutState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("xu-layout") || "{}");
+    return {
+      leftWidth: clamp(Number(saved.leftWidth) || layoutLimits.left.default, layoutLimits.left.min, layoutLimits.left.max),
+      rightWidth: clamp(Number(saved.rightWidth) || layoutLimits.right.default, layoutLimits.right.min, layoutLimits.right.max),
+      leftCollapsed: Boolean(saved.leftCollapsed),
+      rightCollapsed: Boolean(saved.rightCollapsed)
+    };
+  } catch {
+    return { leftWidth: 260, rightWidth: 220, leftCollapsed: false, rightCollapsed: false };
+  }
+}
+
+function saveLayoutState() {
+  localStorage.setItem("xu-layout", JSON.stringify(layoutState));
+}
+
+function applyLayoutState() {
+  siteLayout.style.setProperty("--left-panel-size", `${layoutState.leftWidth}px`);
+  siteLayout.style.setProperty("--right-panel-size", `${layoutState.rightWidth}px`);
+  siteLayout.dataset.leftCollapsed = String(layoutState.leftCollapsed);
+  siteLayout.dataset.rightCollapsed = String(layoutState.rightCollapsed);
+  leftPanelToggle.setAttribute("aria-expanded", String(!layoutState.leftCollapsed));
+  rightPanelToggle.setAttribute("aria-expanded", String(!layoutState.rightCollapsed));
+  leftPanelToggle.title = layoutState.leftCollapsed ? "展开课程目录" : "收起课程目录";
+  rightPanelToggle.title = layoutState.rightCollapsed ? "展开本文目录" : "收起本文目录";
+  leftPanelResizer.setAttribute("aria-valuenow", String(layoutState.leftWidth));
+  rightPanelResizer.setAttribute("aria-valuenow", String(layoutState.rightWidth));
+}
+
+function togglePanel(side) {
+  const key = `${side}Collapsed`;
+  layoutState[key] = !layoutState[key];
+  applyLayoutState();
+  saveLayoutState();
+}
+
+function setupPanelResizer(handle, side) {
+  const limits = layoutLimits[side];
+  const widthKey = `${side}Width`;
+  let startX = 0;
+  let startWidth = 0;
+
+  const finishResize = () => {
+    document.body.classList.remove("is-resizing");
+    saveLayoutState();
+    window.removeEventListener("pointermove", resize);
+    window.removeEventListener("pointerup", finishResize);
+    window.removeEventListener("pointercancel", finishResize);
+  };
+  const resize = (event) => {
+    const movement = event.clientX - startX;
+    layoutState[widthKey] = clamp(startWidth + (side === "left" ? movement : -movement), limits.min, limits.max);
+    applyLayoutState();
+  };
+
+  handle.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0) return;
+    startX = event.clientX;
+    startWidth = layoutState[widthKey];
+    document.body.classList.add("is-resizing");
+    window.addEventListener("pointermove", resize);
+    window.addEventListener("pointerup", finishResize);
+    window.addEventListener("pointercancel", finishResize);
+    event.preventDefault();
+  });
+  handle.addEventListener("dblclick", () => {
+    layoutState[widthKey] = limits.default;
+    applyLayoutState();
+    saveLayoutState();
+  });
+  handle.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    const direction = event.key === "ArrowRight" ? 1 : -1;
+    layoutState[widthKey] = clamp(layoutState[widthKey] + direction * (side === "left" ? 12 : -12), limits.min, limits.max);
+    applyLayoutState();
+    saveLayoutState();
+    event.preventDefault();
+  });
+}
+
+applyLayoutState();
+setupPanelResizer(leftPanelResizer, "left");
+setupPanelResizer(rightPanelResizer, "right");
 
 marked.use(
   { gfm: true, breaks: false },
@@ -272,6 +370,8 @@ navToggle.addEventListener("click", () => {
   const open = sidebar.classList.toggle("open");
   navToggle.setAttribute("aria-expanded", String(open));
 });
+leftPanelToggle.addEventListener("click", () => togglePanel("left"));
+rightPanelToggle.addEventListener("click", () => togglePanel("right"));
 themeToggle.addEventListener("click", () => {
   const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
   document.documentElement.dataset.theme = next;

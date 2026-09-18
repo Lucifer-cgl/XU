@@ -17,10 +17,12 @@
         </a>
         <div class="header-actions">
           <button id="nav-toggle" class="icon-button mobile-only" type="button" aria-label="打开目录" aria-expanded="false">目录</button>
+          <button id="left-panel-toggle" class="icon-button desktop-panel-button" type="button" aria-controls="sidebar" aria-expanded="true" title="收起或展开课程目录">课程栏</button>
+          <button id="right-panel-toggle" class="icon-button desktop-panel-button right-panel-button" type="button" aria-controls="toc-panel" aria-expanded="true" title="收起或展开本文目录">本文栏</button>
           <button id="theme-toggle" class="icon-button" type="button" aria-label="切换明暗主题">主题</button>
         </div>
       </header>
-      <div class="site-layout">
+      <div id="site-layout" class="site-layout">
         <aside id="sidebar" class="sidebar" aria-label="课程目录">
           <div class="sidebar-heading">
             <span>内容目录</span>
@@ -31,9 +33,11 @@
           </div>
           <nav id="course-nav"></nav>
         </aside>
+        <div id="left-panel-resizer" class="panel-resizer panel-resizer-left" role="separator" aria-label="调整课程目录宽度" aria-orientation="vertical" aria-controls="sidebar" aria-valuemin="190" aria-valuemax="420" aria-valuenow="260" tabindex="0"></div>
         <main id="main-content" class="main-content" tabindex="-1">
           <div class="loading-state">正在读取知识库目录……</div>
         </main>
+        <div id="right-panel-resizer" class="panel-resizer panel-resizer-right" role="separator" aria-label="调整本文目录宽度" aria-orientation="vertical" aria-controls="toc-panel" aria-valuemin="170" aria-valuemax="360" aria-valuenow="220" tabindex="0"></div>
         <aside id="toc-panel" class="toc-panel" aria-label="本文目录"></aside>
       </div>
     </div>
