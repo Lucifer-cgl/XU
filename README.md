@@ -2,7 +2,7 @@
 
 > 知识有所归，也由此再出发。
 
-[在线访问](https://xu.lucifer-cgl.workers.dev/) · [提交问题或建议](https://github.com/Lucifer-cgl/XU/issues)
+[在线访问](https://xu.lucifer-cgl.workers.dev/) · [提交问题或建议](https://github.com/Lucifer-cgl/XU/issues) · [墟 · AI Assistant](https://github.com/Lucifer-cgl/XU-AI-Assistant)
 
 “墟”取意于“归墟”。这个项目希望让分散的课程笔记有一处稳定归档，也让知识在记录、分享、修订和再次阅读中持续流转。
 
@@ -34,6 +34,19 @@ XU 的策略是：**内容进入 Git，索引在构建时生成，阅读与下�
 - DOMPurify 清理、CSP 和基础安全响应头。
 - GitHub Actions 内容检查与 Cloudflare Git 自动部署。
 - 无后端、无数据库、无用户账户、无服务端 ZIP/PDF 任务。
+
+## 墟 · AI Assistant
+
+XU 提供可选的浏览器配套工具 [XU-AI-Assistant](https://github.com/Lucifer-cgl/XU-AI-Assistant)。它不是新的 AI 模型，而是帮助访客在阅读 XU 时调用自己已经登录的 ChatGPT、Gemini、DeepSeek 或通义千问账号。
+
+- 可读取用户选中的文字、当前章节或整篇文章；
+- 发送前展示完整预览，由用户决定是否继续；
+- 整理提示词后复制到本机剪贴板，并打开 AI 官方网站；
+- 宽屏设备可让 XU 与 AI 独立窗口并排显示；
+- 不要求 API Key，不保存账号、密码、文章或对话记录；
+- 所有处理均在访客浏览器中完成，不增加 XU 的服务器、数据库或模型费用。
+
+安装、更新、数据保存位置及常见问题见 XU 站内文章《墟 · AI Assistant：安装与使用》，源文件位于 [`content/自我介绍/墟-AI Assistant：安装与使用.md`](content/自我介绍/墟-AI%20Assistant：安装与使用.md)。
 
 ## 两条内容通道
 
