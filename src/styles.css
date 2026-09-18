@@ -215,12 +215,6 @@ body.is-resizing { cursor: col-resize; user-select: none; }
 .download-primary { border-color: var(--accent) !important; background: var(--accent); color: #fff; }
 .download-shell button:disabled { cursor: not-allowed; opacity: .5; }
 
-@media (max-width: 1120px) {
-  .site-layout { --right-column: 0px; --right-handle: 0px; }
-  .toc-panel { display: none; }
-  .panel-edge-toggle-right, .panel-resizer-right { display: none; }
-}
-
 @media (max-width: 940px) {
   .brand-story, .open-source-section { grid-template-columns: 1fr; }
   .brand-glyph { width: 140px; }
