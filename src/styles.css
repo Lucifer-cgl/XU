@@ -7,6 +7,8 @@
   --line: #d9ddd7;
   --accent: #0b6b4f;
   --accent-soft: #dcece5;
+  --scrollbar-thumb: color-mix(in srgb, var(--accent) 38%, var(--line));
+  --scrollbar-thumb-hover: color-mix(in srgb, var(--accent) 68%, var(--line));
   --warm: #b9653b;
   --shadow: 0 22px 60px rgba(31, 45, 38, .08);
   --left-panel-size: 260px;
@@ -58,6 +60,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .site-layout[data-left-collapsed="true"] { --left-column: 0px; --left-handle: 0px; }
 .site-layout[data-right-collapsed="true"] { --right-column: 0px; --right-handle: 0px; }
 .sidebar, .toc-panel { min-width: 0; position: sticky; top: 76px; height: calc(100vh - 76px); overflow: auto; padding: 64px 22px 28px; }
+.sidebar, .toc-panel { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+.sidebar::-webkit-scrollbar, .toc-panel::-webkit-scrollbar { width: 6px; height: 6px; }
+.sidebar::-webkit-scrollbar-track, .toc-panel::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb, .toc-panel::-webkit-scrollbar-thumb { border: 1px solid transparent; border-radius: 999px; background: var(--scrollbar-thumb); background-clip: padding-box; }
+.sidebar::-webkit-scrollbar-thumb:hover, .toc-panel::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); background-clip: padding-box; }
 .sidebar { border-right: 1px solid var(--line); }
 .toc-panel { border-left: 1px solid var(--line); }
 .site-layout[data-left-collapsed="true"] .sidebar,
