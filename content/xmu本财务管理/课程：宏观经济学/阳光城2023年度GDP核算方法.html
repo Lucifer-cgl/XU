@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阳光城2023年度GDP核算方法</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: linear-gradient(to right, #1a2a6c, #b21f1f);
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .section-title {
+            color: #1a2a6c;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #fdbb2d;
+            font-size: 2.2rem;
+            text-align: center;
+        }
+        
+        .methods-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+        
+        .method-card {
+            flex: 1;
+            min-width: 350px;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .method-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+        
+        .method-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #1a2a6c;
+        }
+        
+        .method-header h2 {
+            color: #b21f1f;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .method-header p {
+            font-size: 1.2rem;
+            color: #1a2a6c;
+            font-weight: bold;
+        }
+        
+        .method-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .method-content ul {
+            list-style-type: none;
+            padding-left: 20px;
+            margin: 20px 0;
+        }
+        
+        .method-content li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .method-content li:before {
+            content: "•";
+            color: #1a2a6c;
+            font-size: 1.8rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+        
+        .highlight {
+            background-color: #fff9c4;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .calculation {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #4caf50;
+            font-size: 1.2rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .verification-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin: 40px auto;
+            max-width: 900px;
+        }
+        
+        .verification-title {
+            text-align: center;
+            color: #1a2a6c;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        
+        .verification-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+        
+        .verification-table th {
+            background-color: #1a2a6c;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        
+        .verification-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .verification-table tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+        
+        .verification-table tr:last-child td {
+            font-weight: bold;
+            font-size: 1.3rem;
+            background-color: #e8f5e9;
+        }
+        
+        .result-box {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(to right, #1a2a6c, #b21f1f);
+            border-radius: 10px;
+            color: white;
+        }
+        
+        .result-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .result-box p {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .methods-container {
+                flex-direction: column;
+            }
+            
+            .method-card {
+                min-width: 100%;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页面标题 -->
+        <div class="header">
+            <h1>阳光城2023年度GDP核算方法</h1>
+            <p>三种核算方法一致性验证</p>
+        </div>
+        
+        <!-- 三种核算方法 -->
+        <h2 class="section-title">3. 三种方法核算GDP</h2>
+        
+        <div class="methods-container">
+            <!-- 生产法 -->
+            <div class="method-card">
+                <div class="method-header">
+                    <h2>生产法（增加值法）</h2>
+                    <p>GDP = 所有部门增加值之和</p>
+                </div>
+                
+                <div class="method-content">
+                    <ul>
+                        <li><span class="highlight">农场</span>：800亿元</li>
+                        <li><span class="highlight">面粉厂</span>：500亿元</li>
+                        <li><span class="highlight">面包店</span>：1500亿元</li>
+                        <li><span class="highlight">中介服务</span>：50亿元（二手交易产生的新服务）</li>
+                    </ul>
+                    
+                    <div class="calculation">
+                        GDP = 800 + 500 + 1500 + 50 = <span class="highlight">2850亿元</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 收入法 -->
+            <div class="method-card">
+                <div class="method-header">
+                    <h2>收入法（要素收入法）</h2>
+                    <p>GDP = 劳动者报酬 + 生产税净额 + 固定资产折旧 + 营业盈余</p>
+                </div>
+                
+                <div class="method-content">
+                    <ul>
+                        <li><span class="highlight">劳动者报酬</span>：农场350 + 面粉厂250 + 面包店700 + 中介50 = <span class="highlight">1350亿元</span></li>
+                        <li><span class="highlight">生产税净额</span>：农场80 + 面粉厂40 + 面包店150 = <span class="highlight">270亿元</span></li>
+                        <li><span class="highlight">固定资产折旧</span>：农场70 + 面粉厂50 + 面包店100 = <span class="highlight">220亿元</span></li>
+                        <li><span class="highlight">营业盈余</span>：农场300 + 面粉厂160 + 面包店550 = <span class="highlight">1010亿元</span></li>
+                    </ul>
+                    
+                    <div class="calculation">
+                        GDP = 1350 + 270 + 220 + 1010 = <span class="highlight">2850亿元</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 支出法 -->
+            <div class="method-card">
+                <div class="method-header">
+                    <h2>支出法（最终产品法）</h2>
+                    <p>GDP = 最终消费支出 + 资本形成总额 + 净出口</p>
+                </div>
+                
+                <div class="method-content">
+                    <ul>
+                        <li><span class="highlight">最终消费支出</span>：家庭消费2600 + 中介服务消费50 = <span class="highlight">2650亿元</span></li>
+                        <li><span class="highlight">资本形成总额</span>：存货增加200亿元</li>
+                        <li><span class="highlight">净出口</span>：0（封闭经济）</li>
+                    </ul>
+                    
+                    <div class="calculation">
+                        GDP = 2650 + 200 + 0 = <span class="highlight">2850亿元</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 核算一致性验证 -->
+        <div class="verification-section">
+            <h2 class="verification-title">4. 核算一致性验证</h2>
+            
+            <table class="verification-table">
+                <thead>
+                    <tr>
+                        <th>核算方法</th>
+                        <th>计算过程</th>
+                        <th>结果（亿元）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>生产法</td>
+                        <td>800 + 500 + 1500 + 50</td>
+                        <td>2850</td>
+                    </tr>
+                    <tr>
+                        <td>收入法</td>
+                        <td>1350 + 270 + 220 + 1010</td>
+                        <td>2850</td>
+                    </tr>
+                    <tr>
+                        <td>支出法</td>
+                        <td>2650 + 200 + 0</td>
+                        <td>2850</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">三种方法计算结果一致</td>
+                        <td>2850</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="result-box">
+                <h3>阳光城2023年度GDP</h3>
+                <p>2850 亿元</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            阳光城2023年度GDP核算案例展示
+        </div>
+    </div>
+</body>
+</html>
