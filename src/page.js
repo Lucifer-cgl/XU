@@ -1,27 +1,21 @@
 import "./print.css";
 
-function createPrintHeader({ title, coursePath }) {
-  const header = document.createElement("div");
-  header.className = "print-page-header";
-  header.setAttribute("aria-hidden", "true");
+function escapeCssString(value) {
+  return String(value).replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/[\r\n]+/g, " ");
+}
 
-  const brand = document.createElement("span");
-  brand.className = "print-brand";
-  brand.textContent = "墟 · XU 开源知识库";
-
-  const location = document.createElement("span");
-  location.className = "print-location";
+function createPrintHeaderStyle({ title, coursePath }) {
   const path = ["首页", ...(coursePath || "").split("/").filter(Boolean), title].filter(Boolean);
-  location.textContent = ` / ${path.join(" / ")}`;
-
-  header.append(brand, location);
-  return header;
+  const label = `墟 · XU 开源知识库 / ${path.join(" / ")}`;
+  const style = document.createElement("style");
+  style.textContent = `@page { @top-center { content: "${escapeCssString(label)}"; } }`;
+  return style;
 }
 
 export async function openPdfPreview(documentInfo) {
   const info = typeof documentInfo === "string" ? { title: documentInfo } : documentInfo;
-  const printHeader = createPrintHeader(info);
-  document.body.append(printHeader);
+  const printHeaderStyle = createPrintHeaderStyle(info);
+  document.head.append(printHeaderStyle);
   document.body.classList.add("printing");
   const previousTitle = document.title;
   document.title = info.title;
@@ -32,6 +26,6 @@ export async function openPdfPreview(documentInfo) {
   } finally {
     document.title = previousTitle;
     document.body.classList.remove("printing");
-    printHeader.remove();
+    printHeaderStyle.remove();
   }
 }

@@ -1,10 +1,21 @@
 @page {
   size: A4;
   margin: 24mm 16mm 20mm;
+  @top-center {
+    content: "";
+    width: 100%;
+    padding-bottom: 2.5mm;
+    border-bottom: 0.25mm solid #d4d9d5;
+    overflow: hidden;
+    color: #66706a;
+    font-size: 8pt;
+    line-height: 1.25;
+    text-align: left;
+    vertical-align: bottom;
+    white-space: nowrap;
+  }
   @bottom-center { content: counter(page) " / " counter(pages); font-size: 9pt; color: #66706a; }
 }
-
-.print-page-header { display: none; }
 
 @media print {
   :root { color-scheme: light; }
@@ -12,24 +23,6 @@
   .skip-link, .site-header, .sidebar, .toc-panel, .no-print, .noscript { display: none !important; }
   .site-layout { display: block !important; }
   .main-content { padding: 0 !important; }
-  .print-page-header {
-    display: flex !important;
-    position: fixed;
-    top: -17mm;
-    left: 0;
-    right: 0;
-    align-items: center;
-    gap: 1.5mm;
-    min-width: 0;
-    padding-bottom: 2.5mm;
-    border-bottom: 0.25mm solid #d4d9d5;
-    color: #66706a;
-    font-size: 8pt;
-    line-height: 1.25;
-    white-space: nowrap;
-  }
-  .print-brand { flex: 0 0 auto; color: #17211d; font-weight: 700; }
-  .print-location { overflow: hidden; text-overflow: ellipsis; }
   .article { max-width: none; font-size: 10.5pt; line-height: 1.72; }
   .article h1 { font-size: 24pt; }
   .article h2 { font-size: 16pt; }
