@@ -349,7 +349,10 @@ async function openPrintPreview(event) {
   button.textContent = "正在准备……";
   try {
     const { openPdfPreview } = await import("./page.js");
-    await openPdfPreview(currentDocument.title);
+    await openPdfPreview({
+      title: currentDocument.title,
+      coursePath: currentDocument.coursePath
+    });
   } finally {
     button.disabled = false;
     button.textContent = "A4 / PDF";
