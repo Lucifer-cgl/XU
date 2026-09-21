@@ -167,6 +167,9 @@ body.is-resizing { cursor: col-resize; user-select: none; }
 .article code { padding: .14em .38em; border-radius: 4px; background: var(--accent-soft); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .88em; }
 .article pre code { padding: 0; background: none; }
 .article img { display: block; max-width: 100%; height: auto; margin: 2em auto; border-radius: 8px; }
+.article figure { margin: 2em auto; }
+.article figure svg { display: block; max-width: 100%; height: auto; margin-inline: auto; }
+.article figcaption { margin-top: .65rem; color: var(--muted); font-family: var(--sans); font-size: 14px; line-height: 1.65; text-align: center; }
 .table-scroll, .katex-display { max-width: 100%; overflow-x: auto; }
 .table-scroll { margin: 2em 0; }
 .article table { width: 100%; border-collapse: collapse; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); font-family: var(--sans); font-size: 14px; }

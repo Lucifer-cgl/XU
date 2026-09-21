@@ -9,3 +9,5 @@ public/generated/
 # Local-only Git helpers
 /push-content.cmd
 /push-all.cmd
+/build-dist.cmd
+/build-dist.ps1

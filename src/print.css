@@ -29,7 +29,7 @@
   .article h3 { font-size: 13pt; }
   .article h1, .article h2, .article h3, .article h4 { break-after: avoid; page-break-after: avoid; }
   .article p, .article li { orphans: 3; widows: 3; }
-  .article img, .article pre, .article blockquote, .katex-display { break-inside: avoid; page-break-inside: avoid; }
+  .article img, .article figure, .article svg, .article pre, .article blockquote, .katex-display { break-inside: avoid; page-break-inside: avoid; }
   .table-scroll { overflow: visible; }
   .article table { font-size: 9pt; }
   .article thead { display: table-header-group; }

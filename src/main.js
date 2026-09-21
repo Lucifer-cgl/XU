@@ -308,8 +308,8 @@ async function renderArticle(id) {
     const markdownBody = currentSource.replace(/^---\n[\s\S]*?\n---\n/, "");
     const unsafe = doc.type === "markdown" ? marked.parse(markdownBody) : extractHtmlBody(currentSource);
     const safe = DOMPurify.sanitize(unsafe, {
-      USE_PROFILES: { html: true, mathMl: true },
-      FORBID_TAGS: ["script", "iframe", "object", "embed", "form"],
+      USE_PROFILES: { html: true, mathMl: true, svg: true },
+      FORBID_TAGS: ["script", "iframe", "object", "embed", "form", "foreignObject"],
       FORBID_ATTR: ["onerror", "onclick", "onload"]
     });
     const position = catalog.documents.findIndex((item) => item.id === id);
