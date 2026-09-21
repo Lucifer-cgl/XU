@@ -66,6 +66,10 @@ function titleFrom(source, type, fallback) {
   return fallback.replace(/^\d{2,3}[-_.、\s]*/, "");
 }
 
+function displayNameFromFile(fileName) {
+  return path.basename(fileName, path.extname(fileName));
+}
+
 function validateHtml(file, source) {
   const errors = [];
   const scripts = [...source.matchAll(/<script\b([^>]*)>/gi)];
@@ -135,6 +139,7 @@ for (const file of contentFiles) {
     path: `/content/${relative.split("/").map(encodeURIComponent).join("/")}`,
     type,
     title: attributes.title || titleFrom(body, type, fallback),
+    displayTitle: attributes.displayTitle || displayNameFromFile(fileName),
     description: attributes.description || text.slice(0, 150),
     coursePath,
     order: Number(attributes.order || fallback.match(/^\d{2,3}/)?.[0] || 999),
@@ -148,7 +153,7 @@ if (validationErrors.length) {
   process.exit(1);
 }
 
-documents.sort((a, b) => natural.compare(a.coursePath, b.coursePath) || a.order - b.order || natural.compare(a.title, b.title));
+documents.sort((a, b) => natural.compare(a.coursePath, b.coursePath) || a.order - b.order || natural.compare(a.displayTitle, b.displayTitle));
 const courseMap = new Map();
 for (const document of documents) {
   if (!courseMap.has(document.coursePath)) {
@@ -167,7 +172,7 @@ for (const document of documents) {
 const courses = [...courseMap.values()].sort((a, b) => a.order - b.order || natural.compare(a.name, b.name));
 const catalogDocuments = documents.map(({ searchText, ...document }) => document);
 const catalog = { site: { title: "墟 · XU 开源知识库", generatedAt: new Date().toISOString() }, courses, documents: catalogDocuments };
-const searchIndex = documents.map(({ id, title, description, coursePath, type, searchText }) => ({ id, title, description, coursePath, type, text: searchText }));
+const searchIndex = documents.map(({ id, title, displayTitle, description, coursePath, type, searchText }) => ({ id, title, displayTitle, description, coursePath, type, text: searchText }));
 
 const downloadCourses = new Map(courses.map((course) => [course.id, {
   id: course.id,

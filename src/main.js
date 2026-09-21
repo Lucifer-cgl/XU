@@ -126,6 +126,7 @@ marked.use(
 const escapeHtml = (value = "") => value.replace(/[&<>'\"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]);
 const routeFor = (id) => `#/read/${encodeURIComponent(id)}`;
 const hrefFor = (doc) => doc.type === "html" ? doc.path : routeFor(doc.id);
+const labelFor = (doc) => doc.displayTitle || doc.title;
 
 async function loadJson(url) {
   const response = await fetch(url);
@@ -171,7 +172,7 @@ function renderCourseNodes(nodes, activeId, depth = 0) {
       <details class="course-group ${activeBranch ? "active-branch" : ""}" ${depth === 0 || activeBranch ? "open" : ""}>
         <summary><span class="course-title"><strong>${escapeHtml(label)}</strong></span><span class="course-count">${branchDocumentCount(node)}</span></summary>
         ${course ? `<button type="button" class="course-download-trigger no-print" data-download-group="${encodeURIComponent(groupId)}" data-download-course="${encodeURIComponent(course.id)}" aria-label="下载 ${escapeHtml(course.name)} 所在分类的原始文件" title="下载原始文件">⋯</button>` : ""}
-        ${course?.documents.length ? `<div class="course-links">${course.documents.map((doc) => `<a href="${hrefFor(doc)}" class="${doc.id === activeId ? "active" : ""}" title="${escapeHtml(doc.title)}"><span class="format-badge">${doc.type === "markdown" ? "MD" : "HTML"}</span><span class="course-link-title">${escapeHtml(doc.title)}</span></a>`).join("")}</div>` : ""}
+        ${course?.documents.length ? `<div class="course-links">${course.documents.map((doc) => `<a href="${hrefFor(doc)}" class="${doc.id === activeId ? "active" : ""}" title="${escapeHtml(labelFor(doc))}"><span class="format-badge">${doc.type === "markdown" ? "MD" : "HTML"}</span><span class="course-link-title">${escapeHtml(labelFor(doc))}</span></a>`).join("")}</div>` : ""}
         ${node.children.length ? renderCourseNodes(node.children, activeId, depth + 1) : ""}
       </details>
     </li>`;
@@ -248,9 +249,9 @@ async function handleSearch(event) {
   if (!query) { target.innerHTML = ""; return; }
   await ensureSearchIndex();
   const terms = query.split(/\s+/).filter(Boolean);
-  const results = searchIndex.filter((item) => terms.every((term) => `${item.title} ${item.coursePath} ${item.text}`.toLocaleLowerCase("zh-CN").includes(term))).slice(0, 12);
+  const results = searchIndex.filter((item) => terms.every((term) => `${item.displayTitle || ""} ${item.title} ${item.coursePath} ${item.text}`.toLocaleLowerCase("zh-CN").includes(term))).slice(0, 12);
   target.innerHTML = results.length
-    ? results.map((item) => `<a href="${hrefFor(item)}"><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.coursePath)} · ${item.type.toUpperCase()}</span><small>${escapeHtml(item.description)}</small></a>`).join("")
+    ? results.map((item) => `<a href="${hrefFor(item)}"><strong>${escapeHtml(labelFor(item))}</strong><span>${escapeHtml(item.coursePath)} · ${item.type.toUpperCase()}</span><small>${escapeHtml(item.description)}</small></a>`).join("")
     : "<p>没有找到相关内容。</p>";
 }
 
@@ -317,13 +318,13 @@ async function renderArticle(id) {
     const next = catalog.documents[position + 1];
     main.innerHTML = `
       <div class="article-head no-print">
-        <div class="breadcrumbs"><a href="#/">首页</a><span>/</span><span>${escapeHtml(doc.coursePath)}</span><span>/</span><strong>${escapeHtml(doc.title)}</strong></div>
+        <div class="breadcrumbs"><a href="#/">首页</a><span>/</span><span>${escapeHtml(doc.coursePath)}</span><span>/</span><strong>${escapeHtml(labelFor(doc))}</strong></div>
         ${articleTools(doc)}
       </div>
       <article id="article" class="article ${doc.type === "html" ? "html-source" : "markdown-source"}">${safe}</article>
       <nav class="article-pagination no-print" aria-label="文章翻页">
-        ${previous ? `<a href="${hrefFor(previous)}"><small>上一篇</small>${escapeHtml(previous.title)}</a>` : "<span></span>"}
-        ${next ? `<a class="next" href="${hrefFor(next)}"><small>下一篇</small>${escapeHtml(next.title)}</a>` : "<span></span>"}
+        ${previous ? `<a href="${hrefFor(previous)}"><small>上一篇</small>${escapeHtml(labelFor(previous))}</a>` : "<span></span>"}
+        ${next ? `<a class="next" href="${hrefFor(next)}"><small>下一篇</small>${escapeHtml(labelFor(next))}</a>` : "<span></span>"}
       </nav>`;
     document.title = `${doc.title} · ${catalog.site.title}`;
     enhanceArticle(document.querySelector("#article"));
