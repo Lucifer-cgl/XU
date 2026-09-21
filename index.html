@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="墟 · XU 开源课程知识库，让知识在分享、修订与阅读中不断轮回。" />
+    <meta name="theme-color" content="#f7f4ed" />
+    <title>XU 课程知识库</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到正文</a>
+    <div id="app">
+      <header class="site-header">
+        <a class="brand" href="#/" aria-label="返回知识库首页">
+          <span class="brand-mark" aria-hidden="true">墟</span>
+          <span><strong>墟 · XU</strong><small>Lucifer Open Knowledge</small></span>
+        </a>
+        <div class="header-actions">
+          <button id="nav-toggle" class="icon-button mobile-only" type="button" aria-label="打开目录" aria-expanded="false">目录</button>
+          <button id="theme-toggle" class="icon-button" type="button" aria-label="切换明暗主题">主题</button>
+        </div>
+      </header>
+      <div id="site-layout" class="site-layout">
+        <button id="left-panel-toggle" class="panel-edge-toggle panel-edge-toggle-left" type="button" aria-controls="sidebar" aria-expanded="true" title="收起课程目录">
+          <span class="panel-layout-icon panel-layout-icon-left" aria-hidden="true"></span>
+          <span class="sr-only">收起或展开课程目录</span>
+        </button>
+        <button id="right-panel-toggle" class="panel-edge-toggle panel-edge-toggle-right" type="button" aria-controls="toc-panel" aria-expanded="true" title="收起本文目录">
+          <span class="panel-layout-icon panel-layout-icon-right" aria-hidden="true"></span>
+          <span class="sr-only">收起或展开本文目录</span>
+        </button>
+        <aside id="sidebar" class="sidebar" aria-label="课程目录">
+          <div class="sidebar-heading">
+            <span>内容目录</span>
+            <span class="tree-actions">
+              <button type="button" data-tree-action="expand" aria-label="展开全部目录">展开</button>
+              <button type="button" data-tree-action="collapse" aria-label="收起全部目录">收起</button>
+            </span>
+          </div>
+          <nav id="course-nav"></nav>
+        </aside>
+        <div id="left-panel-resizer" class="panel-resizer panel-resizer-left" role="separator" aria-label="调整课程目录宽度" aria-orientation="vertical" aria-controls="sidebar" aria-valuemin="190" aria-valuemax="420" aria-valuenow="260" tabindex="0"></div>
+        <main id="main-content" class="main-content" tabindex="-1">
+          <div class="loading-state">正在读取知识库目录……</div>
+        </main>
+        <div id="right-panel-resizer" class="panel-resizer panel-resizer-right" role="separator" aria-label="调整本文目录宽度" aria-orientation="vertical" aria-controls="toc-panel" aria-valuemin="170" aria-valuemax="360" aria-valuenow="220" tabindex="0"></div>
+        <aside id="toc-panel" class="toc-panel" aria-label="本文目录"></aside>
+      </div>
+    </div>
+    <noscript><div class="noscript">本知识库需要 JavaScript 才能按需读取 Markdown。请启用 JavaScript，或直接下载仓库中的原始文件。</div></noscript>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
