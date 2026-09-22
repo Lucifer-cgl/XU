@@ -2,11 +2,16 @@
 
 > 知识有所归，也由此再出发。
 
-[在线访问](https://xu.lucifer-cgl.workers.dev/) · [提交问题或建议](https://github.com/Lucifer-cgl/XU/issues) · [墟 · AI Assistant](https://github.com/Lucifer-cgl/XU-AI-Assistant)
+[在线访问](https://xu.lucifer-cgl.workers.dev/) · [国内入口](https://lucifer.gicp.fun/) · [提交问题或建议](https://github.com/Lucifer-cgl/XU/issues) · [墟 · AI Assistant](https://github.com/Lucifer-cgl/XU-AI-Assistant)
 
 “墟”取意于“归墟”。这个项目希望让分散的课程笔记有一处稳定归档，也让知识在记录、分享、修订和再次阅读中持续流转。
 
-XU 是一个以 GitHub 为内容仓库、以 Cloudflare Workers Static Assets 为发布平台的纯静态课程知识库。维护者只需在 `content/` 中增加或修改文件，构建程序就会自动生成目录、搜索索引和下载清单；访客可以在线阅读、搜索、复制原文、下载原文件，并通过浏览器打印为 A4/PDF。
+XU 是一个以 GitHub 为内容仓库、以 Cloudflare Workers Static Assets 为主发布平台的纯静态课程知识库。维护者只需在 `content/` 中增加或修改文件，构建程序就会自动生成目录、搜索索引和下载清单；访客可以在线阅读、搜索、复制原文、下载原文件，并通过浏览器打印为 A4/PDF。
+
+当前有两个访问入口：
+
+- Cloudflare 主站：<https://xu.lucifer-cgl.workers.dev/>，随 GitHub 更新自动构建，更新最快；
+- 国内入口：<https://lucifer.gicp.fun/>，通过花生壳/贝锐静态托管提供国内直连访问，适合不方便使用网络代理的访客；由于该平台需要手动上传 `dist/` 产物，内容可能比主站滞后，通常按维护者节奏同步。
 
 ## 它解决什么问题
 
@@ -37,7 +42,7 @@ XU 的策略是：**内容进入 Git，索引在构建时生成，阅读与下�
 
 ## 墟 · AI Assistant
 
-XU 提供可选的浏览器配套工具 [XU-AI-Assistant](https://github.com/Lucifer-cgl/XU-AI-Assistant)。它不是新的 AI 模型，而是帮助访客在阅读 XU 时调用自己已经登录的 ChatGPT、Gemini、DeepSeek 或通义千问账号。
+XU 提供可选的浏览器配套工具 [XU-AI-Assistant](https://github.com/Lucifer-cgl/XU-AI-Assistant)。它不是新的 AI 模型，而是帮助访客在阅读 XU 时调用自己已经登录的 ChatGPT、Gemini、DeepSeek、通义千问或豆包账号。
 
 - 可读取用户选中的文字、当前章节或整篇文章；
 - 发送前展示完整预览，由用户决定是否继续；
@@ -243,9 +248,12 @@ npm run preview
 - 构建命令：`npm run build`
 - 部署命令：`npx wrangler deploy`
 - 静态目录：`dist/`
-- 生产地址：<https://xu.lucifer-cgl.workers.dev/>
+- Cloudflare 主站：<https://xu.lucifer-cgl.workers.dev/>
+- 国内入口：<https://lucifer.gicp.fun/>
 
 GitHub Actions 会在 push 和 pull request 时执行 `npm ci` 与 `npm run build`。Cloudflare 的 Git 集成会在 `main` 推送后自动构建并部署。
+
+国内入口使用花生壳/贝锐静态托管，优点是中国大陆直连更友好、不要求访客配置网络代理；缺点是目前不具备与 GitHub 的自动部署链路，需要维护者本地生成 `dist/` 后手动上传，因此可能存在数小时到数天的内容滞后。AI Assistant 已同时支持两个入口，功能使用方式一致。
 
 ## 参与协作
 

@@ -163,6 +163,9 @@ body.is-resizing { cursor: col-resize; user-select: none; }
 .article p, .article li { text-align: justify; }
 .article a { color: var(--accent); text-underline-offset: 3px; }
 .article blockquote { margin: 1.8em 0; padding: 12px 22px; border-left: 3px solid var(--warm); background: color-mix(in srgb, var(--surface) 70%, transparent); color: var(--muted); }
+.article .answer-space { display: block; min-height: 8rem; margin: 1.2em 0; border: 1px dashed color-mix(in srgb, var(--muted) 42%, transparent); border-radius: 10px; background: color-mix(in srgb, var(--surface) 52%, transparent); }
+.article .answer-space.small { min-height: 4rem; }
+.article .answer-space.large { min-height: 14rem; }
 .article pre { overflow: auto; padding: 18px 20px; border: 1px solid var(--line); border-radius: 12px; background: #17211d; color: #edf3ef; font: 14px/1.65 ui-monospace, SFMono-Regular, Consolas, monospace; }
 .article code { padding: .14em .38em; border-radius: 4px; background: var(--accent-soft); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .88em; }
 .article pre code { padding: 0; background: none; }

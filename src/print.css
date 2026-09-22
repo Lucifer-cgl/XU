@@ -29,6 +29,9 @@
   .article h3 { font-size: 13pt; }
   .article h1, .article h2, .article h3, .article h4 { break-after: avoid; page-break-after: avoid; }
   .article p, .article li { orphans: 3; widows: 3; }
+  .article .answer-space { min-height: 42mm; margin: 5mm 0; border: 0.25mm dashed #c9cfca; border-radius: 2mm; background: transparent; break-inside: avoid; page-break-inside: avoid; }
+  .article .answer-space.small { min-height: 22mm; }
+  .article .answer-space.large { min-height: 70mm; }
   .article img, .article figure, .article svg, .article pre, .article blockquote, .katex-display { break-inside: avoid; page-break-inside: avoid; }
   .table-scroll { overflow: visible; }
   .article table { font-size: 9pt; }
