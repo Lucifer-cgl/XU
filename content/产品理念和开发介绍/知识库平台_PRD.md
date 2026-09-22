@@ -6,12 +6,13 @@
 |---|---|
 | 产品名称 | 墟 · XU 开源知识库 |
 | 产品定位 | 面向课程笔记与开放资料的纯静态知识发布平台 |
-| 文档版本 | 1.0（已实现版本） |
-| 更新日期 | 2026-09-17 |
+| 文档版本 | 1.1（已实现版本） |
+| 更新日期 | 2026-09-22 |
 | 代码仓库 | https://github.com/Lucifer-cgl/XU |
-| 生产地址 | https://xu.lucifer-cgl.workers.dev/ |
+| Cloudflare 主站 | https://xu.lucifer-cgl.workers.dev/ |
+| 国内入口 | https://lucifer.gicp.fun/ |
 | 内容源 | GitHub 仓库中的 `content/` |
-| 发布平台 | Cloudflare Workers Static Assets |
+| 发布平台 | Cloudflare Workers Static Assets；花生壳/贝锐静态托管作为国内入口 |
 | 主要格式 | Markdown、完整 HTML、图片和静态附件 |
 | 正式导出 | 浏览器原生 A4/PDF |
 | 系统边界 | 无后端、无数据库、无账号、无服务端 ZIP/PDF |
@@ -497,6 +498,19 @@ GitHub Actions 在以下事件运行：
 | 静态目录 | `dist/` |
 | 自定义 workers.dev 子域 | `lucifer-cgl` |
 
+### 19.4 国内入口
+
+国内入口为 <https://lucifer.gicp.fun/>，使用花生壳/贝锐静态托管承载本地构建后的 `dist/` 静态产物。
+
+该入口的定位是降低中国大陆访客的网络门槛：在不要求访客配置网络代理、不新增服务器、不备案自有域名的前提下，提供一个更容易直连访问的站点。
+
+与 Cloudflare 主站相比，它的边界如下：
+
+- 优点：国内访问更友好，阅读、搜索、打印、下载和 AI Assistant 均可继续使用；
+- 缺点：目前不能直接连接 GitHub 自动部署，需要维护者本地构建后手动上传 `dist/`；
+- 更新节奏：Cloudflare 主站随 GitHub 推送自动更新，国内入口按维护者手动同步节奏更新，可能存在数小时到数天滞后；
+- 数据边界：两者都只是静态站点，不新增后端、数据库、账号、API Key 或服务端计算任务。
+
 ## 20 协作规范
 
 ### 20.1 内容贡献
@@ -645,7 +659,6 @@ AI 整理课程内容时仍需人工核对：
 - 本地阅读进度；
 - 本地收藏；
 - 多套阅读主题；
-- 国内备用静态镜像。
 
 继续暂缓：
 
