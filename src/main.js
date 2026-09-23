@@ -274,6 +274,16 @@ function buildHtmlPreviewDocument(source) {
   const parsed = new DOMParser().parseFromString(documentSource, "text/html");
   const style = parsed.createElement("style");
   style.textContent = `
+    html, body {
+      height: auto !important;
+      min-height: 0 !important;
+      overflow-y: visible !important;
+    }
+    :where(.container, .data-container, .methods-container, main, section, article) {
+      max-height: none !important;
+      height: auto !important;
+      overflow-y: visible !important;
+    }
     * { scrollbar-width: thin; scrollbar-color: transparent transparent; }
     *::-webkit-scrollbar { width: 6px; height: 6px; }
     *::-webkit-scrollbar-track { background: transparent; }
