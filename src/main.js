@@ -680,7 +680,10 @@ async function renderArticle(id) {
       </nav>`;
     document.title = `${doc.title} · ${catalog.site.title}`;
     const htmlFrame = document.querySelector("#html-preview-frame");
-    if (htmlFrame) htmlFrame.srcdoc = safeHtmlPreview;
+    if (htmlFrame) {
+      resizeHtmlPreviewFrame(htmlFrame);
+      htmlFrame.srcdoc = safeHtmlPreview;
+    }
     enhanceArticle(document.querySelector("#article"));
     document.querySelector('[data-action="copy"]').addEventListener("click", copySource);
     document.querySelector('[data-action="print"]').addEventListener("click", openPrintPreview);
@@ -695,6 +698,32 @@ async function renderArticle(id) {
 function openHtmlInNewTab() {
   if (!currentDocument?.path) return;
   window.open(currentDocument.path, "_blank", "noopener,noreferrer");
+}
+
+function resizeHtmlPreviewFrame(frame) {
+  if (!frame) return;
+  const resize = () => {
+    const doc = frame.contentDocument;
+    if (!doc) return;
+    const height = Math.max(
+      doc.documentElement?.scrollHeight || 0,
+      doc.body?.scrollHeight || 0,
+      doc.documentElement?.offsetHeight || 0,
+      doc.body?.offsetHeight || 0,
+      560
+    );
+    frame.style.height = `${height}px`;
+    frame.closest(".html-preview-shell")?.style.setProperty("--html-preview-height", `${height}px`);
+  };
+  frame.addEventListener("load", () => {
+    resize();
+    window.setTimeout(resize, 120);
+    window.setTimeout(resize, 600);
+    window.setTimeout(resize, 1500);
+    const observer = new ResizeObserver(resize);
+    observer.observe(frame.contentDocument.documentElement);
+    if (frame.contentDocument.body) observer.observe(frame.contentDocument.body);
+  }, { once: true });
 }
 
 async function copySource(event) {
