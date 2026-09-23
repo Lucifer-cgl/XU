@@ -266,9 +266,18 @@ async function handleSearch(event) {
     : "<p>没有找到相关内容。</p>";
 }
 
-function extractHtmlBody(source) {
-  const parsed = new DOMParser().parseFromString(source, "text/html");
-  return parsed.body?.innerHTML || source;
+function buildHtmlPreviewDocument(source) {
+  const hasDocumentShell = /<!doctype|<html[\s>]/i.test(source);
+  const documentSource = hasDocumentShell
+    ? source
+    : `<!doctype html><html><head><meta charset="utf-8"></head><body>${source}</body></html>`;
+  return DOMPurify.sanitize(documentSource, {
+    WHOLE_DOCUMENT: true,
+    ADD_TAGS: ["style"],
+    ADD_ATTR: ["style"],
+    FORBID_TAGS: ["script", "iframe", "object", "embed", "form", "foreignObject"],
+    FORBID_ATTR: ["onerror", "onclick", "onload"]
+  });
 }
 
 function loadBookmarks() {
@@ -579,6 +588,11 @@ function renderBookmarkList() {
 }
 
 function enhanceArticle(article) {
+  if (article.classList.contains("html-source")) {
+    currentTocHtml = `<p class="bookmark-empty">HTML 文档已在中间预览区打开。</p>`;
+    renderRightPanel();
+    return;
+  }
   const headings = [...article.querySelectorAll("h2, h3, h4")];
   const used = new Set();
   headings.forEach((heading, index) => {
@@ -630,12 +644,13 @@ async function renderArticle(id) {
     if (!response.ok) throw new Error(`文件读取失败（${response.status}）`);
     currentSource = await response.text();
     const markdownBody = currentSource.replace(/^---\n[\s\S]*?\n---\n/, "");
-    const unsafe = doc.type === "markdown" ? marked.parse(markdownBody) : extractHtmlBody(currentSource);
-    const safe = DOMPurify.sanitize(unsafe, {
+    const unsafe = doc.type === "markdown" ? marked.parse(markdownBody) : "";
+    const safe = doc.type === "markdown" ? DOMPurify.sanitize(unsafe, {
       USE_PROFILES: { html: true, mathMl: true, svg: true },
       FORBID_TAGS: ["script", "iframe", "object", "embed", "form", "foreignObject"],
       FORBID_ATTR: ["onerror", "onclick", "onload"]
-    });
+    }) : "";
+    const safeHtmlPreview = doc.type === "html" ? buildHtmlPreviewDocument(currentSource) : "";
     const position = catalog.documents.findIndex((item) => item.id === id);
     const previous = catalog.documents[position - 1];
     const next = catalog.documents[position + 1];
@@ -645,12 +660,14 @@ async function renderArticle(id) {
         <div class="breadcrumbs"><a href="#/">首页</a><span>/</span><span>${escapeHtml(doc.coursePath)}</span><span>/</span><strong>${escapeHtml(labelFor(doc))}</strong></div>
         ${articleTools(doc)}
       </div>
-      <article id="article" class="article ${doc.type === "html" ? "html-source" : "markdown-source"}">${safe}</article>
+      <article id="article" class="article ${doc.type === "html" ? "html-source" : "markdown-source"}">${doc.type === "html" ? `<div class="html-preview-shell"><iframe id="html-preview-frame" class="html-preview-frame" title="${escapeHtml(labelFor(doc))}" sandbox=""></iframe></div>` : safe}</article>
       <nav class="article-pagination no-print" aria-label="文章翻页">
         ${previous ? `<a href="${hrefFor(previous)}"><small>上一篇</small>${escapeHtml(labelFor(previous))}</a>` : "<span></span>"}
         ${next ? `<a class="next" href="${hrefFor(next)}"><small>下一篇</small>${escapeHtml(labelFor(next))}</a>` : "<span></span>"}
       </nav>`;
     document.title = `${doc.title} · ${catalog.site.title}`;
+    const htmlFrame = document.querySelector("#html-preview-frame");
+    if (htmlFrame) htmlFrame.srcdoc = safeHtmlPreview;
     enhanceArticle(document.querySelector("#article"));
     document.querySelector('[data-action="copy"]').addEventListener("click", copySource);
     document.querySelector('[data-action="print"]').addEventListener("click", openPrintPreview);

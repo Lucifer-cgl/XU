@@ -166,6 +166,9 @@ body.is-resizing { cursor: col-resize; user-select: none; }
 .article-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .article-tools .primary { border-color: var(--accent); background: var(--accent); color: #fff; }
 .article { font: 17px/1.9 var(--serif); overflow-wrap: anywhere; }
+.article.html-source { max-width: min(1100px, calc(100vw - 64px)); }
+.html-preview-shell { width: 100%; min-height: min(760px, calc(100vh - 220px)); border: 1px solid var(--line); border-radius: 16px; background: #fff; box-shadow: var(--shadow); overflow: hidden; }
+.html-preview-frame { display: block; width: 100%; height: min(760px, calc(100vh - 220px)); min-height: 520px; border: 0; background: #fff; }
 .article > :first-child { margin-top: 0; }
 .article h1 { margin: 0 0 1.2em; font-size: clamp(34px, 5vw, 52px); line-height: 1.22; letter-spacing: -.025em; }
 .article h2 { margin: 2.4em 0 .8em; padding-bottom: .35em; border-bottom: 1px solid var(--line); font-size: 28px; line-height: 1.35; }
