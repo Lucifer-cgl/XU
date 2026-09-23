@@ -26,6 +26,9 @@ let tocMode = "toc";
 const bookmarkStorageKey = "xu-bookmarks";
 const bookmarkFileSignature = "XU_BOOKMARKS_ONLY_DO_NOT_EDIT";
 const bookmarkFileType = "xu-bookmarks";
+const openTabsStorageKey = "xu-open-doc-tabs";
+const tabScrollStorageKey = "xu-doc-tab-scroll";
+let scrollSaveTimer;
 
 const layoutLimits = {
   left: { min: 190, max: 420, default: 260 },
@@ -285,6 +288,92 @@ function bookmarksFor(docId = currentDocument?.id) {
   return loadBookmarks()[docId] || [];
 }
 
+function loadOpenTabs() {
+  try {
+    const value = JSON.parse(localStorage.getItem(openTabsStorageKey) || "[]");
+    return Array.isArray(value) ? value.filter((item) => item?.id && item?.title).slice(0, 12) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveOpenTabs(tabs) {
+  localStorage.setItem(openTabsStorageKey, JSON.stringify(tabs.slice(0, 12)));
+}
+
+function loadTabScrolls() {
+  try {
+    const value = JSON.parse(localStorage.getItem(tabScrollStorageKey) || "{}");
+    return value && typeof value === "object" ? value : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveTabScrolls(value) {
+  localStorage.setItem(tabScrollStorageKey, JSON.stringify(value));
+}
+
+function saveCurrentTabScroll() {
+  if (!currentDocument) return;
+  const scrolls = loadTabScrolls();
+  scrolls[currentDocument.id] = Math.round(window.scrollY);
+  saveTabScrolls(scrolls);
+}
+
+function addOpenTab(doc) {
+  const next = loadOpenTabs().filter((tab) => tab.id !== doc.id);
+  next.unshift({ id: doc.id, title: labelFor(doc), type: doc.type });
+  saveOpenTabs(next);
+}
+
+function closeDocumentTab(docId) {
+  const tabs = loadOpenTabs();
+  const index = tabs.findIndex((tab) => tab.id === docId);
+  const nextTabs = tabs.filter((tab) => tab.id !== docId);
+  saveOpenTabs(nextTabs);
+  const scrolls = loadTabScrolls();
+  delete scrolls[docId];
+  saveTabScrolls(scrolls);
+  if (currentDocument?.id !== docId) {
+    refreshDocumentTabs();
+    return;
+  }
+  const next = nextTabs[Math.max(0, index - 1)] || nextTabs[0];
+  currentDocument = null;
+  location.hash = next ? routeFor(next.id) : "#/";
+}
+
+function renderDocumentTabs() {
+  const tabs = loadOpenTabs();
+  if (!tabs.length) return "";
+  return `<div class="doc-tabs no-print" aria-label="已打开文档">${tabs.map((tab) => `<div class="doc-tab ${tab.id === currentDocument?.id ? "active" : ""}">
+    <a href="${routeFor(tab.id)}" title="${escapeHtml(tab.title)}">${escapeHtml(tab.title)}</a>
+    <button type="button" data-close-doc-tab="${escapeHtml(tab.id)}" aria-label="关闭 ${escapeHtml(tab.title)}">×</button>
+  </div>`).join("")}</div>`;
+}
+
+function refreshDocumentTabs() {
+  const node = document.querySelector(".doc-tabs");
+  if (!node) return;
+  const html = renderDocumentTabs();
+  if (html) node.outerHTML = html;
+  else node.remove();
+}
+
+function scrollToWithHeaderOffset(target, behavior = "smooth") {
+  if (!target) return;
+  const headerHeight = document.querySelector(".site-header")?.offsetHeight || 76;
+  const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 18;
+  window.scrollTo({ top: Math.max(0, top), behavior });
+}
+
+function restoreTabScroll(docId) {
+  const scrollY = loadTabScrolls()[docId];
+  if (Number.isFinite(scrollY)) window.scrollTo({ top: Math.max(0, scrollY), behavior: "auto" });
+  else window.scrollTo({ top: 0, behavior: "auto" });
+}
+
 function sanitizePlainText(value = "", maxLength = 80) {
   return String(value).replace(/[<>{}()[\];`"'\\]/g, "").replace(/\s+/g, " ").trim().slice(0, maxLength);
 }
@@ -452,7 +541,7 @@ function jumpToBookmark(bookmark) {
     article.children[bookmark.lineIndex] ||
     (bookmark.headingId && document.getElementById(bookmark.headingId));
   if (target) {
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    scrollToWithHeaderOffset(target);
     return;
   }
   window.scrollTo({ top: bookmark.scrollY || 0, behavior: "smooth" });
@@ -530,6 +619,7 @@ async function renderArticle(id) {
   const doc = catalog.documents.find((item) => item.id === id);
   if (!doc) return renderError("没有找到这篇文档。", true);
   currentDocument = doc;
+  addOpenTab(doc);
   renderNavigation(id);
   main.innerHTML = '<div class="loading-state">正在读取文章……</div>';
   tocPanel.innerHTML = "";
@@ -551,6 +641,7 @@ async function renderArticle(id) {
     main.innerHTML = `
       <div class="article-head no-print">
         <div class="breadcrumbs"><a href="#/">首页</a><span>/</span><span>${escapeHtml(doc.coursePath)}</span><span>/</span><strong>${escapeHtml(labelFor(doc))}</strong></div>
+        ${renderDocumentTabs()}
         ${articleTools(doc)}
       </div>
       <article id="article" class="article ${doc.type === "html" ? "html-source" : "markdown-source"}">${safe}</article>
@@ -563,6 +654,7 @@ async function renderArticle(id) {
     document.querySelector('[data-action="copy"]').addEventListener("click", copySource);
     document.querySelector('[data-action="print"]').addEventListener("click", openPrintPreview);
     main.focus();
+    requestAnimationFrame(() => restoreTabScroll(doc.id));
   } catch (error) {
     renderError(error.message);
   }
@@ -597,6 +689,7 @@ function renderError(message, showHome = false) {
 }
 
 function route() {
+  saveCurrentTabScroll();
   const match = location.hash.match(/^#\/read\/(.+)$/);
   if (match) renderArticle(decodeURIComponent(match[1]));
   else renderHome();
@@ -651,7 +744,14 @@ tocPanel.addEventListener("click", (event) => {
   if (!link) return;
   event.preventDefault();
   const target = document.getElementById(decodeURIComponent(link.dataset.section));
-  target?.scrollIntoView({ behavior: "smooth", block: "start" });
+  scrollToWithHeaderOffset(target);
+});
+main.addEventListener("click", (event) => {
+  const closeButton = event.target.closest("[data-close-doc-tab]");
+  if (!closeButton) return;
+  event.preventDefault();
+  event.stopPropagation();
+  closeDocumentTab(closeButton.dataset.closeDocTab);
 });
 nav.addEventListener("click", async (event) => {
   const button = event.target.closest("[data-download-group]");
@@ -678,6 +778,11 @@ sidebar.addEventListener("click", (event) => {
   nav.querySelectorAll("details.course-group").forEach((details) => { details.open = expand; });
 });
 window.addEventListener("hashchange", route);
+window.addEventListener("scroll", () => {
+  if (!currentDocument) return;
+  window.clearTimeout(scrollSaveTimer);
+  scrollSaveTimer = window.setTimeout(saveCurrentTabScroll, 180);
+}, { passive: true });
 
 try {
   catalog = await loadJson("/generated/catalog.json");
