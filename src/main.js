@@ -347,14 +347,14 @@ function closeDocumentTab(docId) {
 function renderDocumentTabs() {
   const tabs = loadOpenTabs();
   if (!tabs.length) return "";
-  return `<div class="doc-tabs no-print" aria-label="已打开文档">${tabs.map((tab) => `<div class="doc-tab ${tab.id === currentDocument?.id ? "active" : ""}">
-    <a href="${routeFor(tab.id)}" title="${escapeHtml(tab.title)}">${escapeHtml(tab.title)}</a>
-    <button type="button" data-close-doc-tab="${escapeHtml(tab.id)}" aria-label="关闭 ${escapeHtml(tab.title)}">×</button>
-  </div>`).join("")}</div>`;
+  return `<div class="doc-tab-dock no-print"><div class="doc-tabs" aria-label="已打开文档">${tabs.map((tab) => `<div class="doc-tab ${tab.id === currentDocument?.id ? "active" : ""}">
+      <a href="${routeFor(tab.id)}" title="${escapeHtml(tab.title)}">${escapeHtml(tab.title)}</a>
+      <button type="button" data-close-doc-tab="${escapeHtml(tab.id)}" aria-label="关闭 ${escapeHtml(tab.title)}">×</button>
+    </div>`).join("")}</div></div>`;
 }
 
 function refreshDocumentTabs() {
-  const node = document.querySelector(".doc-tabs");
+  const node = document.querySelector(".doc-tab-dock");
   if (!node) return;
   const html = renderDocumentTabs();
   if (html) node.outerHTML = html;
@@ -364,7 +364,8 @@ function refreshDocumentTabs() {
 function scrollToWithHeaderOffset(target, behavior = "smooth") {
   if (!target) return;
   const headerHeight = document.querySelector(".site-header")?.offsetHeight || 76;
-  const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 18;
+  const dockHeight = document.querySelector(".doc-tab-dock")?.offsetHeight || 0;
+  const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - dockHeight - 18;
   window.scrollTo({ top: Math.max(0, top), behavior });
 }
 
@@ -639,9 +640,9 @@ async function renderArticle(id) {
     const previous = catalog.documents[position - 1];
     const next = catalog.documents[position + 1];
     main.innerHTML = `
+      ${renderDocumentTabs()}
       <div class="article-head no-print">
         <div class="breadcrumbs"><a href="#/">首页</a><span>/</span><span>${escapeHtml(doc.coursePath)}</span><span>/</span><strong>${escapeHtml(labelFor(doc))}</strong></div>
-        ${renderDocumentTabs()}
         ${articleTools(doc)}
       </div>
       <article id="article" class="article ${doc.type === "html" ? "html-source" : "markdown-source"}">${safe}</article>
