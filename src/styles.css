@@ -78,7 +78,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .panel-resizer::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--line); transform: translateX(-50%); transition: width .15s ease, background .15s ease; }
 .panel-resizer:hover::after, .panel-resizer:focus-visible::after { width: 3px; background: var(--accent); }
 body.is-resizing { cursor: col-resize; user-select: none; }
-.panel-edge-toggle { position: fixed; z-index: 12; top: 92px; display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 1px solid transparent; border-radius: 9px; background: color-mix(in srgb, var(--paper) 88%, transparent); color: var(--ink); cursor: pointer; backdrop-filter: blur(8px); transition: left .2s ease, right .2s ease, color .15s ease, background .15s ease, border-color .15s ease; }
+.panel-edge-toggle { position: fixed; z-index: 24; top: 92px; display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); color: var(--ink); cursor: pointer; box-shadow: 0 0 0 10px var(--paper), 0 10px 22px rgba(23, 33, 29, .08); transition: left .2s ease, right .2s ease, color .15s ease, background .15s ease, border-color .15s ease; }
 .panel-edge-toggle:hover, .panel-edge-toggle:focus-visible { border-color: var(--line); background: var(--surface); color: var(--accent); outline: none; }
 .panel-edge-toggle-left { left: calc(var(--left-column) - 45px); }
 .panel-edge-toggle-right { right: calc(var(--right-column) - 45px); }
