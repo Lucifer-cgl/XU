@@ -180,10 +180,23 @@ body.is-resizing { cursor: col-resize; user-select: none; }
 .article thead th { border-bottom: 1px solid var(--ink); font-weight: 700; }
 .article tbody tr:hover { background: var(--accent-soft); }
 .katex-display { padding: .7em 0; }
-.toc-panel a { display: block; overflow: hidden; padding: 5px 0; color: var(--muted); font-size: 12px; line-height: 1.45; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
-.toc-panel a:hover { color: var(--accent); }
+.toc-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 14px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.toc-switch button { min-width: 0; padding: 5px 8px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: 12px; font-weight: 700; cursor: pointer; }
+.toc-switch button.active { background: var(--accent); color: #fff; }
+.toc-panel a, .bookmark-jump { display: block; overflow: hidden; width: 100%; padding: 5px 0; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 12px; line-height: 1.45; text-align: left; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+.toc-panel a:hover, .bookmark-jump:hover { color: var(--accent); }
 .toc-level-3 { padding-left: 12px !important; }
 .toc-level-4 { padding-left: 24px !important; }
+.bookmark-add { width: 100%; margin-bottom: 10px; padding: 7px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--accent); font-size: 12px; font-weight: 700; cursor: pointer; }
+.bookmark-add:hover { border-color: var(--accent); }
+.bookmark-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+.bookmark-actions button { padding: 6px 8px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--muted); font-size: 12px; cursor: pointer; }
+.bookmark-actions button:hover { border-color: var(--accent); color: var(--accent); }
+.bookmark-list { display: grid; gap: 4px; }
+.bookmark-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px; align-items: center; }
+.bookmark-remove { width: 22px; height: 22px; border: 0; border-radius: 50%; background: transparent; color: var(--muted); cursor: pointer; }
+.bookmark-remove:hover { background: var(--accent-soft); color: var(--warm); }
+.bookmark-empty { margin: 8px 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
 .article-pagination { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--line); }
 .article-pagination a { padding: 14px 0; color: var(--ink); text-decoration: none; }
 .article-pagination a.next { text-align: right; }

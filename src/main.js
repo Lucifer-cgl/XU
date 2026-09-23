@@ -21,6 +21,11 @@ let catalog;
 let searchIndex;
 let currentSource = "";
 let currentDocument;
+let currentTocHtml = "";
+let tocMode = "toc";
+const bookmarkStorageKey = "xu-bookmarks";
+const bookmarkFileSignature = "XU_BOOKMARKS_ONLY_DO_NOT_EDIT";
+const bookmarkFileType = "xu-bookmarks";
 
 const layoutLimits = {
   left: { min: 190, max: 420, default: 260 },
@@ -127,6 +132,7 @@ const escapeHtml = (value = "") => value.replace(/[&<>'\"]/g, (char) => ({ "&": 
 const routeFor = (id) => `#/read/${encodeURIComponent(id)}`;
 const hrefFor = (doc) => doc.type === "html" ? doc.path : routeFor(doc.id);
 const labelFor = (doc) => doc.displayTitle || doc.title;
+const safeId = (value = "") => `b-${Array.from(value).map((char) => char.codePointAt(0).toString(36)).join("-")}`;
 
 async function loadJson(url) {
   const response = await fetch(url);
@@ -185,6 +191,8 @@ function renderNavigation(activeId = "") {
 
 function renderHome() {
   currentDocument = null;
+  currentTocHtml = "";
+  tocMode = "toc";
   tocPanel.innerHTML = "";
   renderNavigation();
   document.title = catalog.site.title;
@@ -260,6 +268,226 @@ function extractHtmlBody(source) {
   return parsed.body?.innerHTML || source;
 }
 
+function loadBookmarks() {
+  try {
+    const value = JSON.parse(localStorage.getItem(bookmarkStorageKey) || "{}");
+    return value && typeof value === "object" ? value : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveBookmarks(value) {
+  localStorage.setItem(bookmarkStorageKey, JSON.stringify(value));
+}
+
+function bookmarksFor(docId = currentDocument?.id) {
+  return loadBookmarks()[docId] || [];
+}
+
+function sanitizePlainText(value = "", maxLength = 80) {
+  return String(value).replace(/[<>{}()[\];`"'\\]/g, "").replace(/\s+/g, " ").trim().slice(0, maxLength);
+}
+
+function sanitizeBookmarkId(value = "") {
+  return String(value).replace(/[^a-z0-9_-]/gi, "").slice(0, 64);
+}
+
+function sanitizeDocId(value = "") {
+  const docId = String(value).replace(/\\/g, "/").trim();
+  if (!docId || docId.includes("..") || /[<>{}()[\];`"'\\]/.test(docId)) return "";
+  return docId.slice(0, 500);
+}
+
+function sanitizeBookmark(raw) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+  const id = sanitizeBookmarkId(raw.id);
+  if (!id) return null;
+  return {
+    id,
+    title: sanitizePlainText(raw.title || "当前位置", 60) || "当前位置",
+    headingId: sanitizePlainText(raw.headingId || "", 120),
+    lineId: sanitizePlainText(raw.lineId || "", 160),
+    lineIndex: Math.max(-1, Math.min(100000, Number(raw.lineIndex) || -1)),
+    offset: Math.max(-100000, Math.min(100000, Number(raw.offset) || 0)),
+    scrollY: Math.max(0, Math.min(10000000, Number(raw.scrollY) || 0)),
+    createdAt: Math.max(0, Math.min(Date.now(), Number(raw.createdAt) || Date.now()))
+  };
+}
+
+function sanitizeBookmarkCollection(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("书签数据不是对象");
+  const output = {};
+  for (const [rawDocId, rawItems] of Object.entries(value)) {
+    const docId = sanitizeDocId(rawDocId);
+    if (!docId || !Array.isArray(rawItems)) continue;
+    const items = rawItems.map(sanitizeBookmark).filter(Boolean).slice(0, 50);
+    if (items.length) output[docId] = items;
+  }
+  return output;
+}
+
+function findReadingTarget(article) {
+  const candidates = [...article.querySelectorAll("h1, h2, h3, h4, h5, h6, p, li, blockquote, table, pre, .answer-space")];
+  const anchor = Math.min(window.innerHeight * 0.32, 220);
+  return candidates.find((node) => node.getBoundingClientRect().bottom >= anchor) || candidates[0] || article;
+}
+
+function nearestHeading(node, article) {
+  let current = node;
+  while (current && current !== article) {
+    if (/^H[1-6]$/.test(current.tagName)) return current;
+    current = current.previousElementSibling;
+  }
+  current = node?.previousElementSibling;
+  while (current) {
+    if (/^H[1-6]$/.test(current.tagName)) return current;
+    current = current.previousElementSibling;
+  }
+  return article.querySelector("h1, h2, h3, h4, h5, h6");
+}
+
+function readableBookmarkTitle(target, heading) {
+  const text = target?.textContent?.replace(/\s+/g, " ").trim();
+  if (text) return text.slice(0, 28);
+  return heading?.textContent?.trim() || "当前位置";
+}
+
+function addBookmark() {
+  const article = document.querySelector("#article");
+  if (!article || !currentDocument) return;
+  const target = findReadingTarget(article);
+  const heading = nearestHeading(target, article);
+  const docBookmarks = bookmarksFor();
+  const bookmark = {
+    id: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+    title: readableBookmarkTitle(target, heading),
+    headingId: heading?.id || "",
+    lineId: target.id || "",
+    lineIndex: [...article.children].indexOf(target),
+    offset: Math.round(target.getBoundingClientRect().top),
+    scrollY: Math.round(window.scrollY),
+    createdAt: Date.now()
+  };
+  const all = loadBookmarks();
+  all[currentDocument.id] = [bookmark, ...docBookmarks].slice(0, 30);
+  saveBookmarks(all);
+  tocMode = "bookmarks";
+  renderRightPanel();
+}
+
+function removeBookmark(id) {
+  if (!currentDocument) return;
+  const all = loadBookmarks();
+  all[currentDocument.id] = bookmarksFor().filter((bookmark) => bookmark.id !== id);
+  saveBookmarks(all);
+  renderRightPanel();
+}
+
+async function exportBookmarks() {
+  const data = {
+    type: bookmarkFileType,
+    xuBookmarkSignature: bookmarkFileSignature,
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    bookmarks: loadBookmarks()
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const fileName = `xu-bookmarks-${new Date().toISOString().slice(0, 10)}.json`;
+  if ("showSaveFilePicker" in window) {
+    try {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: fileName,
+        types: [{ description: "XU 书签备份", accept: { "application/json": [".json"] } }]
+      });
+      const writable = await handle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+      return;
+    } catch (error) {
+      if (error?.name === "AbortError") return;
+    }
+  }
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function importBookmarks() {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = ".json,application/json";
+  input.addEventListener("change", async () => {
+    const file = input.files?.[0];
+    if (!file) return;
+    try {
+      const parsed = JSON.parse(await file.text());
+      if (parsed?.type !== bookmarkFileType || parsed?.xuBookmarkSignature !== bookmarkFileSignature) {
+        throw new Error("缺少 XU 书签关键语句，已拒绝导入");
+      }
+      const incoming = sanitizeBookmarkCollection(parsed.bookmarks);
+      const merged = { ...loadBookmarks() };
+      for (const [docId, items] of Object.entries(incoming)) {
+        const existing = merged[docId] || [];
+        const seen = new Set(existing.map((item) => item.id));
+        merged[docId] = [...existing, ...items.filter((item) => item.id && !seen.has(item.id))].slice(0, 50);
+      }
+      saveBookmarks(merged);
+      renderRightPanel();
+    } catch (error) {
+      alert(`书签导入失败：${error.message}`);
+    }
+  }, { once: true });
+  input.click();
+}
+
+function jumpToBookmark(bookmark) {
+  const article = document.querySelector("#article");
+  if (!article) return;
+  const target =
+    (bookmark.lineId && document.getElementById(bookmark.lineId)) ||
+    article.children[bookmark.lineIndex] ||
+    (bookmark.headingId && document.getElementById(bookmark.headingId));
+  if (target) {
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+  window.scrollTo({ top: bookmark.scrollY || 0, behavior: "smooth" });
+}
+
+function renderRightPanel() {
+  if (!currentDocument) {
+    currentTocHtml = "";
+    tocPanel.innerHTML = "";
+    return;
+  }
+  const activeToc = tocMode === "toc" ? "active" : "";
+  const activeBookmarks = tocMode === "bookmarks" ? "active" : "";
+  const body = tocMode === "bookmarks" ? renderBookmarkList() : currentTocHtml;
+  tocPanel.innerHTML = `<div class="toc-switch" role="tablist" aria-label="右侧栏切换">
+    <button type="button" class="${activeToc}" data-toc-mode="toc">目录</button>
+    <button type="button" class="${activeBookmarks}" data-toc-mode="bookmarks">书签</button>
+  </div>${body}`;
+}
+
+function renderBookmarkList() {
+  const items = bookmarksFor();
+  return `<div class="bookmark-panel">
+    <button type="button" class="bookmark-add" data-bookmark-action="add">+ 添加当前位置</button>
+    <div class="bookmark-actions">
+      <button type="button" data-bookmark-action="export">导出</button>
+      <button type="button" data-bookmark-action="import">导入</button>
+    </div>
+    ${items.length ? `<div class="bookmark-list">${items.map((bookmark) => `<div class="bookmark-item">
+      <button type="button" class="bookmark-jump" data-bookmark-id="${escapeHtml(bookmark.id)}" title="${escapeHtml(bookmark.title)}">${escapeHtml(bookmark.title)}</button>
+      <button type="button" class="bookmark-remove" data-bookmark-remove="${escapeHtml(bookmark.id)}" aria-label="删除书签">×</button>
+    </div>`).join("")}</div>` : `<p class="bookmark-empty">还没有本地书签。</p>`}
+  </div>`;
+}
+
 function enhanceArticle(article) {
   const headings = [...article.querySelectorAll("h2, h3, h4")];
   const used = new Set();
@@ -283,7 +511,11 @@ function enhanceArticle(article) {
     link.rel = "noopener noreferrer";
   }
   for (const image of article.querySelectorAll("img")) image.loading = "lazy";
-  tocPanel.innerHTML = headings.length ? `<div class="toc-title">本文目录</div>${headings.map((heading) => `<a class="toc-level-${heading.tagName.slice(1)}" href="${routeFor(currentDocument.id)}" data-section="${encodeURIComponent(heading.id)}" title="${escapeHtml(heading.textContent)}">${escapeHtml(heading.textContent)}</a>`).join("")}` : "";
+  article.querySelectorAll("p, li, blockquote, table, pre, .answer-space").forEach((node, index) => {
+    if (!node.id) node.id = `${safeId(currentDocument.id)}-line-${index + 1}`;
+  });
+  currentTocHtml = headings.length ? `<div class="toc-title">本文目录</div>${headings.map((heading) => `<a class="toc-level-${heading.tagName.slice(1)}" href="${routeFor(currentDocument.id)}" data-section="${encodeURIComponent(heading.id)}" title="${escapeHtml(heading.textContent)}">${escapeHtml(heading.textContent)}</a>`).join("")}` : `<p class="bookmark-empty">本文暂无目录。</p>`;
+  renderRightPanel();
 }
 
 function articleTools(doc) {
@@ -383,6 +615,38 @@ themeToggle.addEventListener("click", () => {
 });
 document.documentElement.dataset.theme = localStorage.getItem("xu-theme") || "light";
 tocPanel.addEventListener("click", (event) => {
+  const modeButton = event.target.closest("[data-toc-mode]");
+  if (modeButton) {
+    tocMode = modeButton.dataset.tocMode;
+    renderRightPanel();
+    return;
+  }
+  const addButton = event.target.closest('[data-bookmark-action="add"]');
+  if (addButton) {
+    addBookmark();
+    return;
+  }
+  const exportButton = event.target.closest('[data-bookmark-action="export"]');
+  if (exportButton) {
+    exportBookmarks();
+    return;
+  }
+  const importButton = event.target.closest('[data-bookmark-action="import"]');
+  if (importButton) {
+    importBookmarks();
+    return;
+  }
+  const removeButton = event.target.closest("[data-bookmark-remove]");
+  if (removeButton) {
+    removeBookmark(removeButton.dataset.bookmarkRemove);
+    return;
+  }
+  const bookmarkButton = event.target.closest("[data-bookmark-id]");
+  if (bookmarkButton) {
+    const bookmark = bookmarksFor().find((item) => item.id === bookmarkButton.dataset.bookmarkId);
+    if (bookmark) jumpToBookmark(bookmark);
+    return;
+  }
   const link = event.target.closest("a[data-section]");
   if (!link) return;
   event.preventDefault();
