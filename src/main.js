@@ -683,7 +683,7 @@ async function renderArticle(id) {
         <div class="breadcrumbs"><a href="#/">首页</a><span>/</span><span>${escapeHtml(doc.coursePath)}</span><span>/</span><strong>${escapeHtml(labelFor(doc))}</strong></div>
         ${articleTools(doc)}
       </div>
-      <article id="article" class="article ${doc.type === "html" ? "html-source" : "markdown-source"}">${doc.type === "html" ? `<div class="html-preview-shell"><button type="button" class="html-preview-fullscreen no-print" data-action="html-open-tab">新标签页</button><iframe id="html-preview-frame" class="html-preview-frame" title="${escapeHtml(labelFor(doc))}" sandbox=""></iframe></div>` : safe}</article>
+      <article id="article" class="article ${doc.type === "html" ? "html-source" : "markdown-source"}">${doc.type === "html" ? `<div class="html-preview-shell"><button type="button" class="html-preview-fullscreen no-print" data-action="html-open-tab">新标签页</button><iframe id="html-preview-frame" class="html-preview-frame" title="${escapeHtml(labelFor(doc))}" sandbox="allow-same-origin"></iframe></div>` : safe}</article>
       <nav class="article-pagination no-print" aria-label="文章翻页">
         ${previous ? `<a href="${hrefFor(previous)}"><small>上一篇</small>${escapeHtml(labelFor(previous))}</a>` : "<span></span>"}
         ${next ? `<a class="next" href="${hrefFor(next)}"><small>下一篇</small>${escapeHtml(labelFor(next))}</a>` : "<span></span>"}
@@ -713,13 +713,25 @@ function openHtmlInNewTab() {
 function resizeHtmlPreviewFrame(frame) {
   if (!frame) return;
   const resize = () => {
-    const doc = frame.contentDocument;
+    let doc;
+    try {
+      doc = frame.contentDocument;
+    } catch {
+      return;
+    }
     if (!doc) return;
+    const bottom = Math.ceil(Math.max(0, ...[...doc.body.querySelectorAll("*")].map((node) => {
+      const rect = node.getBoundingClientRect();
+      const style = doc.defaultView.getComputedStyle(node);
+      const marginBottom = Number.parseFloat(style.marginBottom) || 0;
+      return rect.bottom + marginBottom;
+    })));
     const height = Math.max(
       doc.documentElement?.scrollHeight || 0,
       doc.body?.scrollHeight || 0,
       doc.documentElement?.offsetHeight || 0,
       doc.body?.offsetHeight || 0,
+      bottom,
       560
     );
     frame.style.height = `${height}px`;
