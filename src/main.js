@@ -23,6 +23,16 @@ let currentSource = "";
 let currentDocument;
 let currentTocHtml = "";
 let tocMode = "toc";
+const localResources = {
+  files: new Map(),
+  urls: new Map(),
+  tabs: [],
+  handle: null,
+  label: ""
+};
+const localFolderDbName = "xu-local-resources";
+const localFolderStoreName = "handles";
+const localFolderHandleKey = "folder";
 const bookmarkStorageKey = "xu-bookmarks";
 const bookmarkFileSignature = "XU_BOOKMARKS_ONLY_DO_NOT_EDIT";
 const bookmarkFileType = "xu-bookmarks";
@@ -133,14 +143,58 @@ marked.use(
 );
 const escapeHtml = (value = "") => value.replace(/[&<>'\"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]);
 const routeFor = (id) => `#/read/${encodeURIComponent(id)}`;
+const localRouteFor = (id) => `#/local/${encodeURIComponent(id)}`;
 const hrefFor = (doc) => routeFor(doc.id);
 const labelFor = (doc) => doc.displayTitle || doc.title;
 const safeId = (value = "") => `b-${Array.from(value).map((char) => char.codePointAt(0).toString(36)).join("-")}`;
+const localFileExtensions = new Set(["md", "markdown", "html", "htm", "pdf", "txt", "png", "jpg", "jpeg", "webp", "svg", "gif", "doc", "docx", "ppt", "pptx", "xls", "xlsx"]);
 
 async function loadJson(url) {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`读取失败（${response.status}）`);
   return response.json();
+}
+
+function openLocalFolderDb() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(localFolderDbName, 1);
+    request.onupgradeneeded = () => request.result.createObjectStore(localFolderStoreName);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function getStoredLocalFolderHandle() {
+  if (!("indexedDB" in window)) return null;
+  const db = await openLocalFolderDb();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(localFolderStoreName, "readonly");
+    const request = tx.objectStore(localFolderStoreName).get(localFolderHandleKey);
+    request.onsuccess = () => resolve(request.result || null);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function setStoredLocalFolderHandle(handle) {
+  if (!("indexedDB" in window)) return;
+  const db = await openLocalFolderDb();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(localFolderStoreName, "readwrite");
+    tx.objectStore(localFolderStoreName).put(handle, localFolderHandleKey);
+    tx.oncomplete = resolve;
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function clearStoredLocalFolderHandle() {
+  if (!("indexedDB" in window)) return;
+  const db = await openLocalFolderDb();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(localFolderStoreName, "readwrite");
+    tx.objectStore(localFolderStoreName).delete(localFolderHandleKey);
+    tx.oncomplete = resolve;
+    tx.onerror = () => reject(tx.error);
+  });
 }
 
 function buildCourseTree(courses) {
@@ -167,6 +221,36 @@ function branchDocumentCount(node) {
   return (node.course?.documents.length || 0) + node.children.reduce((total, child) => total + branchDocumentCount(child), 0);
 }
 
+function getFileExtension(name = "") {
+  return name.includes(".") ? name.split(".").pop().toLowerCase() : "";
+}
+
+function localFileType(file) {
+  const ext = getFileExtension(file?.name || "");
+  if (ext === "md" || ext === "markdown") return "markdown";
+  if (ext === "html" || ext === "htm") return "html";
+  if (ext === "pdf") return "pdf";
+  if (ext === "txt") return "text";
+  if (["png", "jpg", "jpeg", "webp", "svg", "gif"].includes(ext)) return "image";
+  if (["doc", "docx"].includes(ext)) return "word";
+  if (["ppt", "pptx"].includes(ext)) return "powerpoint";
+  if (["xls", "xlsx"].includes(ext)) return "spreadsheet";
+  return "file";
+}
+
+function localFormatLabel(type) {
+  return ({
+    markdown: "MD",
+    html: "HTML",
+    pdf: "PDF",
+    text: "TXT",
+    image: "IMG",
+    word: "WORD",
+    powerpoint: "PPT",
+    spreadsheet: "XLS"
+  })[type] || "FILE";
+}
+
 function branchContains(node, activeId) {
   return Boolean(activeId) && (node.course?.documents.some((doc) => doc.id === activeId) || node.children.some((child) => branchContains(child, activeId)));
 }
@@ -188,8 +272,159 @@ function renderCourseNodes(nodes, activeId, depth = 0) {
   }).join("")}</ul>`;
 }
 
+function buildLocalTree() {
+  const root = { name: "我的资源", path: "", children: new Map(), files: [] };
+  for (const item of localResources.files.values()) {
+    const parts = item.relativePath.split("/").filter(Boolean);
+    const fileName = parts.pop() || item.name;
+    let node = root;
+    parts.forEach((part) => {
+      if (!node.children.has(part)) node.children.set(part, { name: part, path: [node.path, part].filter(Boolean).join("/"), children: new Map(), files: [] });
+      node = node.children.get(part);
+    });
+    node.files.push({ ...item, name: fileName });
+  }
+  return root;
+}
+
+function localTreeCount(node) {
+  return node.files.length + [...node.children.values()].reduce((total, child) => total + localTreeCount(child), 0);
+}
+
+function localBranchContains(node, activeId) {
+  return Boolean(activeId) && (node.files.some((file) => file.id === activeId) || [...node.children.values()].some((child) => localBranchContains(child, activeId)));
+}
+
+function renderLocalNodes(nodes, activeId, depth = 0) {
+  return `<ul class="course-tree course-tree-level-${depth}">${nodes.map((node) => {
+    const activeBranch = localBranchContains(node, activeId);
+    return `<li class="course-node">
+      <details class="course-group local-resource-group ${activeBranch ? "active-branch" : ""}" ${depth === 0 || activeBranch ? "open" : ""}>
+        <summary><span class="course-title"><strong>${escapeHtml(node.name)}</strong></span><span class="course-count">${localTreeCount(node)}</span></summary>
+        ${node.files.length ? `<div class="course-links">${node.files.sort((a, b) => a.name.localeCompare(b.name, "zh-CN")).map((file) => `<a href="${localRouteFor(file.id)}" class="${file.id === activeId ? "active" : ""}" title="${escapeHtml(file.relativePath)}"><span class="format-badge">${escapeHtml(localFormatLabel(file.type))}</span><span class="course-link-title">${escapeHtml(file.name)}</span></a>`).join("")}</div>` : ""}
+        ${node.children.size ? renderLocalNodes([...node.children.values()].sort((a, b) => a.name.localeCompare(b.name, "zh-CN")), activeId, depth + 1) : ""}
+      </details>
+    </li>`;
+  }).join("")}</ul>`;
+}
+
+function renderLocalResources(activeId = "") {
+  const tree = buildLocalTree();
+  const hasFiles = localResources.files.size > 0;
+  return `<section class="local-resources">
+    <div class="sidebar-heading local-resource-heading">
+      <span>我的资源</span>
+      <span class="local-resource-actions">
+        ${hasFiles ? '<button type="button" data-local-action="remove-folder">移除</button>' : ""}
+        <button type="button" data-local-action="pick-folder">${hasFiles ? "重选" : "选择文件夹"}</button>
+      </span>
+    </div>
+    <p class="local-resource-note">${hasFiles ? `${escapeHtml(localResources.label || "本地文件夹")} · ${localResources.files.size} 个文件，只在本机读取。` : "选择本地文件夹后，会在这里生成私人目录。"}</p>
+    ${hasFiles ? renderLocalNodes([...tree.children.values()].sort((a, b) => a.name.localeCompare(b.name, "zh-CN")), activeId) + (tree.files.length ? renderLocalNodes([{ ...tree, name: "根目录", children: new Map() }], activeId) : "") : ""}
+  </section>`;
+}
+
+function chooseLocalFolder() {
+  if ("showDirectoryPicker" in window) {
+    window.showDirectoryPicker({ mode: "read" })
+      .then((handle) => loadLocalFolderHandle(handle, { persist: true }))
+      .catch((error) => {
+        if (error?.name !== "AbortError") alert(`本地文件夹读取失败：${error.message}`);
+      });
+    return;
+  }
+  const input = document.createElement("input");
+  input.type = "file";
+  input.multiple = true;
+  input.webkitdirectory = true;
+  input.addEventListener("change", () => {
+    const files = [...(input.files || [])].filter((file) => localFileExtensions.has(getFileExtension(file.name)));
+    registerLocalFiles(files.map((file) => ({ file, relativePath: file.webkitRelativePath || file.name })), "本地文件夹");
+  }, { once: true });
+  input.click();
+}
+
+function localObjectUrl(id) {
+  const item = localResources.files.get(id);
+  if (!item) return "";
+  if (!localResources.urls.has(id)) localResources.urls.set(id, URL.createObjectURL(item.file));
+  return localResources.urls.get(id);
+}
+
+function clearLocalResources({ keepHandle = false } = {}) {
+  localResources.files.clear();
+  for (const url of localResources.urls.values()) URL.revokeObjectURL(url);
+  localResources.urls.clear();
+  localResources.tabs = [];
+  if (!keepHandle) {
+    localResources.handle = null;
+    localResources.label = "";
+  }
+}
+
+async function collectFilesFromDirectoryHandle(handle, basePath = "") {
+  const output = [];
+  for await (const [name, child] of handle.entries()) {
+    const relativePath = [basePath, name].filter(Boolean).join("/");
+    if (child.kind === "directory") {
+      output.push(...await collectFilesFromDirectoryHandle(child, relativePath));
+    } else if (child.kind === "file" && localFileExtensions.has(getFileExtension(name))) {
+      const file = await child.getFile();
+      output.push({ file, relativePath });
+    }
+  }
+  return output;
+}
+
+function registerLocalFiles(entries, label = "") {
+  clearLocalResources({ keepHandle: true });
+  localResources.label = label;
+  for (const entry of entries) {
+    const file = entry.file;
+    const relativePath = entry.relativePath || file.webkitRelativePath || file.name;
+    const id = `local:${relativePath}`;
+    localResources.files.set(id, {
+      id,
+      name: file.name,
+      relativePath,
+      size: file.size,
+      type: localFileType(file),
+      file
+    });
+  }
+  renderNavigation(currentDocument?.id || "");
+}
+
+async function loadLocalFolderHandle(handle, { persist = false } = {}) {
+  const permission = await handle.requestPermission?.({ mode: "read" });
+  if (permission && permission !== "granted") return;
+  localResources.handle = handle;
+  const entries = await collectFilesFromDirectoryHandle(handle);
+  registerLocalFiles(entries, handle.name || "本地文件夹");
+  if (persist) await setStoredLocalFolderHandle(handle);
+}
+
+async function restoreLocalFolder() {
+  if (!("showDirectoryPicker" in window)) return;
+  try {
+    const handle = await getStoredLocalFolderHandle();
+    if (!handle) return;
+    const permission = await handle.queryPermission?.({ mode: "read" });
+    if (permission === "granted") await loadLocalFolderHandle(handle);
+  } catch {
+    // 恢复失败时保持静默，不影响公开知识库。
+  }
+}
+
+async function removeLocalFolder() {
+  clearLocalResources();
+  await clearStoredLocalFolderHandle();
+  renderNavigation();
+  if (currentDocument?.id?.startsWith("local:")) location.hash = "#/";
+}
+
 function renderNavigation(activeId = "") {
-  nav.innerHTML = renderCourseNodes(buildCourseTree(catalog.courses), activeId);
+  nav.innerHTML = `${renderCourseNodes(buildCourseTree(catalog.courses), activeId)}${renderLocalResources(activeId)}`;
 }
 
 function renderHome() {
@@ -322,14 +557,16 @@ function bookmarksFor(docId = currentDocument?.id) {
 function loadOpenTabs() {
   try {
     const value = JSON.parse(localStorage.getItem(openTabsStorageKey) || "[]");
-    return Array.isArray(value) ? value.filter((item) => item?.id && item?.title).slice(0, 12) : [];
+    const saved = Array.isArray(value) ? value.filter((item) => item?.id && item?.title).slice(0, 12) : [];
+    return [...localResources.tabs, ...saved.filter((item) => !localResources.tabs.some((tab) => tab.id === item.id))].slice(0, 12);
   } catch {
-    return [];
+    return localResources.tabs.slice(0, 12);
   }
 }
 
 function saveOpenTabs(tabs) {
-  localStorage.setItem(openTabsStorageKey, JSON.stringify(tabs.slice(0, 12)));
+  localResources.tabs = tabs.filter((tab) => tab.id?.startsWith("local:")).slice(0, 12);
+  localStorage.setItem(openTabsStorageKey, JSON.stringify(tabs.filter((tab) => !tab.id?.startsWith("local:")).slice(0, 12)));
 }
 
 function loadTabScrolls() {
@@ -372,14 +609,14 @@ function closeDocumentTab(docId) {
   }
   const next = nextTabs[Math.max(0, index - 1)] || nextTabs[0];
   currentDocument = null;
-  location.hash = next ? routeFor(next.id) : "#/";
+  location.hash = next ? (next.id.startsWith("local:") ? localRouteFor(next.id) : routeFor(next.id)) : "#/";
 }
 
 function renderDocumentTabs() {
   const tabs = loadOpenTabs();
   if (!tabs.length) return "";
   return `<div class="doc-tab-dock no-print"><div class="doc-tabs" aria-label="已打开文档">${tabs.map((tab) => `<div class="doc-tab ${tab.id === currentDocument?.id ? "active" : ""}">
-      <a href="${routeFor(tab.id)}" title="${escapeHtml(tab.title)}">${escapeHtml(tab.title)}</a>
+      <a href="${tab.id.startsWith("local:") ? localRouteFor(tab.id) : routeFor(tab.id)}" title="${escapeHtml(tab.title)}">${escapeHtml(tab.title)}</a>
       <button type="button" data-close-doc-tab="${escapeHtml(tab.id)}" aria-label="关闭 ${escapeHtml(tab.title)}">×</button>
     </div>`).join("")}</div></div>`;
 }
@@ -645,12 +882,104 @@ function enhanceArticle(article) {
 }
 
 function articleTools(doc) {
+  if (doc.local) {
+    const canCopy = doc.type === "local-markdown" || doc.type === "local-text";
+    return `<div class="article-tools no-print">
+      ${canCopy ? '<button type="button" data-action="copy">复制原文</button>' : ""}
+      <button type="button" data-action="html-open-tab">新标签页打开</button>
+      <a href="${doc.path}" download="${escapeHtml(doc.title)}">下载原文件</a>
+    </div>`;
+  }
   return `<div class="article-tools no-print">
     <button type="button" data-action="copy">复制原文</button>
     <a href="${doc.path}" download>下载原文件</a>
     ${doc.type === "html" ? '<button type="button" data-action="html-open-tab">新标签页打开</button>' : ""}
     <button type="button" class="primary" data-action="print">A4 / PDF</button>
   </div>`;
+}
+
+function renderLocalUnsupportedCard(item, url) {
+  return `<section class="local-file-card">
+    <p class="eyebrow">${escapeHtml(localFormatLabel(item.type))} · 本地文件</p>
+    <h1>${escapeHtml(item.name)}</h1>
+    <p>这类文件通常由浏览器或本机软件处理。XU 不上传、不转换、不保存文件内容，只提供本地入口。</p>
+    <div class="local-file-meta">
+      <span>位置：${escapeHtml(item.relativePath)}</span>
+      <span>大小：${(item.size / 1024).toFixed(1)} KB</span>
+    </div>
+    <div class="article-tools">
+      <a href="${url}" target="_blank" rel="noopener noreferrer">新标签页打开</a>
+      <a href="${url}" download="${escapeHtml(item.name)}">下载原文件</a>
+    </div>
+  </section>`;
+}
+
+async function renderLocalFile(id) {
+  const item = localResources.files.get(id);
+  if (!item) return renderError("这个本地文件当前不可用。请重新选择“我的资源”文件夹。", true);
+  const url = localObjectUrl(id);
+  const doc = {
+    id,
+    title: item.name,
+    displayTitle: item.name,
+    type: `local-${item.type}`,
+    local: true,
+    coursePath: "我的资源",
+    path: url
+  };
+  currentDocument = doc;
+  addOpenTab(doc);
+  renderNavigation(id);
+  tocPanel.innerHTML = "";
+  sidebar.classList.remove("open");
+  currentSource = "";
+  let body = "";
+  try {
+    if (item.type === "markdown") {
+      currentSource = await item.file.text();
+      body = DOMPurify.sanitize(marked.parse(currentSource), {
+        USE_PROFILES: { html: true, mathMl: true, svg: true },
+        FORBID_TAGS: ["script", "iframe", "object", "embed", "form", "foreignObject"],
+        FORBID_ATTR: ["onerror", "onclick", "onload"]
+      });
+    } else if (item.type === "text") {
+      currentSource = await item.file.text();
+      body = `<pre class="local-text-preview">${escapeHtml(currentSource)}</pre>`;
+    } else if (item.type === "html") {
+      currentSource = await item.file.text();
+      body = `<div class="html-preview-shell"><button type="button" class="html-preview-fullscreen no-print" data-action="html-open-tab">新标签页</button><iframe id="html-preview-frame" class="html-preview-frame" title="${escapeHtml(item.name)}" sandbox="allow-same-origin"></iframe></div>`;
+    } else if (item.type === "pdf") {
+      body = `<iframe class="local-file-frame" src="${url}" title="${escapeHtml(item.name)}"></iframe>`;
+    } else if (item.type === "image") {
+      body = `<img class="local-image-preview" src="${url}" alt="${escapeHtml(item.name)}">`;
+    } else {
+      body = renderLocalUnsupportedCard(item, url);
+    }
+    main.innerHTML = `
+      ${renderDocumentTabs()}
+      <div class="article-head no-print">
+        <div class="breadcrumbs"><a href="#/">首页</a><span>/</span><span>我的资源</span><span>/</span><strong>${escapeHtml(item.relativePath)}</strong></div>
+        ${articleTools(doc)}
+      </div>
+      <article id="article" class="article local-source ${item.type === "html" ? "html-source" : ""}">${body}</article>`;
+    document.title = `${item.name} · 我的资源 · ${catalog.site.title}`;
+    const htmlFrame = document.querySelector("#html-preview-frame");
+    if (htmlFrame) {
+      resizeHtmlPreviewFrame(htmlFrame);
+      htmlFrame.srcdoc = buildHtmlPreviewDocument(currentSource);
+    }
+    if (item.type === "markdown") enhanceArticle(document.querySelector("#article"));
+    else {
+      currentTocHtml = `<p class="bookmark-empty">本地资源已在中间预览区打开。</p>`;
+      renderRightPanel();
+    }
+    document.querySelector('[data-action="copy"]')?.addEventListener("click", copySource);
+    document.querySelectorAll('[data-action="html-open-tab"]').forEach((button) => button.addEventListener("click", openHtmlInNewTab));
+    main.focus();
+    requestAnimationFrame(() => restoreTabScroll(id));
+  } catch (error) {
+    renderError(`本地文件读取失败：${error.message}`);
+  }
 }
 
 async function renderArticle(id) {
@@ -778,6 +1107,11 @@ function renderError(message, showHome = false) {
 
 function route() {
   saveCurrentTabScroll();
+  const localMatch = location.hash.match(/^#\/local\/(.+)$/);
+  if (localMatch) {
+    renderLocalFile(decodeURIComponent(localMatch[1]));
+    return;
+  }
   const match = location.hash.match(/^#\/read\/(.+)$/);
   if (match) renderArticle(decodeURIComponent(match[1]));
   else renderHome();
@@ -842,6 +1176,13 @@ main.addEventListener("click", (event) => {
   closeDocumentTab(closeButton.dataset.closeDocTab);
 });
 nav.addEventListener("click", async (event) => {
+  const localButton = event.target.closest("[data-local-action]");
+  if (localButton) {
+    event.preventDefault();
+    if (localButton.dataset.localAction === "pick-folder") chooseLocalFolder();
+    if (localButton.dataset.localAction === "remove-folder") removeLocalFolder();
+    return;
+  }
   const button = event.target.closest("[data-download-group]");
   if (!button) return;
   event.preventDefault();
@@ -883,6 +1224,7 @@ window.addEventListener("scroll", () => {
 
 try {
   catalog = await loadJson("/generated/catalog.json");
+  await restoreLocalFolder();
   renderNavigation();
   route();
 } catch (error) {
