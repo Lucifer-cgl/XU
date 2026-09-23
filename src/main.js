@@ -899,16 +899,17 @@ function articleTools(doc) {
 }
 
 function renderLocalUnsupportedCard(item, url) {
+  const officeLike = item.type === "word" || item.type === "powerpoint" || item.type === "spreadsheet";
   return `<section class="local-file-card">
     <p class="eyebrow">${escapeHtml(localFormatLabel(item.type))} · 本地文件</p>
     <h1>${escapeHtml(item.name)}</h1>
-    <p>这类文件通常由浏览器或本机软件处理。XU 不上传、不转换、不保存文件内容，只提供本地入口。</p>
+    <p>${officeLike ? "这类 Office 文件多数浏览器不能原生预览，点击打开时通常会交给浏览器下载或调用本机 Office/WPS。XU 不上传、不转换、不保存文件内容。" : "这类文件通常由浏览器或本机软件处理。XU 不上传、不转换、不保存文件内容，只提供本地入口。"}</p>
     <div class="local-file-meta">
       <span>位置：${escapeHtml(item.relativePath)}</span>
       <span>大小：${(item.size / 1024).toFixed(1)} KB</span>
     </div>
     <div class="article-tools">
-      <a href="${url}" target="_blank" rel="noopener noreferrer">新标签页打开</a>
+      <a href="${url}" target="_blank" rel="noopener noreferrer">${officeLike ? "交给浏览器/本机打开" : "新标签页打开"}</a>
       <a href="${url}" download="${escapeHtml(item.name)}">下载原文件</a>
     </div>
   </section>`;
@@ -949,7 +950,17 @@ async function renderLocalFile(id) {
       currentSource = await item.file.text();
       body = `<div class="html-preview-shell"><button type="button" class="html-preview-fullscreen no-print" data-action="html-open-tab">新标签页</button><iframe id="html-preview-frame" class="html-preview-frame" title="${escapeHtml(item.name)}" sandbox="allow-same-origin"></iframe></div>`;
     } else if (item.type === "pdf") {
-      body = `<iframe class="local-file-frame" src="${url}" title="${escapeHtml(item.name)}"></iframe>`;
+      body = `<object class="local-file-frame" data="${url}" type="application/pdf" aria-label="${escapeHtml(item.name)}">
+        <section class="local-file-card">
+          <p class="eyebrow">PDF · 本地文件</p>
+          <h1>${escapeHtml(item.name)}</h1>
+          <p>当前浏览器没有在页面内打开这个 PDF。你可以用新标签页或本机 PDF 阅读器打开。</p>
+          <div class="article-tools">
+            <a href="${url}" target="_blank" rel="noopener noreferrer">新标签页打开</a>
+            <a href="${url}" download="${escapeHtml(item.name)}">下载原文件</a>
+          </div>
+        </section>
+      </object>`;
     } else if (item.type === "image") {
       body = `<img class="local-image-preview" src="${url}" alt="${escapeHtml(item.name)}">`;
     } else {
