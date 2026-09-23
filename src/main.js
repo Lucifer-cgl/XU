@@ -638,6 +638,7 @@ function articleTools(doc) {
   return `<div class="article-tools no-print">
     <button type="button" data-action="copy">复制原文</button>
     <a href="${doc.path}" download>下载原文件</a>
+    ${doc.type === "html" ? '<button type="button" data-action="html-open-tab">新标签页打开</button>' : ""}
     <button type="button" class="primary" data-action="print">A4 / PDF</button>
   </div>`;
 }
@@ -672,7 +673,7 @@ async function renderArticle(id) {
         <div class="breadcrumbs"><a href="#/">首页</a><span>/</span><span>${escapeHtml(doc.coursePath)}</span><span>/</span><strong>${escapeHtml(labelFor(doc))}</strong></div>
         ${articleTools(doc)}
       </div>
-      <article id="article" class="article ${doc.type === "html" ? "html-source" : "markdown-source"}">${doc.type === "html" ? `<div class="html-preview-shell"><iframe id="html-preview-frame" class="html-preview-frame" title="${escapeHtml(labelFor(doc))}" sandbox=""></iframe></div>` : safe}</article>
+      <article id="article" class="article ${doc.type === "html" ? "html-source" : "markdown-source"}">${doc.type === "html" ? `<div class="html-preview-shell"><button type="button" class="html-preview-fullscreen no-print" data-action="html-open-tab">新标签页</button><iframe id="html-preview-frame" class="html-preview-frame" title="${escapeHtml(labelFor(doc))}" sandbox=""></iframe></div>` : safe}</article>
       <nav class="article-pagination no-print" aria-label="文章翻页">
         ${previous ? `<a href="${hrefFor(previous)}"><small>上一篇</small>${escapeHtml(labelFor(previous))}</a>` : "<span></span>"}
         ${next ? `<a class="next" href="${hrefFor(next)}"><small>下一篇</small>${escapeHtml(labelFor(next))}</a>` : "<span></span>"}
@@ -683,11 +684,17 @@ async function renderArticle(id) {
     enhanceArticle(document.querySelector("#article"));
     document.querySelector('[data-action="copy"]').addEventListener("click", copySource);
     document.querySelector('[data-action="print"]').addEventListener("click", openPrintPreview);
+    document.querySelectorAll('[data-action="html-open-tab"]').forEach((button) => button.addEventListener("click", openHtmlInNewTab));
     main.focus();
     requestAnimationFrame(() => restoreTabScroll(doc.id));
   } catch (error) {
     renderError(error.message);
   }
+}
+
+function openHtmlInNewTab() {
+  if (!currentDocument?.path) return;
+  window.open(currentDocument.path, "_blank", "noopener,noreferrer");
 }
 
 async function copySource(event) {
