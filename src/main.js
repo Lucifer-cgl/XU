@@ -133,7 +133,7 @@ marked.use(
 );
 const escapeHtml = (value = "") => value.replace(/[&<>'\"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]);
 const routeFor = (id) => `#/read/${encodeURIComponent(id)}`;
-const hrefFor = (doc) => doc.type === "html" ? doc.path : routeFor(doc.id);
+const hrefFor = (doc) => routeFor(doc.id);
 const labelFor = (doc) => doc.displayTitle || doc.title;
 const safeId = (value = "") => `b-${Array.from(value).map((char) => char.codePointAt(0).toString(36)).join("-")}`;
 
@@ -271,7 +271,19 @@ function buildHtmlPreviewDocument(source) {
   const documentSource = hasDocumentShell
     ? source
     : `<!doctype html><html><head><meta charset="utf-8"></head><body>${source}</body></html>`;
-  return DOMPurify.sanitize(documentSource, {
+  const parsed = new DOMParser().parseFromString(documentSource, "text/html");
+  const style = parsed.createElement("style");
+  style.textContent = `
+    * { scrollbar-width: thin; scrollbar-color: transparent transparent; }
+    *::-webkit-scrollbar { width: 6px; height: 6px; }
+    *::-webkit-scrollbar-track { background: transparent; }
+    *::-webkit-scrollbar-thumb { border-radius: 999px; background: transparent; }
+    *:hover { scrollbar-color: rgba(32, 70, 58, .42) transparent; }
+    *:hover::-webkit-scrollbar-thumb { background: rgba(32, 70, 58, .42); }
+    *:hover::-webkit-scrollbar-thumb:hover { background: rgba(32, 70, 58, .7); }
+  `;
+  parsed.head.append(style);
+  return DOMPurify.sanitize(`<!doctype html>${parsed.documentElement.outerHTML}`, {
     WHOLE_DOCUMENT: true,
     ADD_TAGS: ["style"],
     ADD_ATTR: ["style"],
@@ -796,6 +808,15 @@ sidebar.addEventListener("click", (event) => {
   nav.querySelectorAll("details.course-group").forEach((details) => { details.open = expand; });
 });
 window.addEventListener("hashchange", route);
+window.addEventListener("pointermove", (event) => {
+  const edge = 30;
+  const nearRight = window.innerWidth - event.clientX <= edge;
+  const nearBottom = window.innerHeight - event.clientY <= edge;
+  document.documentElement.classList.toggle("show-page-scrollbar", nearRight || nearBottom);
+}, { passive: true });
+window.addEventListener("blur", () => {
+  document.documentElement.classList.remove("show-page-scrollbar");
+});
 window.addEventListener("scroll", () => {
   if (!currentDocument) return;
   window.clearTimeout(scrollSaveTimer);

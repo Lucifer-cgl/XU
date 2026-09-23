@@ -32,11 +32,13 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-html { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+html { scrollbar-width: thin; scrollbar-color: transparent transparent; }
+html.show-page-scrollbar { scrollbar-color: var(--scrollbar-thumb) transparent; }
 html::-webkit-scrollbar { width: 6px; height: 6px; }
 html::-webkit-scrollbar-track { background: transparent; }
-html::-webkit-scrollbar-thumb { border: 1px solid transparent; border-radius: 999px; background: var(--scrollbar-thumb); background-clip: padding-box; }
-html::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); background-clip: padding-box; }
+html::-webkit-scrollbar-thumb { border: 1px solid transparent; border-radius: 999px; background: transparent; background-clip: padding-box; }
+html.show-page-scrollbar::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); background-clip: padding-box; }
+html.show-page-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); background-clip: padding-box; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.75; }
 a { color: inherit; }
 button, input { font: inherit; }
@@ -65,11 +67,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .site-layout[data-left-collapsed="true"] { --left-column: 0px; --left-handle: 0px; }
 .site-layout[data-right-collapsed="true"] { --right-column: 0px; --right-handle: 0px; }
 .sidebar, .toc-panel { min-width: 0; position: sticky; top: 76px; height: calc(100vh - 76px); overflow: auto; padding: 64px 22px 28px; }
-.sidebar, .toc-panel { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
-.sidebar::-webkit-scrollbar, .toc-panel::-webkit-scrollbar { width: 6px; height: 6px; }
-.sidebar::-webkit-scrollbar-track, .toc-panel::-webkit-scrollbar-track { background: transparent; }
-.sidebar::-webkit-scrollbar-thumb, .toc-panel::-webkit-scrollbar-thumb { border: 1px solid transparent; border-radius: 999px; background: var(--scrollbar-thumb); background-clip: padding-box; }
-.sidebar::-webkit-scrollbar-thumb:hover, .toc-panel::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); background-clip: padding-box; }
+.sidebar, .toc-panel, .doc-tabs, .article pre, .table-scroll, .katex-display, .download-course-list, .download-batches, .download-raw-links { scrollbar-width: thin; scrollbar-color: transparent transparent; }
+.sidebar:hover, .toc-panel:hover, .doc-tabs:hover, .article pre:hover, .table-scroll:hover, .katex-display:hover, .download-course-list:hover, .download-batches:hover, .download-raw-links:hover { scrollbar-color: var(--scrollbar-thumb) transparent; }
+.sidebar::-webkit-scrollbar, .toc-panel::-webkit-scrollbar, .doc-tabs::-webkit-scrollbar, .article pre::-webkit-scrollbar, .table-scroll::-webkit-scrollbar, .katex-display::-webkit-scrollbar, .download-course-list::-webkit-scrollbar, .download-batches::-webkit-scrollbar, .download-raw-links::-webkit-scrollbar { width: 6px; height: 6px; }
+.sidebar::-webkit-scrollbar-track, .toc-panel::-webkit-scrollbar-track, .doc-tabs::-webkit-scrollbar-track, .article pre::-webkit-scrollbar-track, .table-scroll::-webkit-scrollbar-track, .katex-display::-webkit-scrollbar-track, .download-course-list::-webkit-scrollbar-track, .download-batches::-webkit-scrollbar-track, .download-raw-links::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb, .toc-panel::-webkit-scrollbar-thumb, .doc-tabs::-webkit-scrollbar-thumb, .article pre::-webkit-scrollbar-thumb, .table-scroll::-webkit-scrollbar-thumb, .katex-display::-webkit-scrollbar-thumb, .download-course-list::-webkit-scrollbar-thumb, .download-batches::-webkit-scrollbar-thumb, .download-raw-links::-webkit-scrollbar-thumb { border: 1px solid transparent; border-radius: 999px; background: transparent; background-clip: padding-box; }
+.sidebar:hover::-webkit-scrollbar-thumb, .toc-panel:hover::-webkit-scrollbar-thumb, .doc-tabs:hover::-webkit-scrollbar-thumb, .article pre:hover::-webkit-scrollbar-thumb, .table-scroll:hover::-webkit-scrollbar-thumb, .katex-display:hover::-webkit-scrollbar-thumb, .download-course-list:hover::-webkit-scrollbar-thumb, .download-batches:hover::-webkit-scrollbar-thumb, .download-raw-links:hover::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); background-clip: padding-box; }
+.sidebar:hover::-webkit-scrollbar-thumb:hover, .toc-panel:hover::-webkit-scrollbar-thumb:hover, .doc-tabs:hover::-webkit-scrollbar-thumb:hover, .article pre:hover::-webkit-scrollbar-thumb:hover, .table-scroll:hover::-webkit-scrollbar-thumb:hover, .katex-display:hover::-webkit-scrollbar-thumb:hover, .download-course-list:hover::-webkit-scrollbar-thumb:hover, .download-batches:hover::-webkit-scrollbar-thumb:hover, .download-raw-links:hover::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); background-clip: padding-box; }
 .sidebar { border-right: 1px solid var(--line); }
 .toc-panel { border-left: 1px solid var(--line); }
 .site-layout[data-left-collapsed="true"] .sidebar,
@@ -153,10 +157,7 @@ body.is-resizing { cursor: col-resize; user-select: none; }
 .article-head { margin-bottom: 38px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
 .breadcrumbs { display: flex; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: 12px; }
 .breadcrumbs a { color: var(--accent); }
-.doc-tabs { display: flex; gap: 8px; max-width: 100%; padding-bottom: 4px; overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
-.doc-tabs::-webkit-scrollbar { height: 5px; }
-.doc-tabs::-webkit-scrollbar-track { background: transparent; }
-.doc-tabs::-webkit-scrollbar-thumb { border-radius: 999px; background: var(--scrollbar-thumb); }
+.doc-tabs { display: flex; gap: 8px; max-width: 100%; padding-bottom: 4px; overflow-x: auto; }
 .doc-tab { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; flex: 0 0 auto; width: min(230px, 58vw); border: 1px solid var(--line); border-radius: 999px; background: color-mix(in srgb, var(--surface) 88%, var(--paper)); }
 .doc-tab.active { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); background: var(--accent-soft); box-shadow: 0 8px 22px rgba(20, 90, 68, .08); }
 .doc-tab a { min-width: 0; overflow: hidden; padding: 8px 4px 8px 12px; color: var(--muted); font-size: 12px; font-weight: 700; line-height: 1; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
