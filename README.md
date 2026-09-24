@@ -234,6 +234,16 @@ npm run preview
 
 ## 下载策略
 
+## 本地 Office 文档工作台
+
+XU 的“我的资源”支持连接独立的本地 Office 编辑器仓库：
+
+- Office 编辑器仓库：[Lucifer-cgl/XU-Office-Editor](https://github.com/Lucifer-cgl/XU-Office-Editor)
+- 直接下载仓库 ZIP：[下载 XU-Office-Editor](https://github.com/Lucifer-cgl/XU-Office-Editor/archive/refs/heads/main.zip)
+- XU 在线入口：[xu.lucifer-cgl.workers.dev](https://xu.lucifer-cgl.workers.dev/)
+
+下载并解压 `XU-Office-Editor` 后，在 XU 左侧“我的资源”底部连接编辑器文件夹。首次连接需要授权该文件夹；以后 XU 会从本地文件夹加载 Office 运行组件，不需要每次重新下载，也不会把 Office 大型运行文件打包进 XU 仓库。国内镜像发布后会在此处补充 Gitee 下载链接。
+
 课程下载入口位于左侧目录每门课程右侧的“⋯”。
 
 - 下载的是仓库中原始文件，不是转化后的 HTML 或 PDF。
