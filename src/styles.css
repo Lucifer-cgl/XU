@@ -192,6 +192,10 @@ body.is-resizing { cursor: col-resize; user-select: none; }
 .doc-tab button:hover { background: color-mix(in srgb, var(--warm) 14%, transparent); color: var(--warm); }
 .article-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .article-tools .primary { border-color: var(--accent); background: var(--accent); color: #fff; }
+.workbench-zoom-tools { display: inline-flex; align-items: center; gap: 4px; padding: 2px 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.workbench-zoom-tools button { min-width: 24px; padding: 3px 7px; border: 0; border-radius: 999px; background: transparent; color: var(--ink); cursor: pointer; }
+.workbench-zoom-tools button:hover { background: var(--accent-soft); color: var(--accent); }
+.workbench-zoom-tools strong { min-width: 42px; color: var(--muted); font-size: 11px; text-align: center; }
 .article { font: 17px/1.9 var(--serif); overflow-wrap: anywhere; }
 .article.html-source { max-width: min(1100px, calc(100vw - 64px)); }
 .html-preview-shell { position: relative; width: 100%; min-height: 560px; height: var(--html-preview-height, auto); border: 1px solid var(--line); border-radius: 16px; background: #fff; box-shadow: var(--shadow); overflow: hidden; }
