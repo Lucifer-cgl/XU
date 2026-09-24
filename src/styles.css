@@ -140,6 +140,7 @@ body.is-resizing { cursor: col-resize; user-select: none; }
 .local-runtime-card button:hover { border-color: var(--accent); }
 .main-content { min-width: 0; padding: 58px clamp(28px, 6vw, 96px) 90px; outline: none; }
 .main-content.workspace-active { display: grid; grid-template-rows: auto auto minmax(0, 1fr); min-height: calc(100vh - 76px); height: auto; padding: 12px 14px 14px; overflow-x: clip; overflow-y: visible; }
+.site-layout[data-local-workbench="true"] .main-content.workspace-active { padding-left: 0; padding-right: 0; }
 .workspace-active .doc-tab-dock { position: relative; top: auto; width: 100%; max-width: none; margin: 0 0 6px; padding: 0; box-shadow: none; }
 .workspace-active .doc-tab-dock::before { display: none; }
 .workspace-active .article-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; max-width: none; margin: 0 0 8px; padding: 0 2px 8px; }
