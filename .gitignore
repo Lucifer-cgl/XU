@@ -11,3 +11,4 @@ public/generated/
 /push-all.cmd
 /build-dist.cmd
 /build-dist.ps1
+/preview-local.cmd
