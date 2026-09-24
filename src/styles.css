@@ -66,6 +66,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 .site-layout[data-left-collapsed="true"] { --left-column: 0px; --left-handle: 0px; }
 .site-layout[data-right-collapsed="true"] { --right-column: 0px; --right-handle: 0px; }
+.site-layout[data-local-workbench="true"] { --right-column: 0px; --right-handle: 0px; }
 .sidebar, .toc-panel { min-width: 0; position: sticky; top: 76px; height: calc(100vh - 76px); overflow: auto; padding: 64px 22px 28px; }
 .sidebar, .toc-panel, .doc-tabs, .article pre, .table-scroll, .katex-display, .download-course-list, .download-batches, .download-raw-links { scrollbar-width: thin; scrollbar-color: transparent transparent; }
 .sidebar:hover, .toc-panel:hover, .doc-tabs:hover, .article pre:hover, .table-scroll:hover, .katex-display:hover, .download-course-list:hover, .download-batches:hover, .download-raw-links:hover { scrollbar-color: var(--scrollbar-thumb) transparent; }
@@ -82,7 +83,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 #right-panel-resizer { grid-column: 4; }
 #toc-panel { grid-column: 5; }
 .site-layout[data-left-collapsed="true"] .sidebar,
-.site-layout[data-right-collapsed="true"] .toc-panel { visibility: hidden; padding-inline: 0; border: 0; overflow: hidden; }
+.site-layout[data-right-collapsed="true"] .toc-panel,
+.site-layout[data-local-workbench="true"] .toc-panel { visibility: hidden; padding-inline: 0; border: 0; overflow: hidden; }
+.site-layout[data-local-workbench="true"] #right-panel-resizer,
+.site-layout[data-local-workbench="true"] #right-panel-toggle { display: none; }
 .panel-resizer { position: sticky; z-index: 5; top: 76px; height: calc(100vh - 76px); cursor: col-resize; touch-action: none; outline: none; }
 .panel-resizer::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--line); transform: translateX(-50%); transition: width .15s ease, background .15s ease; }
 .panel-resizer:hover::after, .panel-resizer:focus-visible::after { width: 3px; background: var(--accent); }

@@ -597,6 +597,7 @@ function renderNavigation(activeId = "") {
 }
 
 function renderHome() {
+  siteLayout.dataset.localWorkbench = "false";
   main.classList.remove("workspace-active");
   activeWorkbenchFrame = null;
   activeWorkbenchItem = null;
@@ -1155,6 +1156,7 @@ async function renderLocalFile(id) {
       body = renderLocalUnsupportedCard(item, url);
     }
     main.classList.toggle("workspace-active", useWorkbench);
+    siteLayout.dataset.localWorkbench = String(useWorkbench);
     main.innerHTML = `
       ${renderDocumentTabs()}
       <div class="article-head no-print">
@@ -1261,6 +1263,7 @@ window.addEventListener("message", async (event) => {
 });
 
 async function renderArticle(id) {
+  siteLayout.dataset.localWorkbench = "false";
   main.classList.remove("workspace-active");
   activeWorkbenchFrame = null;
   activeWorkbenchItem = null;
@@ -1384,6 +1387,7 @@ async function openPrintPreview(event) {
 }
 
 function renderError(message, showHome = false) {
+  siteLayout.dataset.localWorkbench = "false";
   main.classList.remove("workspace-active");
   main.innerHTML = `<section class="error-state"><p class="eyebrow">读取失败</p><h1>${escapeHtml(message)}</h1>${showHome ? '<a href="#/">返回首页</a>' : '<button type="button" onclick="location.reload()">重新加载</button>'}</section>`;
 }
