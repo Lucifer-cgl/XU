@@ -76,6 +76,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .sidebar:hover::-webkit-scrollbar-thumb:hover, .toc-panel:hover::-webkit-scrollbar-thumb:hover, .doc-tabs:hover::-webkit-scrollbar-thumb:hover, .article pre:hover::-webkit-scrollbar-thumb:hover, .table-scroll:hover::-webkit-scrollbar-thumb:hover, .katex-display:hover::-webkit-scrollbar-thumb:hover, .download-course-list:hover::-webkit-scrollbar-thumb:hover, .download-batches:hover::-webkit-scrollbar-thumb:hover, .download-raw-links:hover::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); background-clip: padding-box; }
 .sidebar { border-right: 1px solid var(--line); }
 .toc-panel { border-left: 1px solid var(--line); }
+#sidebar { grid-column: 1; }
+#left-panel-resizer { grid-column: 2; }
+#main-content { grid-column: 3; min-width: 0; }
+#right-panel-resizer { grid-column: 4; }
+#toc-panel { grid-column: 5; }
 .site-layout[data-left-collapsed="true"] .sidebar,
 .site-layout[data-right-collapsed="true"] .toc-panel { visibility: hidden; padding-inline: 0; border: 0; overflow: hidden; }
 .panel-resizer { position: sticky; z-index: 5; top: 76px; height: calc(100vh - 76px); cursor: col-resize; touch-action: none; outline: none; }
@@ -130,7 +135,7 @@ body.is-resizing { cursor: col-resize; user-select: none; }
 .local-runtime-card button { padding: 4px 8px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--accent); font-size: 10px; font-weight: 700; cursor: pointer; }
 .local-runtime-card button:hover { border-color: var(--accent); }
 .main-content { min-width: 0; padding: 58px clamp(28px, 6vw, 96px) 90px; outline: none; }
-.main-content.workspace-active { display: grid; grid-template-rows: auto auto minmax(0, 1fr); min-height: calc(100vh - 76px); height: auto; padding: 12px 14px 14px; overflow: visible; }
+.main-content.workspace-active { display: grid; grid-template-rows: auto auto minmax(0, 1fr); min-height: calc(100vh - 76px); height: auto; padding: 12px 14px 14px; overflow-x: clip; overflow-y: visible; }
 .workspace-active .doc-tab-dock { position: relative; top: auto; width: 100%; max-width: none; margin: 0 0 6px; padding: 0; box-shadow: none; }
 .workspace-active .doc-tab-dock::before { display: none; }
 .workspace-active .article-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; max-width: none; margin: 0 0 8px; padding: 0 2px 8px; }
