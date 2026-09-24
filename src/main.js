@@ -27,6 +27,7 @@ let activeWorkbenchFrame = null;
 let activeWorkbenchItem = null;
 let activeWorkbenchFile = null;
 let workbenchZoom = 1;
+let workbenchMode = "edit";
 const workbenchTypes = new Set(["word", "powerpoint", "spreadsheet", "pdf", "markdown"]);
 const localResources = {
   files: new Map(),
@@ -1059,7 +1060,7 @@ function articleTools(doc) {
     const canCopy = doc.type === "local-markdown" || doc.type === "local-text";
     const canZoom = ["local-word", "local-powerpoint", "local-spreadsheet", "local-pdf"].includes(doc.type);
     return `<div class="article-tools no-print">
-      ${canZoom ? '<span class="workbench-zoom-tools" aria-label="文档缩放"><button type="button" data-workbench-zoom="decrease" title="缩小文档">−</button><strong data-workbench-zoom-value>100%</strong><button type="button" data-workbench-zoom="increase" title="放大文档">＋</button><button type="button" data-workbench-zoom="reset" title="恢复默认大小">重置</button></span>' : ""}
+      ${canZoom ? '<span class="workbench-zoom-tools" aria-label="文档显示"><button type="button" data-workbench-zoom="decrease" title="缩小文档">−</button><strong data-workbench-zoom-value>100%</strong><button type="button" data-workbench-zoom="increase" title="放大文档">＋</button><button type="button" data-workbench-zoom="reset" title="恢复默认大小">重置</button><button type="button" data-workbench-mode="hand" title="手型：拖动文档">手型</button><button type="button" data-workbench-mode="edit" title="编辑：点击文档修改">编辑</button></span>' : ""}
       ${canCopy ? '<button type="button" data-action="copy">复制原文</button>' : ""}
       <button type="button" data-action="html-open-tab">新标签页打开</button>
       <a href="${doc.path}" download="${escapeHtml(doc.title)}">下载原文件</a>
@@ -1115,6 +1116,7 @@ async function renderLocalFile(id) {
   };
   currentDocument = doc;
   workbenchZoom = 1;
+  workbenchMode = "edit";
   addOpenTab(doc);
   renderNavigation(id);
   tocPanel.innerHTML = "";
@@ -1193,6 +1195,11 @@ async function renderLocalFile(id) {
       document.querySelectorAll("[data-workbench-zoom-value]").forEach((value) => { value.textContent = `${Math.round(workbenchZoom * 100)}%`; });
       sendWorkbenchZoom();
     }));
+    document.querySelectorAll("[data-workbench-mode]").forEach((button) => button.addEventListener("click", () => {
+      workbenchMode = button.dataset.workbenchMode;
+      document.querySelectorAll("[data-workbench-mode]").forEach((item) => item.classList.toggle("active", item.dataset.workbenchMode === workbenchMode));
+      sendWorkbenchMode();
+    }));
     main.focus();
     requestAnimationFrame(() => restoreTabScroll(id));
   } catch (error) {
@@ -1212,10 +1219,15 @@ async function sendFileToWorkbench() {
     bytes
   }, window.location.origin, [bytes]);
   sendWorkbenchZoom();
+  sendWorkbenchMode();
 }
 
 function sendWorkbenchZoom() {
   if (activeWorkbenchFrame?.contentWindow) activeWorkbenchFrame.contentWindow.postMessage({ source: "xu-knowledge-base", type: "viewport-zoom", value: workbenchZoom }, window.location.origin);
+}
+
+function sendWorkbenchMode() {
+  if (activeWorkbenchFrame?.contentWindow) activeWorkbenchFrame.contentWindow.postMessage({ source: "xu-knowledge-base", type: "viewport-mode", value: workbenchMode }, window.location.origin);
 }
 
 async function saveWorkbenchBytes(item, bytes) {

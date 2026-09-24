@@ -195,6 +195,7 @@ body.is-resizing { cursor: col-resize; user-select: none; }
 .workbench-zoom-tools { display: inline-flex; align-items: center; gap: 4px; padding: 2px 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
 .workbench-zoom-tools button { min-width: 24px; padding: 3px 7px; border: 0; border-radius: 999px; background: transparent; color: var(--ink); cursor: pointer; }
 .workbench-zoom-tools button:hover { background: var(--accent-soft); color: var(--accent); }
+.workbench-zoom-tools button.active { color: #fff; background: var(--accent); }
 .workbench-zoom-tools strong { min-width: 42px; color: var(--muted); font-size: 11px; text-align: center; }
 .article { font: 17px/1.9 var(--serif); overflow-wrap: anywhere; }
 .article.html-source { max-width: min(1100px, calc(100vw - 64px)); }
