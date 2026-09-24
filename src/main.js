@@ -453,7 +453,7 @@ function renderLocalResources(activeId = "") {
       </span>
     </div>
     <p class="local-resource-note">${hasFolder ? `${escapeHtml(localResources.label || "本地文件夹")} · ${localResources.directories.length} 个目录 · ${localResources.files.size} 个文档；内容按点击读取。` : "选择本地文件夹后，会在这里生成私人目录。"}</p>
-    ${hasEntries ? renderLocalNodes([...tree.children.values()].sort((a, b) => a.name.localeCompare(b.name, "zh-CN")), activeId) + (tree.files.length ? renderLocalNodes([{ ...tree, name: "根目录", children: new Map() }], activeId) : "") : ""}
+    ${hasEntries ? renderLocalNodes([{ ...tree, name: localResources.label || "我的资源" }], activeId) : ""}
     <div class="local-runtime-card">
       <strong>本地文档引擎</strong>
       <span>${officeRuntime.ready ? `${escapeHtml(officeRuntime.label)} · 已连接` : officeRuntime.error ? `连接失败：${escapeHtml(officeRuntime.error)}` : officeRuntime.handle ? `${escapeHtml(officeRuntime.label)} · 需要重新授权，请点击重新连接` : "尚未连接；请选择编辑器文件夹"}</span>
