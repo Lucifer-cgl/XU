@@ -35,7 +35,7 @@ const localResources = {
   handle: null,
   label: ""
 };
-const officeRuntime = { handle: null, label: "", ready: false };
+const officeRuntime = { handle: null, label: "", ready: false, error: "" };
 const localFolderDbName = "xu-local-resources";
 const localFolderStoreName = "handles";
 const localFolderHandleKey = "folder";
@@ -276,6 +276,7 @@ async function connectOfficeRuntime(handle, { persist = false } = {}) {
   officeRuntime.handle = handle;
   officeRuntime.label = handle.name || "XU-Office-Editor";
   officeRuntime.ready = true;
+  officeRuntime.error = "";
   if (persist) await setStoredOfficeRuntimeHandle(handle);
   renderNavigation(currentDocument?.id || "");
 }
@@ -289,7 +290,12 @@ async function chooseOfficeRuntime() {
     const handle = await window.showDirectoryPicker({ mode: "read", id: "xu-office-runtime" });
     await connectOfficeRuntime(handle, { persist: true });
   } catch (error) {
-    if (error?.name !== "AbortError") alert(`运行组件连接失败：${error.message}`);
+    if (error?.name !== "AbortError") {
+      officeRuntime.ready = false;
+      officeRuntime.error = error?.message || "无法读取编辑器文件夹";
+      renderNavigation(currentDocument?.id || "");
+      alert(`编辑器文件夹连接失败：${officeRuntime.error}`);
+    }
   }
 }
 
@@ -302,8 +308,9 @@ async function restoreOfficeRuntime() {
     officeRuntime.label = handle.name || "XU-Office-Editor";
     const permission = await handle.queryPermission?.({ mode: "read" });
     if (permission === "granted") await connectOfficeRuntime(handle);
-  } catch {
+  } catch (error) {
     officeRuntime.ready = false;
+    officeRuntime.error = error?.message || "无法恢复编辑器文件夹授权";
   }
 }
 
@@ -311,6 +318,7 @@ async function disconnectOfficeRuntime() {
   officeRuntime.handle = null;
   officeRuntime.label = "";
   officeRuntime.ready = false;
+  officeRuntime.error = "";
   await clearStoredOfficeRuntimeHandle();
   renderNavigation(currentDocument?.id || "");
 }
@@ -448,7 +456,7 @@ function renderLocalResources(activeId = "") {
     ${hasEntries ? renderLocalNodes([...tree.children.values()].sort((a, b) => a.name.localeCompare(b.name, "zh-CN")), activeId) + (tree.files.length ? renderLocalNodes([{ ...tree, name: "根目录", children: new Map() }], activeId) : "") : ""}
     <div class="local-runtime-card">
       <strong>本地文档引擎</strong>
-      <span>${officeRuntime.ready ? `${escapeHtml(officeRuntime.label)} · 已连接` : officeRuntime.handle ? `${escapeHtml(officeRuntime.label)} · 需要重新授权，请点击重新连接` : "尚未连接；请选择编辑器文件夹"}</span>
+      <span>${officeRuntime.ready ? `${escapeHtml(officeRuntime.label)} · 已连接` : officeRuntime.error ? `连接失败：${escapeHtml(officeRuntime.error)}` : officeRuntime.handle ? `${escapeHtml(officeRuntime.label)} · 需要重新授权，请点击重新连接` : "尚未连接；请选择编辑器文件夹"}</span>
       <div>
         <button type="button" data-local-action="pick-runtime">${officeRuntime.handle ? "重新连接编辑器文件夹" : "选择编辑器文件夹"}</button>
         ${officeRuntime.handle ? '<button type="button" data-local-action="remove-runtime">断开</button>' : ""}
@@ -458,6 +466,10 @@ function renderLocalResources(activeId = "") {
 }
 
 function chooseLocalFolder() {
+  if (!officeRuntime.ready) {
+    alert("请先连接并成功加载“编辑器文件夹”，再选择个人文档文件夹。");
+    return;
+  }
   if ("showDirectoryPicker" in window) {
     window.showDirectoryPicker({ mode: "read" })
       .then((handle) => loadLocalFolderHandle(handle, { persist: true }))
@@ -1078,6 +1090,9 @@ function renderLocalUnsupportedCard(item, url) {
 async function renderLocalFile(id) {
   const item = localResources.files.get(id);
   if (!item) return renderError("这个本地文件当前不可用。请重新选择“我的资源”文件夹。", true);
+  if (["word", "powerpoint", "spreadsheet"].includes(item.type) && !officeRuntime.ready) {
+    return renderError("请先在“我的资源”下连接并成功加载编辑器文件夹，再打开此 Office 文档。", false);
+  }
   if (workbenchTypes.has(item.type) && officeRuntime.ready && !isIsolatedWorkspace) {
     window.location.assign(`/workspace/${window.location.hash || localRouteFor(id)}`);
     return;
