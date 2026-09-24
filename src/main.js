@@ -23,16 +23,27 @@ let currentSource = "";
 let currentDocument;
 let currentTocHtml = "";
 let tocMode = "toc";
+let activeWorkbenchFrame = null;
+let activeWorkbenchItem = null;
+let activeWorkbenchFile = null;
+const workbenchTypes = new Set(["word", "powerpoint", "spreadsheet", "pdf", "markdown"]);
 const localResources = {
   files: new Map(),
+  directories: [],
   urls: new Map(),
   tabs: [],
   handle: null,
   label: ""
 };
+const officeRuntime = { handle: null, label: "", ready: false };
 const localFolderDbName = "xu-local-resources";
 const localFolderStoreName = "handles";
 const localFolderHandleKey = "folder";
+const officeRuntimeDbName = "xu-office-runtime";
+const officeRuntimeStoreName = "handles";
+const officeRuntimeHandleKey = "runtime";
+const officeRuntimeFrameUrl = "/__xu_office__/index.html?embedded=1";
+const isIsolatedWorkspace = window.location.pathname.startsWith("/workspace");
 const bookmarkStorageKey = "xu-bookmarks";
 const bookmarkFileSignature = "XU_BOOKMARKS_ONLY_DO_NOT_EDIT";
 const bookmarkFileType = "xu-bookmarks";
@@ -147,7 +158,7 @@ const localRouteFor = (id) => `#/local/${encodeURIComponent(id)}`;
 const hrefFor = (doc) => routeFor(doc.id);
 const labelFor = (doc) => doc.displayTitle || doc.title;
 const safeId = (value = "") => `b-${Array.from(value).map((char) => char.codePointAt(0).toString(36)).join("-")}`;
-const localFileExtensions = new Set(["md", "markdown", "html", "htm", "pdf", "txt", "png", "jpg", "jpeg", "webp", "svg", "gif", "doc", "docx", "ppt", "pptx", "xls", "xlsx"]);
+const localFileExtensions = new Set(["md", "markdown", "html", "htm", "pdf", "txt", "png", "jpg", "jpeg", "webp", "svg", "gif", "doc", "docx", "odt", "rtf", "ppt", "pptx", "odp", "xls", "xlsx", "ods", "csv"]);
 
 async function loadJson(url) {
   const response = await fetch(url);
@@ -197,6 +208,113 @@ async function clearStoredLocalFolderHandle() {
   });
 }
 
+function openOfficeRuntimeDb() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(officeRuntimeDbName, 1);
+    request.onupgradeneeded = () => request.result.createObjectStore(officeRuntimeStoreName);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function getStoredOfficeRuntimeHandle() {
+  if (!("indexedDB" in window)) return null;
+  const db = await openOfficeRuntimeDb();
+  return new Promise((resolve, reject) => {
+    const request = db.transaction(officeRuntimeStoreName, "readonly").objectStore(officeRuntimeStoreName).get(officeRuntimeHandleKey);
+    request.onsuccess = () => resolve(request.result || null);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function setStoredOfficeRuntimeHandle(handle) {
+  const db = await openOfficeRuntimeDb();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(officeRuntimeStoreName, "readwrite");
+    tx.objectStore(officeRuntimeStoreName).put(handle, officeRuntimeHandleKey);
+    tx.oncomplete = resolve;
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function clearStoredOfficeRuntimeHandle() {
+  const db = await openOfficeRuntimeDb();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(officeRuntimeStoreName, "readwrite");
+    tx.objectStore(officeRuntimeStoreName).delete(officeRuntimeHandleKey);
+    tx.oncomplete = resolve;
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function registerLocalRuntimeWorker() {
+  if (!("serviceWorker" in navigator)) return false;
+  await navigator.serviceWorker.register("/xu-local-runtime-sw.js", { scope: "/" });
+  await navigator.serviceWorker.ready;
+  if (navigator.serviceWorker.controller) return true;
+  await new Promise((resolve) => navigator.serviceWorker.addEventListener("controllerchange", resolve, { once: true }));
+  return true;
+}
+
+async function validateOfficeRuntime(handle) {
+  await handle.getFileHandle("index.html");
+  const assets = await handle.getDirectoryHandle("assets");
+  const zetaoffice = await assets.getDirectoryHandle("zetaoffice");
+  const manifestFile = await (await zetaoffice.getFileHandle("runtime-manifest.json")).getFile();
+  const manifest = JSON.parse(await manifestFile.text());
+  if (!manifest["soffice.wasm"]?.parts?.length || !manifest["soffice.data"]?.parts?.length) throw new Error("运行组件清单不完整");
+  await zetaoffice.getFileHandle(manifest["soffice.wasm"].parts[0]);
+  await zetaoffice.getFileHandle(manifest["soffice.data"].parts[0]);
+  return manifest;
+}
+
+async function connectOfficeRuntime(handle, { persist = false } = {}) {
+  const permission = await handle.requestPermission?.({ mode: "read" });
+  if (permission && permission !== "granted") throw new Error("没有获得运行组件目录的读取权限");
+  await validateOfficeRuntime(handle);
+  await registerLocalRuntimeWorker();
+  officeRuntime.handle = handle;
+  officeRuntime.label = handle.name || "XU-Office-Editor";
+  officeRuntime.ready = true;
+  if (persist) await setStoredOfficeRuntimeHandle(handle);
+  renderNavigation(currentDocument?.id || "");
+}
+
+async function chooseOfficeRuntime() {
+  if (!("showDirectoryPicker" in window)) {
+    alert("请选择最新版 Chrome 或 Edge 来连接本地 Office 运行组件。");
+    return;
+  }
+  try {
+    const handle = await window.showDirectoryPicker({ mode: "read", id: "xu-office-runtime" });
+    await connectOfficeRuntime(handle, { persist: true });
+  } catch (error) {
+    if (error?.name !== "AbortError") alert(`运行组件连接失败：${error.message}`);
+  }
+}
+
+async function restoreOfficeRuntime() {
+  try {
+    await registerLocalRuntimeWorker();
+    const handle = await getStoredOfficeRuntimeHandle();
+    if (!handle) return;
+    officeRuntime.handle = handle;
+    officeRuntime.label = handle.name || "XU-Office-Editor";
+    const permission = await handle.queryPermission?.({ mode: "read" });
+    if (permission === "granted") await connectOfficeRuntime(handle);
+  } catch {
+    officeRuntime.ready = false;
+  }
+}
+
+async function disconnectOfficeRuntime() {
+  officeRuntime.handle = null;
+  officeRuntime.label = "";
+  officeRuntime.ready = false;
+  await clearStoredOfficeRuntimeHandle();
+  renderNavigation(currentDocument?.id || "");
+}
+
 function buildCourseTree(courses) {
   const roots = [];
   for (const course of courses) {
@@ -232,9 +350,9 @@ function localFileType(file) {
   if (ext === "pdf") return "pdf";
   if (ext === "txt") return "text";
   if (["png", "jpg", "jpeg", "webp", "svg", "gif"].includes(ext)) return "image";
-  if (["doc", "docx"].includes(ext)) return "word";
-  if (["ppt", "pptx"].includes(ext)) return "powerpoint";
-  if (["xls", "xlsx"].includes(ext)) return "spreadsheet";
+  if (["doc", "docx", "odt", "rtf"].includes(ext)) return "word";
+  if (["ppt", "pptx", "odp"].includes(ext)) return "powerpoint";
+  if (["xls", "xlsx", "ods", "csv"].includes(ext)) return "spreadsheet";
   return "file";
 }
 
@@ -274,14 +392,19 @@ function renderCourseNodes(nodes, activeId, depth = 0) {
 
 function buildLocalTree() {
   const root = { name: "我的资源", path: "", children: new Map(), files: [] };
-  for (const item of localResources.files.values()) {
-    const parts = item.relativePath.split("/").filter(Boolean);
-    const fileName = parts.pop() || item.name;
+  const ensureDirectory = (relativePath) => {
     let node = root;
-    parts.forEach((part) => {
+    relativePath.split("/").filter(Boolean).forEach((part) => {
       if (!node.children.has(part)) node.children.set(part, { name: part, path: [node.path, part].filter(Boolean).join("/"), children: new Map(), files: [] });
       node = node.children.get(part);
     });
+    return node;
+  };
+  localResources.directories.forEach(ensureDirectory);
+  for (const item of localResources.files.values()) {
+    const parts = item.relativePath.split("/").filter(Boolean);
+    const fileName = parts.pop() || item.name;
+    const node = ensureDirectory(parts.join("/"));
     node.files.push({ ...item, name: fileName });
   }
   return root;
@@ -311,16 +434,26 @@ function renderLocalNodes(nodes, activeId, depth = 0) {
 function renderLocalResources(activeId = "") {
   const tree = buildLocalTree();
   const hasFiles = localResources.files.size > 0;
+  const hasEntries = hasFiles || localResources.directories.length > 0;
+  const hasFolder = Boolean(localResources.handle) || hasEntries;
   return `<section class="local-resources">
     <div class="sidebar-heading local-resource-heading">
       <span>我的资源</span>
       <span class="local-resource-actions">
-        ${hasFiles ? '<button type="button" data-local-action="remove-folder">移除</button>' : ""}
-        <button type="button" data-local-action="pick-folder">${hasFiles ? "重选" : "选择文件夹"}</button>
+        ${hasFolder ? '<button type="button" data-local-action="remove-folder">移除</button>' : ""}
+        <button type="button" data-local-action="pick-folder">${hasFolder ? "重选" : "选择文件夹"}</button>
       </span>
     </div>
-    <p class="local-resource-note">${hasFiles ? `${escapeHtml(localResources.label || "本地文件夹")} · ${localResources.files.size} 个文件，只在本机读取。` : "选择本地文件夹后，会在这里生成私人目录。"}</p>
-    ${hasFiles ? renderLocalNodes([...tree.children.values()].sort((a, b) => a.name.localeCompare(b.name, "zh-CN")), activeId) + (tree.files.length ? renderLocalNodes([{ ...tree, name: "根目录", children: new Map() }], activeId) : "") : ""}
+    <p class="local-resource-note">${hasFolder ? `${escapeHtml(localResources.label || "本地文件夹")} · ${localResources.directories.length} 个目录 · ${localResources.files.size} 个文档；内容按点击读取。` : "选择本地文件夹后，会在这里生成私人目录。"}</p>
+    ${hasEntries ? renderLocalNodes([...tree.children.values()].sort((a, b) => a.name.localeCompare(b.name, "zh-CN")), activeId) + (tree.files.length ? renderLocalNodes([{ ...tree, name: "根目录", children: new Map() }], activeId) : "") : ""}
+    <div class="local-runtime-card">
+      <strong>本地文档引擎</strong>
+      <span>${officeRuntime.ready ? `${escapeHtml(officeRuntime.label)} · 已连接` : officeRuntime.handle ? `${escapeHtml(officeRuntime.label)} · 需要重新授权` : "尚未连接 XU-Office-Editor"}</span>
+      <div>
+        <button type="button" data-local-action="pick-runtime">${officeRuntime.handle ? "重新连接" : "选择组件目录"}</button>
+        ${officeRuntime.handle ? '<button type="button" data-local-action="remove-runtime">断开</button>' : ""}
+      </div>
+    </div>
   </section>`;
 }
 
@@ -339,20 +472,38 @@ function chooseLocalFolder() {
   input.webkitdirectory = true;
   input.addEventListener("change", () => {
     const files = [...(input.files || [])].filter((file) => localFileExtensions.has(getFileExtension(file.name)));
-    registerLocalFiles(files.map((file) => ({ file, relativePath: file.webkitRelativePath || file.name })), "本地文件夹");
+    const directories = new Set();
+    const entries = files.map((file) => {
+      const relativePath = file.webkitRelativePath || file.name;
+      const parts = relativePath.split("/");
+      parts.pop();
+      while (parts.length) {
+        directories.add(parts.join("/"));
+        parts.pop();
+      }
+      return { file, name: file.name, relativePath };
+    });
+    registerLocalIndex({ files: entries, directories: [...directories] }, "本地文件夹");
   }, { once: true });
   input.click();
 }
 
-function localObjectUrl(id) {
+async function localObjectUrl(id, file = null) {
   const item = localResources.files.get(id);
   if (!item) return "";
-  if (!localResources.urls.has(id)) localResources.urls.set(id, URL.createObjectURL(item.file));
+  if (!localResources.urls.has(id)) localResources.urls.set(id, URL.createObjectURL(file || await resolveLocalFile(item)));
   return localResources.urls.get(id);
+}
+
+async function resolveLocalFile(item) {
+  if (item.file) return item.file;
+  if (item.handle) return item.handle.getFile();
+  throw new Error("文件句柄不可用，请重新选择文件夹");
 }
 
 function clearLocalResources({ keepHandle = false } = {}) {
   localResources.files.clear();
+  localResources.directories = [];
   for (const url of localResources.urls.values()) URL.revokeObjectURL(url);
   localResources.urls.clear();
   localResources.tabs = [];
@@ -363,33 +514,37 @@ function clearLocalResources({ keepHandle = false } = {}) {
 }
 
 async function collectFilesFromDirectoryHandle(handle, basePath = "") {
-  const output = [];
+  const index = { files: [], directories: [] };
   for await (const [name, child] of handle.entries()) {
     const relativePath = [basePath, name].filter(Boolean).join("/");
     if (child.kind === "directory") {
-      output.push(...await collectFilesFromDirectoryHandle(child, relativePath));
+      index.directories.push(relativePath);
+      const nested = await collectFilesFromDirectoryHandle(child, relativePath);
+      index.files.push(...nested.files);
+      index.directories.push(...nested.directories);
     } else if (child.kind === "file" && localFileExtensions.has(getFileExtension(name))) {
-      const file = await child.getFile();
-      output.push({ file, relativePath });
+      index.files.push({ handle: child, name, relativePath });
     }
   }
-  return output;
+  return index;
 }
 
-function registerLocalFiles(entries, label = "") {
+function registerLocalIndex(index, label = "") {
   clearLocalResources({ keepHandle: true });
   localResources.label = label;
-  for (const entry of entries) {
-    const file = entry.file;
-    const relativePath = entry.relativePath || file.webkitRelativePath || file.name;
+  localResources.directories = index.directories || [];
+  for (const entry of index.files) {
+    const name = entry.name || entry.file?.name || entry.handle?.name;
+    const relativePath = entry.relativePath || entry.file?.webkitRelativePath || name;
     const id = `local:${relativePath}`;
     localResources.files.set(id, {
       id,
-      name: file.name,
+      name,
       relativePath,
-      size: file.size,
-      type: localFileType(file),
-      file
+      size: entry.file?.size ?? null,
+      type: localFileType({ name }),
+      file: entry.file || null,
+      handle: entry.handle || null
     });
   }
   renderNavigation(currentDocument?.id || "");
@@ -399,8 +554,8 @@ async function loadLocalFolderHandle(handle, { persist = false } = {}) {
   const permission = await handle.requestPermission?.({ mode: "read" });
   if (permission && permission !== "granted") return;
   localResources.handle = handle;
-  const entries = await collectFilesFromDirectoryHandle(handle);
-  registerLocalFiles(entries, handle.name || "本地文件夹");
+  const index = await collectFilesFromDirectoryHandle(handle);
+  registerLocalIndex(index, handle.name || "本地文件夹");
   if (persist) await setStoredLocalFolderHandle(handle);
 }
 
@@ -428,6 +583,10 @@ function renderNavigation(activeId = "") {
 }
 
 function renderHome() {
+  main.classList.remove("workspace-active");
+  activeWorkbenchFrame = null;
+  activeWorkbenchItem = null;
+  activeWorkbenchFile = null;
   currentDocument = null;
   currentTocHtml = "";
   tocMode = "toc";
@@ -557,16 +716,17 @@ function bookmarksFor(docId = currentDocument?.id) {
 function loadOpenTabs() {
   try {
     const value = JSON.parse(localStorage.getItem(openTabsStorageKey) || "[]");
-    const saved = Array.isArray(value) ? value.filter((item) => item?.id && item?.title).slice(0, 12) : [];
-    return [...localResources.tabs, ...saved.filter((item) => !localResources.tabs.some((tab) => tab.id === item.id))].slice(0, 12);
+    return Array.isArray(value)
+      ? value.filter((item) => item?.id && item?.title && (!item.id.startsWith("local:") || localResources.files.has(item.id))).slice(0, 12)
+      : [];
   } catch {
-    return localResources.tabs.slice(0, 12);
+    return [];
   }
 }
 
 function saveOpenTabs(tabs) {
   localResources.tabs = tabs.filter((tab) => tab.id?.startsWith("local:")).slice(0, 12);
-  localStorage.setItem(openTabsStorageKey, JSON.stringify(tabs.filter((tab) => !tab.id?.startsWith("local:")).slice(0, 12)));
+  localStorage.setItem(openTabsStorageKey, JSON.stringify(tabs.slice(0, 12)));
 }
 
 function loadTabScrolls() {
@@ -918,7 +1078,14 @@ function renderLocalUnsupportedCard(item, url) {
 async function renderLocalFile(id) {
   const item = localResources.files.get(id);
   if (!item) return renderError("这个本地文件当前不可用。请重新选择“我的资源”文件夹。", true);
-  const url = localObjectUrl(id);
+  if (workbenchTypes.has(item.type) && officeRuntime.ready && !isIsolatedWorkspace) {
+    window.location.assign(`/workspace/${window.location.hash || localRouteFor(id)}`);
+    return;
+  }
+  const file = await resolveLocalFile(item);
+  item.size = file.size;
+  const url = await localObjectUrl(id, file);
+  const useWorkbench = workbenchTypes.has(item.type) && officeRuntime.ready;
   const doc = {
     id,
     title: item.name,
@@ -936,18 +1103,20 @@ async function renderLocalFile(id) {
   currentSource = "";
   let body = "";
   try {
-    if (item.type === "markdown") {
-      currentSource = await item.file.text();
+    if (useWorkbench) {
+      body = `<div class="local-workbench-shell"><iframe id="local-workbench-frame" class="local-workbench-frame" src="${officeRuntimeFrameUrl}" title="${escapeHtml(item.name)} 文档工作台" allow="cross-origin-isolated"></iframe></div>`;
+    } else if (item.type === "markdown") {
+      currentSource = await file.text();
       body = DOMPurify.sanitize(marked.parse(currentSource), {
         USE_PROFILES: { html: true, mathMl: true, svg: true },
         FORBID_TAGS: ["script", "iframe", "object", "embed", "form", "foreignObject"],
         FORBID_ATTR: ["onerror", "onclick", "onload"]
       });
     } else if (item.type === "text") {
-      currentSource = await item.file.text();
+      currentSource = await file.text();
       body = `<pre class="local-text-preview">${escapeHtml(currentSource)}</pre>`;
     } else if (item.type === "html") {
-      currentSource = await item.file.text();
+      currentSource = await file.text();
       body = `<div class="html-preview-shell"><button type="button" class="html-preview-fullscreen no-print" data-action="html-open-tab">新标签页</button><iframe id="html-preview-frame" class="html-preview-frame" title="${escapeHtml(item.name)}" sandbox="allow-same-origin"></iframe></div>`;
     } else if (item.type === "pdf") {
       body = `<object class="local-file-frame" data="${url}" type="application/pdf" aria-label="${escapeHtml(item.name)}">
@@ -966,6 +1135,7 @@ async function renderLocalFile(id) {
     } else {
       body = renderLocalUnsupportedCard(item, url);
     }
+    main.classList.toggle("workspace-active", useWorkbench);
     main.innerHTML = `
       ${renderDocumentTabs()}
       <div class="article-head no-print">
@@ -974,13 +1144,25 @@ async function renderLocalFile(id) {
       </div>
       <article id="article" class="article local-source ${item.type === "html" ? "html-source" : ""}">${body}</article>`;
     document.title = `${item.name} · 我的资源 · ${catalog.site.title}`;
+    const workbenchFrame = document.querySelector("#local-workbench-frame");
+    if (workbenchFrame) {
+      activeWorkbenchFrame = workbenchFrame;
+      activeWorkbenchItem = item;
+      activeWorkbenchFile = file;
+      currentTocHtml = `<p class="bookmark-empty">正在等待文档工作台提供目录。</p>`;
+      renderRightPanel();
+    } else {
+      activeWorkbenchFrame = null;
+      activeWorkbenchItem = null;
+      activeWorkbenchFile = null;
+    }
     const htmlFrame = document.querySelector("#html-preview-frame");
     if (htmlFrame) {
       resizeHtmlPreviewFrame(htmlFrame);
       htmlFrame.srcdoc = buildHtmlPreviewDocument(currentSource);
     }
-    if (item.type === "markdown") enhanceArticle(document.querySelector("#article"));
-    else {
+    if (item.type === "markdown" && !useWorkbench) enhanceArticle(document.querySelector("#article"));
+    else if (!useWorkbench) {
       currentTocHtml = `<p class="bookmark-empty">本地资源已在中间预览区打开。</p>`;
       renderRightPanel();
     }
@@ -993,7 +1175,67 @@ async function renderLocalFile(id) {
   }
 }
 
+async function sendFileToWorkbench() {
+  if (!activeWorkbenchFrame?.contentWindow || !activeWorkbenchItem) return;
+  const file = activeWorkbenchFile || await resolveLocalFile(activeWorkbenchItem);
+  const bytes = await file.arrayBuffer();
+  activeWorkbenchFrame.contentWindow.postMessage({
+    source: "xu-knowledge-base",
+    type: "open-file",
+    name: activeWorkbenchItem.name,
+    relativePath: activeWorkbenchItem.relativePath,
+    bytes
+  }, window.location.origin, [bytes]);
+}
+
+async function saveWorkbenchBytes(item, bytes) {
+  if (item.handle) {
+    const permission = await item.handle.requestPermission?.({ mode: "readwrite" });
+    if (permission && permission !== "granted") throw new Error("没有获得原文件写入权限");
+    const writable = await item.handle.createWritable();
+    await writable.write(bytes);
+    await writable.close();
+    return;
+  }
+  const blob = new Blob([bytes], { type: "application/octet-stream" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = item.name;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+window.addEventListener("message", async (event) => {
+  if (event.origin !== window.location.origin || event.source !== activeWorkbenchFrame?.contentWindow) return;
+  const data = event.data;
+  if (!data || data.source !== "xu-office-editor") return;
+  try {
+    if (data.type === "ready") {
+      await sendFileToWorkbench();
+      return;
+    }
+    if (data.type === "file-saved" && data.bytes instanceof ArrayBuffer && activeWorkbenchItem) {
+      await saveWorkbenchBytes(activeWorkbenchItem, data.bytes);
+      return;
+    }
+    if (data.type === "outline-changed") {
+      const items = Array.isArray(data.items) ? data.items : [];
+      currentTocHtml = items.length
+        ? `<div class="toc-title">文档目录</div>${items.map((item) => `<button type="button" class="bookmark-jump toc-level-${Math.max(1, Math.min(6, Number(item.level) || 1))}" data-workbench-outline="${escapeHtml(item.id || "")}" title="${escapeHtml(item.title || "")}">${escapeHtml(item.title || "未命名")}</button>`).join("")}`
+        : `<p class="bookmark-empty">当前文档暂未提供可导航目录。</p>`;
+      renderRightPanel();
+    }
+  } catch (error) {
+    renderError(`文档工作台通信失败：${error.message}`);
+  }
+});
+
 async function renderArticle(id) {
+  main.classList.remove("workspace-active");
+  activeWorkbenchFrame = null;
+  activeWorkbenchItem = null;
+  activeWorkbenchFile = null;
   const doc = catalog.documents.find((item) => item.id === id);
   if (!doc) return renderError("没有找到这篇文档。", true);
   currentDocument = doc;
@@ -1113,6 +1355,7 @@ async function openPrintPreview(event) {
 }
 
 function renderError(message, showHome = false) {
+  main.classList.remove("workspace-active");
   main.innerHTML = `<section class="error-state"><p class="eyebrow">读取失败</p><h1>${escapeHtml(message)}</h1>${showHome ? '<a href="#/">返回首页</a>' : '<button type="button" onclick="location.reload()">重新加载</button>'}</section>`;
 }
 
@@ -1141,6 +1384,11 @@ themeToggle.addEventListener("click", () => {
 });
 document.documentElement.dataset.theme = localStorage.getItem("xu-theme") || "light";
 tocPanel.addEventListener("click", (event) => {
+  const outlineButton = event.target.closest("[data-workbench-outline]");
+  if (outlineButton && activeWorkbenchFrame?.contentWindow) {
+    activeWorkbenchFrame.contentWindow.postMessage({ source: "xu-knowledge-base", type: "outline-jump", id: outlineButton.dataset.workbenchOutline }, window.location.origin);
+    return;
+  }
   const modeButton = event.target.closest("[data-toc-mode]");
   if (modeButton) {
     tocMode = modeButton.dataset.tocMode;
@@ -1192,6 +1440,8 @@ nav.addEventListener("click", async (event) => {
     event.preventDefault();
     if (localButton.dataset.localAction === "pick-folder") chooseLocalFolder();
     if (localButton.dataset.localAction === "remove-folder") removeLocalFolder();
+    if (localButton.dataset.localAction === "pick-runtime") chooseOfficeRuntime();
+    if (localButton.dataset.localAction === "remove-runtime") disconnectOfficeRuntime();
     return;
   }
   const button = event.target.closest("[data-download-group]");
@@ -1235,7 +1485,7 @@ window.addEventListener("scroll", () => {
 
 try {
   catalog = await loadJson("/generated/catalog.json");
-  await restoreLocalFolder();
+  await Promise.all([restoreLocalFolder(), restoreOfficeRuntime()]);
   renderNavigation();
   route();
 } catch (error) {

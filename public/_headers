@@ -13,3 +13,8 @@
 
 /generated/*
   Cache-Control: public, max-age=300, must-revalidate
+
+/workspace/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Permissions-Policy: cross-origin-isolated=(self), camera=(), microphone=(), geolocation=()

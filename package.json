@@ -6,7 +6,7 @@
   "scripts": {
     "content:build": "node scripts/build-content.mjs",
     "dev": "npm run content:build && vite",
-    "build": "npm run content:build && vite build",
+    "build": "npm run content:build && vite build && node scripts/build-workspace.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

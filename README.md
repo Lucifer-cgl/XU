@@ -55,6 +55,18 @@ XU 提供可选的浏览器配套工具 [XU-AI-Assistant](https://github.com/Luc
 
 安装、更新、数据保存位置及常见问题见 XU 站内文章《墟 · AI Assistant：安装与使用》，源文件位于 [`content/自我介绍/墟-AI Assistant：安装与使用.md`](content/自我介绍/墟-AI%20Assistant：安装与使用.md)。
 
+## XU 本地文档工作台
+
+XU 可以连接独立下载的 `XU-Office-Editor` 目录，把其中约 250 MiB 的 LibreOffice WebAssembly 运行组件作为本地文档引擎使用。大型组件不会进入 XU 仓库，也不会随公共知识库首屏加载。
+
+- XU 继续负责公共资源、“我的资源”、公共/本地混合标签、右侧目录和书签；
+- 用户选择文件夹时只建立目录索引，点击具体文件后才读取内容；
+- PDF、Markdown、Word、Excel 和 PowerPoint 在 XU 中间区域使用无外壳工作台打开；
+- 运行组件由用户下载一次并放在固定目录，后续由 XU 通过授权的本地目录句柄读取；
+- 文档内容和运行组件都不会上传到 XU。
+
+当前本地联调时，在“我的资源”底部选择 `XU-Office-Editor` 仓库根目录即可。正式发行包与国内镜像准备完成后，下载入口会写入站内文章《XU 本地文档工作台：安装与使用》。
+
 ## 两条内容通道
 
 ### Markdown
