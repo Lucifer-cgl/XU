@@ -597,6 +597,7 @@ function renderNavigation(activeId = "") {
 }
 
 function renderHome() {
+  document.body.classList.remove("workbench-fullscreen");
   siteLayout.dataset.localWorkbench = "false";
   siteLayout.dataset.workbenchFullscreen = "false";
   main.classList.remove("workspace-active");
@@ -1264,6 +1265,7 @@ window.addEventListener("message", async (event) => {
 });
 
 async function renderArticle(id) {
+  document.body.classList.remove("workbench-fullscreen");
   siteLayout.dataset.localWorkbench = "false";
   siteLayout.dataset.workbenchFullscreen = "false";
   main.classList.remove("workspace-active");
@@ -1337,6 +1339,7 @@ function resizeHtmlPreviewFrame(frame) {
     }
     if (data.type === "toggle-fullscreen") {
       siteLayout.dataset.workbenchFullscreen = String(Boolean(data.active));
+      document.body.classList.toggle("workbench-fullscreen", Boolean(data.active));
       return;
     }
     if (!doc) return;
@@ -1393,6 +1396,7 @@ async function openPrintPreview(event) {
 }
 
 function renderError(message, showHome = false) {
+  document.body.classList.remove("workbench-fullscreen");
   siteLayout.dataset.localWorkbench = "false";
   siteLayout.dataset.workbenchFullscreen = "false";
   main.classList.remove("workspace-active");

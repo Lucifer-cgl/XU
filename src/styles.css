@@ -91,7 +91,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .site-layout[data-workbench-fullscreen="true"] #left-panel-resizer,
 .site-layout[data-workbench-fullscreen="true"] #right-panel-resizer,
 .site-layout[data-workbench-fullscreen="true"] #toc-panel,
-.site-layout[data-workbench-fullscreen="true"] .site-header { display: none; }
+.workbench-fullscreen .site-header { display: none; }
 .site-layout[data-workbench-fullscreen="true"] #main-content { position: fixed; inset: 0; z-index: 100; grid-column: 1 / -1; padding: 0; }
 .site-layout[data-workbench-fullscreen="true"] .local-workbench-shell,
 .site-layout[data-workbench-fullscreen="true"] .local-workbench-frame { width: 100vw; height: 100vh; min-height: 100vh; border-radius: 0; }
