@@ -21,10 +21,18 @@ Office 运行组件约 250 MiB，不进入 XU 主仓库，也不会在浏览公�
 
 ## 正式发行后的下载方式
 
-正式版本（仓库发布后）将提供两个内容一致、版本号一致的下载入口。当前两个入口尚未发布：
+当前可用链接：
 
-- 国外及 GitHub 访问顺畅的用户：从后续公布的 GitHub 项目下载发行包；
-- 中国大陆用户：从后续公布的 Gitee 镜像下载相同版本的发行包。
+- Office 编辑器仓库：[Lucifer-cgl/XU-Office-Editor](https://github.com/Lucifer-cgl/XU-Office-Editor)
+- 直接查看运行包目录：[XU-Office-Editor/dist](https://github.com/Lucifer-cgl/XU-Office-Editor/tree/main/dist)
+- 下载发行 ZIP：[下载 XU-Office-Editor](https://github.com/Lucifer-cgl/XU-Office-Editor/archive/refs/heads/main.zip)
+- XU 主仓库：[Lucifer-cgl/XU](https://github.com/Lucifer-cgl/XU)
+- XU 在线入口：[xu.lucifer-cgl.workers.dev](https://xu.lucifer-cgl.workers.dev/)
+
+下载 ZIP 后只使用其中的 `dist/` 文件夹。后续会提供内容一致、版本号一致的 Gitee 镜像下载入口：
+
+- 国外及 GitHub 访问顺畅的用户：使用上面的 GitHub 链接；
+- 中国大陆用户：待 Gitee 镜像发布后使用相同版本的 `dist/` 发行包。
 
 下载后请解压到固定位置，例如 `D:\XU-Office-Editor\dist`。首次连接成功后，不要随意删除、移动、改名或拆散 `dist/` 目录中的文件，否则 XU 下次将无法找到本地运行组件，需要重新选择或重新下载。
 
