@@ -1058,9 +1058,7 @@ function enhanceArticle(article) {
 function articleTools(doc) {
   if (doc.local) {
     const canCopy = doc.type === "local-markdown" || doc.type === "local-text";
-    const canZoom = ["local-word", "local-powerpoint", "local-spreadsheet", "local-pdf"].includes(doc.type);
     return `<div class="article-tools no-print">
-      ${canZoom ? '<span class="workbench-zoom-tools" aria-label="文档显示"><button type="button" data-workbench-zoom="decrease" title="缩小文档">−</button><strong data-workbench-zoom-value>100%</strong><button type="button" data-workbench-zoom="increase" title="放大文档">＋</button><button type="button" data-workbench-zoom="reset" title="恢复默认大小">重置</button><button type="button" data-workbench-mode="hand" title="手型：拖动文档">手型</button><button type="button" data-workbench-mode="edit" title="编辑：点击文档修改">编辑</button></span>' : ""}
       ${canCopy ? '<button type="button" data-action="copy">复制原文</button>' : ""}
       <button type="button" data-action="html-open-tab">新标签页打开</button>
       <a href="${doc.path}" download="${escapeHtml(doc.title)}">下载原文件</a>
@@ -1189,17 +1187,6 @@ async function renderLocalFile(id) {
     }
     document.querySelector('[data-action="copy"]')?.addEventListener("click", copySource);
     document.querySelectorAll('[data-action="html-open-tab"]').forEach((button) => button.addEventListener("click", openHtmlInNewTab));
-    document.querySelectorAll("[data-workbench-zoom]").forEach((button) => button.addEventListener("click", () => {
-      const action = button.dataset.workbenchZoom;
-      workbenchZoom = action === "reset" ? 1 : Math.min(1.6, Math.max(.6, workbenchZoom + (action === "increase" ? .1 : -.1)));
-      document.querySelectorAll("[data-workbench-zoom-value]").forEach((value) => { value.textContent = `${Math.round(workbenchZoom * 100)}%`; });
-      sendWorkbenchZoom();
-    }));
-    document.querySelectorAll("[data-workbench-mode]").forEach((button) => button.addEventListener("click", () => {
-      workbenchMode = button.dataset.workbenchMode;
-      document.querySelectorAll("[data-workbench-mode]").forEach((item) => item.classList.toggle("active", item.dataset.workbenchMode === workbenchMode));
-      sendWorkbenchMode();
-    }));
     main.focus();
     requestAnimationFrame(() => restoreTabScroll(id));
   } catch (error) {
