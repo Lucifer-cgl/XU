@@ -448,9 +448,9 @@ function renderLocalResources(activeId = "") {
     ${hasEntries ? renderLocalNodes([...tree.children.values()].sort((a, b) => a.name.localeCompare(b.name, "zh-CN")), activeId) + (tree.files.length ? renderLocalNodes([{ ...tree, name: "根目录", children: new Map() }], activeId) : "") : ""}
     <div class="local-runtime-card">
       <strong>本地文档引擎</strong>
-      <span>${officeRuntime.ready ? `${escapeHtml(officeRuntime.label)} · 已连接` : officeRuntime.handle ? `${escapeHtml(officeRuntime.label)} · 需要重新授权` : "尚未连接 XU-Office-Editor"}</span>
+      <span>${officeRuntime.ready ? `${escapeHtml(officeRuntime.label)} · 已连接` : officeRuntime.handle ? `${escapeHtml(officeRuntime.label)} · 需要重新授权，请点击重新连接` : "尚未连接；请选择编辑器文件夹"}</span>
       <div>
-        <button type="button" data-local-action="pick-runtime">${officeRuntime.handle ? "重新连接" : "选择组件目录"}</button>
+        <button type="button" data-local-action="pick-runtime">${officeRuntime.handle ? "重新连接编辑器文件夹" : "选择编辑器文件夹"}</button>
         ${officeRuntime.handle ? '<button type="button" data-local-action="remove-runtime">断开</button>' : ""}
       </div>
     </div>
