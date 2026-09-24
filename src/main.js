@@ -598,6 +598,7 @@ function renderNavigation(activeId = "") {
 
 function renderHome() {
   siteLayout.dataset.localWorkbench = "false";
+  siteLayout.dataset.workbenchFullscreen = "false";
   main.classList.remove("workspace-active");
   activeWorkbenchFrame = null;
   activeWorkbenchItem = null;
@@ -1124,7 +1125,7 @@ async function renderLocalFile(id) {
   let body = "";
   try {
     if (useWorkbench) {
-      body = `<div class="local-workbench-shell"><iframe id="local-workbench-frame" class="local-workbench-frame" src="${officeRuntimeFrameUrl}" title="${escapeHtml(item.name)} 文档工作台" allow="cross-origin-isolated"></iframe></div>`;
+      body = `<div class="local-workbench-shell"><iframe id="local-workbench-frame" class="local-workbench-frame" src="${officeRuntimeFrameUrl}" title="${escapeHtml(item.name)} 文档工作台" allow="cross-origin-isolated; fullscreen" allowfullscreen></iframe></div>`;
     } else if (item.type === "markdown") {
       currentSource = await file.text();
       body = DOMPurify.sanitize(marked.parse(currentSource), {
@@ -1264,6 +1265,7 @@ window.addEventListener("message", async (event) => {
 
 async function renderArticle(id) {
   siteLayout.dataset.localWorkbench = "false";
+  siteLayout.dataset.workbenchFullscreen = "false";
   main.classList.remove("workspace-active");
   activeWorkbenchFrame = null;
   activeWorkbenchItem = null;
@@ -1333,6 +1335,10 @@ function resizeHtmlPreviewFrame(frame) {
     } catch {
       return;
     }
+    if (data.type === "toggle-fullscreen") {
+      siteLayout.dataset.workbenchFullscreen = String(Boolean(data.active));
+      return;
+    }
     if (!doc) return;
     const bottom = Math.ceil(Math.max(0, ...[...doc.body.querySelectorAll("*")].map((node) => {
       const rect = node.getBoundingClientRect();
@@ -1388,6 +1394,7 @@ async function openPrintPreview(event) {
 
 function renderError(message, showHome = false) {
   siteLayout.dataset.localWorkbench = "false";
+  siteLayout.dataset.workbenchFullscreen = "false";
   main.classList.remove("workspace-active");
   main.innerHTML = `<section class="error-state"><p class="eyebrow">读取失败</p><h1>${escapeHtml(message)}</h1>${showHome ? '<a href="#/">返回首页</a>' : '<button type="button" onclick="location.reload()">重新加载</button>'}</section>`;
 }

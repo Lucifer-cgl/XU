@@ -87,6 +87,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .site-layout[data-local-workbench="true"] .toc-panel { visibility: hidden; padding-inline: 0; border: 0; overflow: hidden; }
 .site-layout[data-local-workbench="true"] #right-panel-resizer,
 .site-layout[data-local-workbench="true"] #right-panel-toggle { display: none; }
+.site-layout[data-workbench-fullscreen="true"] #sidebar,
+.site-layout[data-workbench-fullscreen="true"] #left-panel-resizer,
+.site-layout[data-workbench-fullscreen="true"] #right-panel-resizer,
+.site-layout[data-workbench-fullscreen="true"] #toc-panel,
+.site-layout[data-workbench-fullscreen="true"] .site-header { display: none; }
+.site-layout[data-workbench-fullscreen="true"] #main-content { position: fixed; inset: 0; z-index: 100; grid-column: 1 / -1; padding: 0; }
+.site-layout[data-workbench-fullscreen="true"] .local-workbench-shell,
+.site-layout[data-workbench-fullscreen="true"] .local-workbench-frame { width: 100vw; height: 100vh; min-height: 100vh; border-radius: 0; }
 .panel-resizer { position: sticky; z-index: 5; top: 76px; height: calc(100vh - 76px); cursor: col-resize; touch-action: none; outline: none; }
 .panel-resizer::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--line); transform: translateX(-50%); transition: width .15s ease, background .15s ease; }
 .panel-resizer:hover::after, .panel-resizer:focus-visible::after { width: 3px; background: var(--accent); }
