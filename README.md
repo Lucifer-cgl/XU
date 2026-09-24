@@ -69,7 +69,7 @@ XU 可以连接独立下载的 `XU-Office-Editor` 目录，把其中约 250 MiB 
 
 ## 本地预览
 
-双击仓库根目录下的 `preview-local.cmd`，或运行 `npm run preview:local`，即可启动只供本机访问的预览页并自动打开浏览器。它只生成被 `.gitignore` 忽略的临时内容索引，不生成 `dist`，不会推送或发布到网页仓库。
+双击仓库根目录下的 `preview-local.cmd`，或运行 `npm run preview:local`，即可先生成与线上一致的 `dist`，再启动只供本机访问的静态预览页并自动打开浏览器。`dist` 和临时内容目录都被 `.gitignore` 忽略，不会推送或发布到网页仓库；Office 编辑器运行包仍然保持在独立仓库中。
 
 ## 两条内容通道
 

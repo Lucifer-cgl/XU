@@ -6,7 +6,7 @@
   "scripts": {
     "content:build": "node scripts/build-content.mjs",
     "dev": "npm run content:build && vite",
-    "preview:local": "npm run content:build && vite --host 127.0.0.1 --open",
+    "preview:local": "npm run build && vite preview --host 127.0.0.1 --port 5175 --open",
     "build": "npm run content:build && vite build && node scripts/build-workspace.mjs",
     "preview": "vite preview"
   },
