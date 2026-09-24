@@ -65,7 +65,7 @@ XU 可以连接独立下载的 `XU-Office-Editor` 目录，把其中约 250 MiB 
 - 运行组件由用户下载一次并放在固定目录，后续由 XU 通过授权的本地目录句柄读取；
 - 文档内容和运行组件都不会上传到 XU。
 
-当前本地联调时，在“我的资源”底部选择 `XU-Office-Editor` 仓库根目录即可。正式发行包与国内镜像准备完成后，下载入口会写入站内文章《XU 本地文档工作台：安装与使用》。
+当前本地联调或正式使用时，在“我的资源”底部选择 `XU-Office-Editor/dist/` 运行目录即可，不要选择仓库根目录。正式下载说明同步写入站内文章《XU 本地文档工作台：安装与使用》。
 
 ## 本地预览
 
@@ -238,12 +238,12 @@ npm run preview
 
 XU 的“我的资源”支持连接独立的本地 Office 编辑器仓库：
 
-- Office 编辑器仓库：[Lucifer-cgl/XU-Office-Editor](https://github.com/Lucifer-cgl/XU-Office-Editor)
-- 直接下载仓库 ZIP：[下载 XU-Office-Editor](https://github.com/Lucifer-cgl/XU-Office-Editor/archive/refs/heads/main.zip)
+- Office 运行包目录：[XU-Office-Editor/dist](https://github.com/Lucifer-cgl/XU-Office-Editor/tree/main/dist)
+- 下载发行包：[下载 XU-Office-Editor](https://github.com/Lucifer-cgl/XU-Office-Editor/archive/refs/heads/main.zip)（解压后只使用其中的 `dist/` 文件夹）
 - XU 在线入口：[xu.lucifer-cgl.workers.dev](https://xu.lucifer-cgl.workers.dev/)
-- Office 独立打开：下载后双击仓库内的 `start.cmd`，即可不经过 XU 单独打开文档工作台。
+- Office 独立打开：下载并解压后，进入 `dist/`，双击其中的 `start.cmd`，即可不经过 XU 单独打开文档工作台。
 
-下载并解压 `XU-Office-Editor` 后，在 XU 左侧“我的资源”底部连接编辑器文件夹。首次连接需要授权该文件夹；以后 XU 会从本地文件夹加载 Office 运行组件，不需要每次重新下载，也不会把 Office 大型运行文件打包进 XU 仓库。国内镜像发布后会在此处补充 Gitee 下载链接。
+下载并解压 `XU-Office-Editor` 后，只需在 XU 左侧“我的资源”底部选择解压出来的 `dist/` 文件夹，不要选择仓库根目录。首次连接需要授权该文件夹；以后 XU 会从本地 `dist/` 文件夹加载 Office 运行组件，不需要每次重新下载，也不会把 Office 大型运行文件打包进 XU 仓库。国内镜像发布后会在此处补充 Gitee 下载链接。
 
 课程下载入口位于左侧目录每门课程右侧的“⋯”。
 
