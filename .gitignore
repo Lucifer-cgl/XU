@@ -6,6 +6,12 @@ public/generated/
 .dev.vars
 *.log
 
+# Release attachments are staged locally and uploaded by the publisher script.
+/release-staging/
+/push-release.cmd
+/scripts/publish-release.ps1
+/scripts/test-release-manifest.mjs
+
 # Local-only Git helpers
 /push-content.cmd
 /push-all.cmd

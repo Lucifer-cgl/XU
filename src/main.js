@@ -19,6 +19,7 @@ const rightPanelResizer = document.querySelector("#right-panel-resizer");
 const themeToggle = document.querySelector("#theme-toggle");
 let catalog;
 let searchIndex;
+let releaseManifest = { files: [], tree: null };
 let currentSource = "";
 let currentDocument;
 let currentTocHtml = "";
@@ -156,8 +157,10 @@ marked.use(
 );
 const escapeHtml = (value = "") => value.replace(/[&<>'\"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]);
 const routeFor = (id) => `#/read/${encodeURIComponent(id)}`;
+const releaseRouteFor = (id) => `#/release/${encodeURIComponent(id)}`;
 const localRouteFor = (id) => `#/local/${encodeURIComponent(id)}`;
 const hrefFor = (doc) => routeFor(doc.id);
+const releaseHrefFor = (item) => item.mirrorUrl || item.url || "#";
 const labelFor = (doc) => doc.displayTitle || doc.title;
 const safeId = (value = "") => `b-${Array.from(value).map((char) => char.codePointAt(0).toString(36)).join("-")}`;
 const localFileExtensions = new Set(["md", "markdown", "html", "htm", "pdf", "txt", "png", "jpg", "jpeg", "webp", "svg", "gif", "doc", "docx", "odt", "rtf", "ppt", "pptx", "odp", "xls", "xlsx", "ods", "csv"]);
@@ -593,11 +596,53 @@ async function removeLocalFolder() {
 }
 
 function renderNavigation(activeId = "") {
-  nav.innerHTML = `${renderCourseNodes(buildCourseTree(catalog.courses), activeId)}${renderLocalResources(activeId)}`;
+  nav.innerHTML = `
+    <div class="sidebar-heading"><span>笔记目录</span></div>
+    ${renderCourseNodes(buildCourseTree(catalog.courses), activeId)}
+    ${renderLocalResources(activeId)}`;
+}
+
+function setSectionMode(mode) {
+  siteLayout.dataset.sectionMode = mode;
+  document.body.dataset.sectionMode = mode;
+  document.querySelectorAll(".primary-nav a").forEach((link) => {
+    const selected = (mode === "landing" && link.getAttribute("href") === "#/")
+      || (mode === "notes" && link.getAttribute("href") === "#/notes")
+      || (mode === "resources" && link.getAttribute("href") === "#/resources");
+    if (selected) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  });
+}
+
+function renderReleaseNavigation(activeId = "") {
+  const children = releaseManifest.tree?.children || [];
+  if (!children.length) return "";
+  return `<section class="release-navigation">
+    <div class="sidebar-heading"><span>资料附件</span><span>${releaseManifest.files.length}</span></div>
+    ${renderReleaseNavigationNodes(children, activeId)}
+  </section>`;
+}
+
+function renderReleaseNavigationNodes(nodes, activeId, depth = 0) {
+  return `<ul class="course-tree course-tree-level-${depth}">${nodes.map((node) => {
+    if (node.type === "file") {
+      const item = releaseManifest.files.find((file) => file.id === node.resourceId);
+      if (!item) return "";
+      return `<li class="course-links"><a href="${releaseRouteFor(item.id)}" class="${item.id === activeId ? "active" : ""}" title="${escapeHtml(item.path)}"><span class="format-badge">${escapeHtml(item.type.toUpperCase())}</span><span class="course-link-title">${escapeHtml(item.name)}</span></a></li>`;
+    }
+    const activeBranch = Boolean(activeId) && releaseBranchContains(node, activeId);
+    return `<li class="course-node"><details class="course-group ${activeBranch ? "active-branch" : ""}" ${depth === 0 || activeBranch ? "open" : ""}><summary><span class="course-title"><strong>${escapeHtml(node.name)}</strong></span><span class="course-count">${releaseFileCount(node)}</span></summary>${renderReleaseNavigationNodes(node.children || [], activeId, depth + 1)}</details></li>`;
+  }).join("")}</ul>`;
+}
+
+function releaseBranchContains(node, activeId) {
+  if (node.type === "file") return node.resourceId === activeId;
+  return (node.children || []).some((child) => releaseBranchContains(child, activeId));
 }
 
 function renderHome() {
   document.body.classList.remove("workbench-fullscreen");
+  setSectionMode("landing");
   siteLayout.dataset.localWorkbench = "false";
   siteLayout.dataset.workbenchFullscreen = "false";
   main.classList.remove("workspace-active");
@@ -608,61 +653,164 @@ function renderHome() {
   currentTocHtml = "";
   tocMode = "toc";
   tocPanel.innerHTML = "";
-  renderNavigation();
+  nav.innerHTML = "";
   document.title = catalog.site.title;
   main.innerHTML = `
-    <section class="hero">
-      <p class="eyebrow">墟 · XU · LUCIFER OPEN KNOWLEDGE</p>
-      <h1>把知识整理成<br><em>清晰、可靠、可带走</em>的页面。</h1>
-      <p class="hero-copy">Markdown 自动完成专业排版；完整 HTML 保留作者原有设计并直接打开。目录层级由文件夹自动生成。</p>
-      <label class="search-box"><span>搜索</span><input id="search-input" type="search" placeholder="课程、章节或正文关键词" autocomplete="off" /></label>
-      <div id="search-results" class="search-results" aria-live="polite"></div>
-    </section>
-    <section class="brand-story" aria-labelledby="brand-story-title">
-      <div class="brand-glyph" aria-hidden="true">墟</div>
-      <div class="brand-story-copy">
-        <p class="eyebrow">WHY “墟”</p>
-        <h2 id="brand-story-title">知识有所归，也由此再出发。</h2>
-        <p>“墟”取意于“归墟”。我们借《山海经》中万物流转、终有所归的意象，表达知识的另一种轮回：它被记录、分享与修订，又在下一颗好奇心中重新生长。</p>
-        <p>这里不是知识的终点，而是一处开放的汇流之地。</p>
+    <section class="portal-hero">
+      <div class="portal-intro"><p class="eyebrow">墟 · XU · OPEN KNOWLEDGE</p><h1>让知识<br>有迹可循。</h1><p>沿着笔记梳理思路，在资料库里找到原始文件。选一个入口，继续你的探索。</p></div>
+      <div class="portal-options">
+        <a class="portal-card portal-card-note" href="#/notes"><span class="portal-index">01 / 阅读</span><div><small>CONTENT / READING</small><h2>NOTE</h2><p>课程笔记、文章与知识整理。循着目录阅读，在字里行间找到线索。</p></div><strong>浏览笔记 <span>↗</span></strong></a>
+        <a class="portal-card portal-card-resource" href="#/resources"><span class="portal-index">02 / 资料</span><div><small>RELEASE / LIBRARY</small><h2>RESOURCE</h2><p>试卷、课件和 Office 文件。按文件夹查找，打开预览或保存原件。</p></div><strong>进入资料库 <span>↗</span></strong></a>
       </div>
+      <footer class="portal-foot"><span>知识有所归，也由此再出发。</span><span>${catalog.documents.length} 篇笔记 · ${(releaseManifest.files || []).length} 份资料</span><a href="https://github.com/Lucifer-cgl/XU" target="_blank" rel="noopener noreferrer">GitHub ↗</a></footer>
     </section>
-    <section class="open-source-section" aria-labelledby="open-source-title">
-      <div class="open-source-copy">
-        <p class="eyebrow">OPEN SOURCE, OPEN FUTURE</p>
-        <h2 id="open-source-title">让有用的内容，抵达更多人。</h2>
-        <p>开源即是未来，分享带来进步。你可以把有用的文章放进对应文件夹，让它们成为知识库的一部分，分享给 everybody。</p>
-        <p>这个站点保持纯静态，不设置账号、评论服务器或数据库。想交流、提建议、补充文章，可以直接前往 GitHub 仓库。</p>
-        <a class="github-link" href="https://github.com/Lucifer-cgl/XU" target="_blank" rel="noopener noreferrer"><span>GitHub</span><strong>Lucifer-cgl / XU</strong><span aria-hidden="true">↗</span></a>
-      </div>
-      <div class="support-panel">
-        <div class="support-copy">
-          <p class="eyebrow">SUPPORT THE WORK</p>
-          <h2>码字不易，感谢每一次回应。</h2>
-          <p>点赞、收藏、加关注，就是最直接的支持。觉得有用的话，随缘支持一下～ 欢迎私信订阅更多有趣内容。</p>
+    <div class="portal-about">
+      <section class="brand-story" aria-labelledby="brand-story-title">
+        <div class="brand-glyph" aria-hidden="true">墟</div>
+        <div class="brand-story-copy">
+          <p class="eyebrow">WHY “墟”</p>
+          <h2 id="brand-story-title">知识有所归，也由此再出发。</h2>
+          <p>“墟”取意于“归墟”。我们借《山海经》中万物流转、终有所归的意象，表达知识的另一种轮回：它被记录、分享与修订，又在下一颗好奇心中重新生长。</p>
+          <p>这里不是知识的终点，而是一处开放的汇流之地。</p>
         </div>
-        <div class="support-images">
-          <figure><img src="${supportMemeUrl}" alt="支持作者的趣味表情图" loading="lazy"><figcaption>喜欢的话，给创作一点鼓励</figcaption></figure>
-          <figure><img src="${wechatQrUrl}" alt="作者的微信支持二维码" loading="lazy"><figcaption>随缘支持 · 量力而行</figcaption></figure>
+      </section>
+      <section class="open-source-section" aria-labelledby="open-source-title">
+        <div class="open-source-copy">
+          <p class="eyebrow">OPEN SOURCE, OPEN FUTURE</p>
+          <h2 id="open-source-title">让有用的内容，抵达更多人。</h2>
+          <p>开源即是未来，分享带来进步。你可以把有用的文章放进对应文件夹，让它们成为知识库的一部分，分享给 everybody。</p>
+          <p>这个站点保持纯静态，不设置账号、评论服务器或数据库。想交流、提建议、补充文章，可以直接前往 GitHub 仓库。</p>
+          <a class="github-link" href="https://github.com/Lucifer-cgl/XU" target="_blank" rel="noopener noreferrer"><span>GitHub</span><strong>Lucifer-cgl / XU</strong><span aria-hidden="true">↗</span></a>
         </div>
-      </div>
-    </section>
-    <section class="course-grid" aria-label="课程列表">
-      ${catalog.courses.map((course, index) => `
-        <article class="course-card">
-          <span class="course-number">${String(index + 1).padStart(2, "0")}</span>
-          <h2>${escapeHtml(course.name)}</h2>
-          <p>${escapeHtml(course.description || `${course.documents.length} 篇内容`)}</p>
-          <a href="${course.documents[0] ? hrefFor(course.documents[0]) : "#/"}">开始阅读 <span aria-hidden="true">→</span></a>
-        </article>`).join("")}
-    </section>`;
+        <div class="support-panel">
+          <div class="support-copy">
+            <p class="eyebrow">SUPPORT THE WORK</p>
+            <h2>码字不易，感谢每一次回应。</h2>
+            <p>点赞、收藏、加关注，就是最直接的支持。觉得有用的话，随缘支持一下～ 欢迎私信订阅更多有趣内容。</p>
+          </div>
+          <div class="support-images">
+            <figure><img src="${supportMemeUrl}" alt="支持作者的趣味表情图" loading="lazy"><figcaption>喜欢的话，给创作一点鼓励</figcaption></figure>
+            <figure><img src="${wechatQrUrl}" alt="作者的微信支持二维码" loading="lazy"><figcaption>随缘支持 · 量力而行</figcaption></figure>
+          </div>
+        </div>
+      </section>
+    </div>`;
+}
+
+function renderNotesHome() {
+  setSectionMode("notes");
+  siteLayout.dataset.localWorkbench = "false";
+  main.classList.remove("workspace-active", "release-active");
+  currentDocument = null;
+  currentTocHtml = "";
+  renderNavigation();
+  tocPanel.innerHTML = '<div class="toc-title">笔记说明</div><p class="bookmark-empty">左侧选择课程与文章；打开文章后，右侧显示本文目录与书签。</p>';
+  document.title = `NOTE · ${catalog.site.title}`;
+  main.innerHTML = `<section class="notes-library-head"><div><p class="eyebrow">NOTE / CONTENT</p><h1>笔记与文章</h1><p>适合连续阅读、全文检索与按章节浏览的 Markdown / HTML 内容。</p></div><a href="#/">返回入口</a></section><section class="notes-search"><label class="search-box"><span>搜索</span><input id="search-input" type="search" placeholder="课程、章节或正文关键词" autocomplete="off" /></label><div id="search-results" class="search-results" aria-live="polite"></div></section>${renderNotesSection()}`;
   const input = document.querySelector("#search-input");
   input.addEventListener("focus", ensureSearchIndex, { once: true });
   input.addEventListener("input", handleSearch);
 }
 
+function renderResourcesHome() {
+  setSectionMode("resources");
+  siteLayout.dataset.localWorkbench = "false";
+  main.classList.remove("workspace-active");
+  main.classList.add("release-active");
+  currentDocument = null;
+  nav.innerHTML = "";
+  tocPanel.innerHTML = "";
+  document.title = `RESOURCE · ${catalog.site.title}`;
+  main.innerHTML = `<section class="resource-library-head"><p class="eyebrow">XU / RESOURCE LIBRARY</p><h1>每一份资料，<br><em>都有它的归处。</em></h1><p>沿着文件夹寻找试卷、课件与参考材料。目录按原有层级组织，打开文件时才加载内容。</p><label class="resource-search"><span class="sr-only">搜索资料</span><input id="resource-search-input" type="search" placeholder="搜索文件名或文件夹，例如 财务管理、期末卷" autocomplete="off"><span class="resource-search-icon" aria-hidden="true">⌕</span></label><div class="resource-library-stats"><span><strong>${(releaseManifest.files || []).length}</strong> 份资料</span><span><strong>${countReleaseFolders(releaseManifest.tree)}</strong> 个文件夹</span><span>PDF · WORD · EXCEL · PPT</span></div></section><section class="resource-guide"><span class="resource-guide-mark" aria-hidden="true">✦</span><p>从文件夹进入，按需预览或下载单个文件。资料会保持原样，方便保存和引用。</p><a href="https://github.com/Lucifer-cgl/XU" target="_blank" rel="noopener noreferrer">查看开源仓库 ↗</a></section><div id="resource-search-results" class="resource-search-results" hidden></div><div id="resource-directory">${renderReleaseSection() || '<section class="release-preview-empty"><h2>资料库暂时为空</h2><p>把文件放入 release-staging 后重新生成目录。</p></section>'}</div>`;
+  document.querySelector("#resource-search-input").addEventListener("input", handleResourceSearch);
+}
+
+function countReleaseFolders(node) {
+  if (!node) return 0;
+  return (node.children || []).reduce((count, child) => count + (child.type === "folder" ? 1 + countReleaseFolders(child) : 0), 0);
+}
+
+function handleResourceSearch(event) {
+  const query = event.target.value.trim().toLocaleLowerCase("zh-CN");
+  const results = document.querySelector("#resource-search-results");
+  const directory = document.querySelector("#resource-directory");
+  directory.hidden = Boolean(query);
+  results.hidden = !query;
+  if (!query) { results.innerHTML = ""; return; }
+  const matches = (releaseManifest.files || []).filter((item) => item.path.toLocaleLowerCase("zh-CN").includes(query));
+  results.innerHTML = `<div class="resource-search-summary">找到 ${matches.length} 份资料</div><div class="resource-search-grid">${matches.slice(0, 80).map(renderReleaseFileCard).join("")}</div>${matches.length > 80 ? '<p class="resource-search-more">仅显示前 80 项，请输入更具体的关键词。</p>' : ""}`;
+}
+
+function renderNotesSection() {
+  return `<section class="notes-section" aria-labelledby="notes-title">
+    <div class="section-heading"><div><p class="eyebrow">NOTES &amp; ARTICLES</p><h2 id="notes-title">笔记与文章</h2><p>Markdown 和 HTML 按课程整理，专注阅读、搜索与清晰的文章结构。</p></div><span class="release-count">${catalog.documents.length} 篇</span></div>
+    <div class="course-grid" aria-label="课程列表">
+      ${catalog.courses.map((course, index) => `<article class="course-card"><span class="course-number">${String(index + 1).padStart(2, "0")}</span><h2>${escapeHtml(course.name)}</h2><p>${escapeHtml(course.description || `${course.documents.length} 篇内容`)}</p><a href="${course.documents[0] ? hrefFor(course.documents[0]) : "#/"}">开始阅读 <span aria-hidden="true">→</span></a></article>`).join("")}
+    </div>
+  </section>`;
+}
+
+function renderReleaseSection() {
+  const files = releaseManifest.files || [];
+  if (!files.length) return "";
+  const tree = releaseManifest.tree || { children: [] };
+  const roots = tree.children || [];
+  const singleRoot = roots.length === 1 && roots[0].type === "folder" ? roots[0] : null;
+  return `<section class="release-section" aria-labelledby="release-title">
+    <div class="release-heading"><div><p class="eyebrow">BROWSE BY FOLDER</p><h2 id="release-title">按目录探索</h2><p>先选文件夹，再查看里面的文件。</p></div><span class="release-count">${files.length} 份资料</span></div>
+    ${singleRoot ? `<div class="release-root-label"><span>当前目录</span><strong>${escapeHtml(singleRoot.name)}</strong><span>${releaseFileCount(singleRoot)} 份资料</span></div>` : ""}
+    <div class="release-tree">${(singleRoot?.children || roots).map((node) => renderReleaseNode(node, singleRoot ? 1 : 0)).join("")}</div>
+  </section>`;
+}
+
+function releaseFileCount(node) {
+  if (node.type === "file") return 1;
+  return (node.children || []).reduce((total, child) => total + releaseFileCount(child), 0);
+}
+
+function renderReleaseNode(node, depth) {
+  if (node.type === "folder") {
+    const count = releaseFileCount(node);
+    const folders = (node.children || []).filter((child) => child.type === "folder");
+    const chips = folders.slice(0, 4).map((child, index) => `<button type="button" data-release-child-folder="${index}" aria-label="展开${escapeHtml(child.name)}文件夹">${escapeHtml(child.name)} <small>${releaseFileCount(child)}</small></button>`).join("");
+    return `<details class="release-folder release-folder-depth-${depth}"><summary><span class="release-folder-top"><span class="release-folder-name">${escapeHtml(node.name)}</span><span class="release-folder-count">${count} 份</span></span><span class="release-folder-preview">${chips || `<span>${count} 份文件</span>`}</span><span class="release-folder-open">展开目录 <span aria-hidden="true">⌄</span></span></summary><div class="release-folder-children">${(node.children || []).map((child) => renderReleaseNode(child, depth + 1)).join("")}</div></details>`;
+  }
+  const item = releaseManifest.files.find((file) => file.id === node.resourceId);
+  if (!item) return "";
+  return renderReleaseFileCard(item);
+}
+
+function renderReleaseFileCard(item) {
+  const href = releaseHrefFor(item);
+  const ready = Boolean(item.url || item.mirrorUrl);
+  return `<article class="release-card"><div class="release-card-top"><span class="format-badge">${escapeHtml(item.type.toUpperCase())}</span><span>${formatBytes(item.size)}</span></div><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.path)}</p><div class="release-actions">${ready && item.preview ? `<a href="${releaseRouteFor(item.id)}">预览</a>` : ""}<a href="${ready ? escapeHtml(href) : "#"}" ${ready ? 'target="_blank" rel="noopener noreferrer" download' : 'aria-disabled="true"'}>${ready ? "下载" : "等待发布"} <span aria-hidden="true">↗</span></a></div></article>`;
+}
+
+function formatBytes(bytes = 0) {
+  if (bytes < 1024) return `${bytes} B`;
+  const units = ["KB", "MB", "GB", "TB"];
+  let value = bytes;
+  let index = -1;
+  do { value /= 1024; index += 1; } while (value >= 1024 && index < units.length - 1);
+  return `${value.toFixed(value >= 100 ? 0 : value >= 10 ? 1 : 2)} ${units[index]}`;
+}
+
 async function ensureSearchIndex() {
-  if (!searchIndex) searchIndex = await loadJson("/generated/search-index.json");
+  if (!searchIndex) {
+    searchIndex = await loadJson("/generated/search-index.json");
+    const releaseItems = (releaseManifest.files || []).filter((item) => item.url || item.mirrorUrl).map((item) => ({
+      id: item.id,
+      title: item.name,
+      displayTitle: item.name,
+      description: `${formatBytes(item.size)} · ${item.preview ? "可在线预览" : "可下载"}`,
+      coursePath: `附件资料 / ${item.path.split("/").slice(0, -1).join(" / ") || "未分类"}`,
+      type: item.type,
+      text: `${item.name} ${item.path}`,
+      release: true,
+      url: releaseRouteFor(item.id)
+    }));
+    searchIndex = [...searchIndex, ...releaseItems];
+  }
 }
 
 async function handleSearch(event) {
@@ -673,7 +821,9 @@ async function handleSearch(event) {
   const terms = query.split(/\s+/).filter(Boolean);
   const results = searchIndex.filter((item) => terms.every((term) => `${item.displayTitle || ""} ${item.title} ${item.coursePath} ${item.text}`.toLocaleLowerCase("zh-CN").includes(term))).slice(0, 12);
   target.innerHTML = results.length
-    ? results.map((item) => `<a href="${hrefFor(item)}"><strong>${escapeHtml(labelFor(item))}</strong><span>${escapeHtml(item.coursePath)} · ${item.type.toUpperCase()}</span><small>${escapeHtml(item.description)}</small></a>`).join("")
+    ? results.map((item) => item.release
+      ? `<a href="${escapeHtml(item.url)}"><strong>${escapeHtml(labelFor(item))}</strong><span>${escapeHtml(item.coursePath)} · ${item.type.toUpperCase()}</span><small>${escapeHtml(item.description)}</small></a>`
+      : `<a href="${hrefFor(item)}"><strong>${escapeHtml(labelFor(item))}</strong><span>${escapeHtml(item.coursePath)} · ${item.type.toUpperCase()}</span><small>${escapeHtml(item.description)}</small></a>`).join("")
     : "<p>没有找到相关内容。</p>";
 }
 
@@ -1093,6 +1243,7 @@ function renderLocalUnsupportedCard(item, url) {
 }
 
 async function renderLocalFile(id) {
+  setSectionMode("notes");
   const item = localResources.files.get(id);
   if (!item) return renderError("这个本地文件当前不可用。请重新选择“我的资源”文件夹。", true);
   if (["word", "powerpoint", "spreadsheet"].includes(item.type) && !officeRuntime.ready) {
@@ -1265,6 +1416,7 @@ window.addEventListener("message", async (event) => {
 });
 
 async function renderArticle(id) {
+  setSectionMode("notes");
   document.body.classList.remove("workbench-fullscreen");
   siteLayout.dataset.localWorkbench = "false";
   siteLayout.dataset.workbenchFullscreen = "false";
@@ -1403,16 +1555,65 @@ function renderError(message, showHome = false) {
   main.innerHTML = `<section class="error-state"><p class="eyebrow">读取失败</p><h1>${escapeHtml(message)}</h1>${showHome ? '<a href="#/">返回首页</a>' : '<button type="button" onclick="location.reload()">重新加载</button>'}</section>`;
 }
 
+function renderReleaseResource(id) {
+  const item = (releaseManifest.files || []).find((file) => file.id === id);
+  if (!item) { renderError("没有找到这份资料，目录可能已经更新。", true); return; }
+  const href = releaseHrefFor(item);
+  const ready = Boolean(item.url || item.mirrorUrl);
+  const type = item.type.toLowerCase();
+  const officeTypes = new Set(["doc", "docx", "xls", "xlsx", "ppt", "pptx"]);
+  const imageTypes = new Set(["png", "jpg", "jpeg", "webp", "gif", "svg"]);
+  let preview = `<div class="release-preview-empty"><p class="eyebrow">DOWNLOAD ONLY</p><h2>该格式暂不支持网页内预览</h2><p>可以直接下载原文件，在本地应用中打开。</p></div>`;
+  if (!ready) {
+    preview = `<div class="release-preview-empty"><p class="eyebrow">WAITING FOR RELEASE</p><h2>文件尚未发布</h2><p>目录已经生成，上传 Release 后预览和下载入口会自动生效。</p></div>`;
+  } else if (type === "pdf") {
+    preview = `<iframe class="release-preview-frame" src="${escapeHtml(href)}" title="${escapeHtml(item.name)} PDF 预览"></iframe>`;
+  } else if (officeTypes.has(type)) {
+    const officeViewer = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(href)}`;
+    preview = `<iframe class="release-preview-frame" src="${escapeHtml(officeViewer)}" title="${escapeHtml(item.name)} Office 在线预览"></iframe>`;
+  } else if (imageTypes.has(type)) {
+    preview = `<div class="release-image-stage"><img src="${escapeHtml(href)}" alt="${escapeHtml(item.name)}"></div>`;
+  }
+  document.body.classList.remove("workbench-fullscreen");
+  setSectionMode("resources");
+  siteLayout.dataset.localWorkbench = "false";
+  siteLayout.dataset.workbenchFullscreen = "false";
+  main.classList.remove("workspace-active");
+  main.classList.add("release-active");
+  currentDocument = null;
+  currentTocHtml = "";
+  tocPanel.innerHTML = "";
+  nav.innerHTML = "";
+  document.title = `${item.name} · 资料附件 · ${catalog.site.title}`;
+  main.innerHTML = `<section class="release-detail">
+    <nav class="breadcrumbs"><a href="#/">首页</a><span>/</span><a href="#/resources">资料库</a><span>/</span><strong>${escapeHtml(item.name)}</strong></nav>
+    <header class="release-detail-head"><div><p class="eyebrow">RELEASE RESOURCE</p><h1>${escapeHtml(item.name)}</h1><p>${escapeHtml(item.path)}</p></div><div class="release-detail-actions">${ready ? `<a class="primary" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" download>下载原文件</a>` : ""}<a href="#/resources">返回资料库</a></div></header>
+    <dl class="release-meta"><div><dt>格式</dt><dd>${escapeHtml(type.toUpperCase())}</dd></div><div><dt>大小</dt><dd>${formatBytes(item.size)}</dd></div><div><dt>文件校验</dt><dd title="${escapeHtml(item.sha256 || "")}">${escapeHtml((item.sha256 || "").slice(0, 12) || "—")}</dd></div><div><dt>存储</dt><dd>GitHub Release</dd></div></dl>
+    <div class="release-preview-shell">${preview}</div>
+    ${officeTypes.has(type) && ready ? '<p class="release-preview-note">Office 预览由微软在线查看器读取公开附件；若网络不可用，请直接下载原文件。</p>' : ""}
+  </section>`;
+  sidebar.classList.remove("open");
+  main.focus();
+}
+
 function route() {
   saveCurrentTabScroll();
+  main.classList.remove("release-active");
+  const releaseMatch = location.hash.match(/^#\/release\/(.+)$/);
+  if (releaseMatch) {
+    renderReleaseResource(decodeURIComponent(releaseMatch[1]));
+    return;
+  }
   const localMatch = location.hash.match(/^#\/local\/(.+)$/);
   if (localMatch) {
     renderLocalFile(decodeURIComponent(localMatch[1]));
     return;
   }
   const match = location.hash.match(/^#\/read\/(.+)$/);
-  if (match) renderArticle(decodeURIComponent(match[1]));
-  else renderHome();
+  if (match) { renderArticle(decodeURIComponent(match[1])); return; }
+  if (location.hash === "#/notes") { renderNotesHome(); return; }
+  if (location.hash === "#/resources") { renderResourcesHome(); return; }
+  renderHome();
 }
 
 navToggle.addEventListener("click", () => {
@@ -1421,12 +1622,19 @@ navToggle.addEventListener("click", () => {
 });
 leftPanelToggle.addEventListener("click", () => togglePanel("left"));
 rightPanelToggle.addEventListener("click", () => togglePanel("right"));
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  themeToggle.textContent = theme === "dark" ? "☾ 黑夜" : "☀ 白天";
+  themeToggle.setAttribute("aria-label", `当前为${theme === "dark" ? "黑夜" : "白天"}主题，点击切换`);
+  themeToggle.title = theme === "dark" ? "切换到白天主题" : "切换到黑夜主题";
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#14253b" : "#f7f4ed");
+}
 themeToggle.addEventListener("click", () => {
   const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-  document.documentElement.dataset.theme = next;
+  applyTheme(next);
   localStorage.setItem("xu-theme", next);
 });
-document.documentElement.dataset.theme = localStorage.getItem("xu-theme") || "light";
+applyTheme(localStorage.getItem("xu-theme") || "light");
 tocPanel.addEventListener("click", (event) => {
   const outlineButton = event.target.closest("[data-workbench-outline]");
   if (outlineButton && activeWorkbenchFrame?.contentWindow) {
@@ -1472,6 +1680,20 @@ tocPanel.addEventListener("click", (event) => {
   scrollToWithHeaderOffset(target);
 });
 main.addEventListener("click", (event) => {
+  const childFolderButton = event.target.closest("[data-release-child-folder]");
+  if (childFolderButton) {
+    event.preventDefault();
+    event.stopPropagation();
+    const parentFolder = childFolderButton.closest("details.release-folder");
+    const childFolders = parentFolder?.querySelectorAll(":scope > .release-folder-children > details.release-folder");
+    const childFolder = childFolders?.[Number(childFolderButton.dataset.releaseChildFolder)];
+    if (parentFolder && childFolder) {
+      parentFolder.open = true;
+      childFolder.open = true;
+      requestAnimationFrame(() => childFolder.scrollIntoView({ behavior: "smooth", block: "nearest" }));
+    }
+    return;
+  }
   const closeButton = event.target.closest("[data-close-doc-tab]");
   if (!closeButton) return;
   event.preventDefault();
@@ -1529,7 +1751,11 @@ window.addEventListener("scroll", () => {
 
 try {
   catalog = await loadJson("/generated/catalog.json");
-  await Promise.all([restoreLocalFolder(), restoreOfficeRuntime()]);
+  try { releaseManifest = await loadJson("/generated/release-resources.json"); } catch { releaseManifest = { files: [], tree: null }; }
+  await Promise.race([
+    Promise.all([restoreLocalFolder(), restoreOfficeRuntime()]),
+    new Promise((resolve) => window.setTimeout(resolve, 1200))
+  ]);
   renderNavigation();
   route();
 } catch (error) {

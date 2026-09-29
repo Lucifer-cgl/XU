@@ -6,7 +6,7 @@
 
 “墟”取意于“归墟”。这个项目希望让分散的课程笔记有一处稳定归档，也让知识在记录、分享、修订和再次阅读中持续流转。
 
-XU 是一个以 GitHub 为内容仓库、以 Cloudflare Workers Static Assets 为主发布平台的纯静态课程知识库。维护者只需在 `content/` 中增加或修改文件，构建程序就会自动生成目录、搜索索引和下载清单；访客可以在线阅读、搜索、复制原文、下载原文件，并通过浏览器打印为 A4/PDF。
+XU 是一个以 GitHub 为内容仓库、以 Cloudflare Workers Static Assets 为主发布平台的纯静态课程知识库。维护者只需在 `content/` 中增加或修改文件，构建程序就会自动生成目录、搜索索引和下载清单；访客可以在线阅读、搜索、复制原文、下载原文件，并通过浏览器打印为 A4/PDF。较大的 PDF、DOCX、XLSX 和 Office DIST 包可放入 GitHub/Gitee Release，由清单按需连接，不进入网页仓库历史。
 
 当前有两个访问入口：
 
@@ -39,6 +39,10 @@ XU 的策略是：**内容进入 Git，索引在构建时生成，阅读与下�
 - DOMPurify 清理、CSP 和基础安全响应头。
 - GitHub Actions 内容检查与 Cloudflare Git 自动部署。
 - 无后端、无数据库、无用户账户、无服务端 ZIP/PDF 任务。
+- Release 附件清单：扫描本地 `release-staging/` 后生成树形目录、大小和 SHA-256，不把大资料提交进 Git 历史。
+- 公共附件按需打开：PDF 可交给浏览器预览，DOCX/XLSX 保留在线预览或下载入口，Office DIST 作为独立压缩包发布。
+- 首页是独立导航入口，只提供 `NOTE` 与 `RESOURCE` 两个大选项：NOTE 保留左右目录阅读，RESOURCE 使用无侧栏的文件资料库界面。
+- 入口和资料库的主题切换使用同场景的 `public/static/xu-night-forest-v2.png`（夜景，山体原有暖光局部提亮）与 `public/static/xu-day-forest.png`（日景）；原始夜景保留在 `public/static/xu-night-forest.jfif` 便于对照。光影和卡片颜色随主题变化，偏好保存在浏览器本地。
 
 ## 墟 · AI Assistant
 
@@ -71,7 +75,14 @@ XU 可以连接独立下载的 `XU-Office-Editor` 目录，把其中约 250 MiB 
 
 双击仓库根目录下的 `preview-local.cmd`，或运行 `npm run preview:local`，即可先生成与线上一致的 `dist`，再启动只供本机访问的静态预览页并自动打开浏览器。`dist` 和临时内容目录都被 `.gitignore` 忽略，不会推送或发布到网页仓库；Office 编辑器运行包仍然保持在独立仓库中。
 
-## 两条内容通道
+## 两块内容区域
+
+XU 入口页明确分成两块：
+
+- `NOTE` 对应 `content/`。Markdown 与 HTML 进入带左右目录的文章阅读器，参与全文搜索、文章目录和前后篇导航。
+- `RESOURCE` 对应 `release-staging/`。PDF、Word、Excel、PowerPoint 等大文件保留原文件夹层级，采用无左右侧栏的资料库界面，聚焦在线预览和单文件下载。
+
+两块区域只共享站点外壳，不混用展示逻辑，也不会为了打开笔记而下载 Release 大文件。
 
 ### Markdown
 
@@ -97,6 +108,14 @@ scripts/build-content.mjs
 ├── 生成 catalog.json
 ├── 生成 search-index.json
 └── 生成 downloads.json
+        +
+release-staging/ 原始文件夹层级
+        │
+        ▼
+scripts/build-release-manifest.mjs
+├── 计算 SHA-256 与扁平附件名
+├── 生成树形 release-resources.json
+└── Release 只上传各个独立文件
         │
         ▼
 Vite 打包站点外壳、样式与自托管依赖
@@ -132,7 +151,10 @@ XU/
 │   ├── styles.css               # 阅读主题、首页与三线表
 │   └── print.css                # A4 打印规则
 ├── scripts/
-│   └── build-content.mjs        # 内容校验与清单生成
+│   ├── build-content.mjs        # 内容校验与清单生成
+│   ├── build-release-manifest.mjs # Release 附件扫描、哈希与树形清单
+├── release-staging/             # 本地暂存大文件，已忽略，不提交到仓库
+├── release-resources.json       # 已发布附件的树形目录、地址与 SHA-256（需要提交）
 ├── public/
 │   ├── _headers                 # 缓存与安全响应头
 │   └── static/html-tools.js     # 独立 HTML 可使用的受控工具
@@ -143,7 +165,42 @@ XU/
 └── package.json
 ```
 
-`public/content/`、`public/generated/` 和 `dist/` 都是构建产物，已被 Git 忽略，不应手工编辑。
+`public/content/`、`public/generated/` 和 `dist/` 都是构建产物，已被 Git 忽略，不应手工编辑。`release-staging/` 也不会进入仓库；它只供发布脚本读取。
+
+## 大文件 Release 发布
+
+大文件不要直接放进 Git 仓库。把 PDF、DOCX、XLSX、PPTX 或 `XU-Office-DIST.zip` 按希望展示的文件夹层级放入本地 `release-staging/`，再由维护者在本机上传到长期固定的 `resources` Release。`push-release.cmd` 和 `scripts/publish-release.ps1` 是本地维护工具，不随仓库提交；访客和部署环境都不需要它们。
+
+脚本会先扫描目录、计算 SHA-256、生成需要提交的 `release-resources.json`，再创建或更新 Release。Release 本身没有文件夹：新附件使用 `xu-路径哈希前16位-内容哈希前16位.扩展名`，仅含小写英文字母、数字、连字符和一个扩展名点；原始中文文件名和文件夹层级只保存在 JSON 中，供网页展示。已发布的旧附件继续沿用 GitHub 实际保存的名字，不会为了改名重新上传。
+
+例如本地结构：
+
+```text
+release-staging/高数/试卷/高数期末.pdf
+```
+
+会得到：
+
+```text
+网页目录：高数 / 试卷 / 高数期末.pdf
+Release：xu-0123456789abcdef-a1b2c3d4e5f67890.pdf（示意）
+```
+
+发布是可续传的：`release-resources.json` 中每条文件记录的 `uploaded` 就是发布标记。脚本先按内容哈希核对 GitHub 已有附件，上传成功并校验后立即保存标记和实际下载地址；中途失败后重跑，只处理未标记或内容已变化的文件。移动文件会更新逻辑路径，相同内容可复用远端附件；删除本地文件后重新扫描，其目录条目和标记会一起消失，但不会自动删除 Release 中的旧附件，避免断开历史链接。0 字节文件、非法扩展名和新附件名冲突会在上传前报错。
+
+GitHub 的 Release 页面还会把自动生成的 `Source code (zip)` 和 `Source code (tar.gz)` 算进页面显示的总数；它们不是 `release-staging/` 上传的资料。实际资料数量以 `release-resources.json` 和 Release API 的附件列表为准。
+
+网页构建时会把已提交清单复制到静态产物；部署机没有 `release-staging/` 时沿用已提交清单，本地目录存在但为空时则会生成空目录。访客不需要安装 Git、Node 或 GitHub CLI，网页首屏只加载索引，不下载全部资料。
+
+如果希望一键完成“上传 Release → 更新目录 → 提交并推送”，在仓库根目录运行 `push-release.cmd`。它会先执行 Release 发布脚本，再提交 `release-resources.json`、界面和发布逻辑相关变化。该脚本是本地维护工具，不进入仓库。
+
+如果暂时只想本地检查目录，不上传 Release，可运行：
+
+```bash
+npm run release:manifest
+```
+
+未标记为已上传的文件即使设置了 `XU_RELEASE_BASE_URL`，下载地址仍留空，网页显示“等待发布”；成功发布后才写入真实地址。后续本地扫描会保留内容未变化且发布目标相同的标记，移除已删除文件的记录。
 
 ## 添加一门课程
 
@@ -205,7 +262,8 @@ npm run preview
 
 | 命令 | 用途 |
 |---|---|
-| `npm run content:build` | 校验内容并生成三份静态清单 |
+| `npm run content:build` | 校验内容并生成四份静态清单 |
+| `npm run release:manifest` | 扫描 `release-staging/` 并生成 Release 附件清单 |
 | `npm run dev` | 生成内容后启动本地开发服务器 |
 | `npm run build` | 生成 `dist/` 正式静态站点 |
 | `npm run preview` | 本地预览正式构建结果 |

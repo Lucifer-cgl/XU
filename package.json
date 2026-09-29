@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "content:build": "node scripts/build-content.mjs",
+    "content:build": "node scripts/build-content.mjs && node scripts/build-release-manifest.mjs",
+    "release:manifest": "node scripts/build-release-manifest.mjs",
     "dev": "npm run content:build && vite",
     "preview:local": "npm run build && vite preview --host 127.0.0.1 --port 5175 --open",
     "build": "npm run content:build && vite build && node scripts/build-workspace.mjs",

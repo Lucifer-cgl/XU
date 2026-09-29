@@ -1,0 +1,2938 @@
+{
+  "schema": 1,
+  "generatedAt": "2026-09-29T18:52:42.766Z",
+  "source": "release-staging",
+  "releaseBaseUrl": "https://github.com/Lucifer-cgl/XU/releases/download/resources",
+  "mirrorBaseUrl": null,
+  "note": "大文件由发布脚本上传到 GitHub/Gitee Release；本清单保存目录、哈希、发布标记和下载地址。",
+  "files": [
+    {
+      "id": "release:财务管理A/21级期末答案（仅答案）.pdf",
+      "path": "财务管理A/21级期末答案（仅答案）.pdf",
+      "name": "21级期末答案（仅答案）.pdf",
+      "type": "pdf",
+      "size": 428852,
+      "sha256": "8bd6fa779b0a8f6698127d799c2a45e1cef49ab69d19f5325030c1b5fcaed8d4",
+      "assetName": "21._._-8bd6fa77.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/21._._-8bd6fa77.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:财务管理A/22财管期末卷.pdf",
+      "path": "财务管理A/22财管期末卷.pdf",
+      "name": "22财管期末卷.pdf",
+      "type": "pdf",
+      "size": 1532499,
+      "sha256": "8c43ea0fea3bd6b0eb4f5c357072fe83cbafec1596f92bd93d6f8dc682c54a6b",
+      "assetName": "22.-8c43ea0f.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/22.-8c43ea0f.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:财务管理A/22期末答案.doc",
+      "path": "财务管理A/22期末答案.doc",
+      "name": "22期末答案.doc",
+      "type": "doc",
+      "size": 189952,
+      "sha256": "437ff5caf2cc8b1cf14debfa8e5237cc0932539b33934949d5f532c681d9888d",
+      "assetName": "22.-437ff5ca.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/22.-437ff5ca.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:财务管理A/2018级期末考试参考答案.pdf",
+      "path": "财务管理A/2018级期末考试参考答案.pdf",
+      "name": "2018级期末考试参考答案.pdf",
+      "type": "pdf",
+      "size": 230319,
+      "sha256": "afad5a904c13e86096a46dc9d87475ab3d3d47920e0d3411efc085578dbca73a",
+      "assetName": "2018.-afad5a90.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2018.-afad5a90.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:财务管理A/2018级期末试卷.pdf",
+      "path": "财务管理A/2018级期末试卷.pdf",
+      "name": "2018级期末试卷.pdf",
+      "type": "pdf",
+      "size": 339403,
+      "sha256": "8b47251fe2e503fbfd3ca4d46b457195fdf408c582fd20c990e5e97966c70c8c",
+      "assetName": "2018.-8b47251f.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2018.-8b47251f.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:财务管理A/财务管理测试及答案.doc",
+      "path": "财务管理A/财务管理测试及答案.doc",
+      "name": "财务管理测试及答案.doc",
+      "type": "doc",
+      "size": 303104,
+      "sha256": "47b3defe691a4e251116ca1517d5e18628b53f948eeb962182e4f04e21c87e95",
+      "assetName": "-47b3defe.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-47b3defe.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:财务管理A/财务管理基础题库1~18章.docx",
+      "path": "财务管理A/财务管理基础题库1~18章.docx",
+      "name": "财务管理基础题库1~18章.docx",
+      "type": "docx",
+      "size": 56903,
+      "sha256": "3cedba720ab45d3ad3b0619396e4cd448e74a6ba4cbf4073cfe4a0dc5ca1eef5",
+      "assetName": "1_18.-3cedba72.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/1_18.-3cedba72.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:财务管理A/财务管理无名期中测试含答案/财务管理无名期中测试.docx",
+      "path": "财务管理A/财务管理无名期中测试含答案/财务管理无名期中测试.docx",
+      "name": "财务管理无名期中测试.docx",
+      "type": "docx",
+      "size": 62342,
+      "sha256": "0f1ccf8373ded1a1346ba3b0628fcd95733dac6387f898b068dcb34461159847",
+      "assetName": "-0f1ccf83.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-0f1ccf83.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:财务管理A/财务管理无名期中测试含答案/财务管理无名期中测试答案.pdf",
+      "path": "财务管理A/财务管理无名期中测试含答案/财务管理无名期中测试答案.pdf",
+      "name": "财务管理无名期中测试答案.pdf",
+      "type": "pdf",
+      "size": 78517,
+      "sha256": "85a6529873b0a9109f1495328eb3732c76531393b5b160f6c207b15229527389",
+      "assetName": "-85a65298.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-85a65298.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:财务管理A/公司理财  原..13.pdf",
+      "path": "财务管理A/公司理财  原..13.pdf",
+      "name": "公司理财  原..13.pdf",
+      "type": "pdf",
+      "size": 598091259,
+      "sha256": "f6d4e3392f8274820fc3482e0656141c245e1d42cc683fb2cd3650b75857a6d4",
+      "assetName": "_.13-f6d4e339.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_.13-f6d4e339.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:财务管理A/XXX1级期末试卷.pdf",
+      "path": "财务管理A/XXX1级期末试卷.pdf",
+      "name": "XXX1级期末试卷.pdf",
+      "type": "pdf",
+      "size": 446417,
+      "sha256": "075fec99a4548cf046049708dcfa2d8be912abe5f0e7a3ff544a88912ad13eca",
+      "assetName": "XXX1.-075fec99.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/XXX1.-075fec99.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:财务管理A/xxx2级期末试卷.pdf",
+      "path": "财务管理A/xxx2级期末试卷.pdf",
+      "name": "xxx2级期末试卷.pdf",
+      "type": "pdf",
+      "size": 473779,
+      "sha256": "46f5975cd9719027dde9bac90e7c068b27f301a2448fd3fc7bab63695e1eb646",
+      "assetName": "xxx2.-46f5975c.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/xxx2.-46f5975c.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:财务管理A/xxx3级期末试卷.pdf",
+      "path": "财务管理A/xxx3级期末试卷.pdf",
+      "name": "xxx3级期末试卷.pdf",
+      "type": "pdf",
+      "size": 287218,
+      "sha256": "aa42a1157d496b1479efb6bd97c31d056eb08ac41d1fbaae26baf3f5563ece9d",
+      "assetName": "xxx3.-aa42a115.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/xxx3.-aa42a115.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:财务管理A/XXX4级期末试卷.pdf",
+      "path": "财务管理A/XXX4级期末试卷.pdf",
+      "name": "XXX4级期末试卷.pdf",
+      "type": "pdf",
+      "size": 481107,
+      "sha256": "bef17dd1d96cedefefaf133829b9ddfc6b09fabdfcb831162f35c54c9cf525db",
+      "assetName": "XXX4.-bef17dd1.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/XXX4.-bef17dd1.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/试卷/《大学物理B下》期中试卷A卷.pdf",
+      "path": "大学物理B/试卷/《大学物理B下》期中试卷A卷.pdf",
+      "name": "《大学物理B下》期中试卷A卷.pdf",
+      "type": "pdf",
+      "size": 1055249,
+      "sha256": "20d07ff1f37eceb3e119b2bfc0840752beaaa11d0093b908679221676743e9b8",
+      "assetName": "_.B._.A.-20d07ff1.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_.B._.A.-20d07ff1.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/试卷/《大学物理B下》期中试卷A卷参考答案.pdf",
+      "path": "大学物理B/试卷/《大学物理B下》期中试卷A卷参考答案.pdf",
+      "name": "《大学物理B下》期中试卷A卷参考答案.pdf",
+      "type": "pdf",
+      "size": 781854,
+      "sha256": "7013e86e901e3075936c815f27497fb927e1bc63c0e0ac462d39565b3fd4826d",
+      "assetName": "_.B._.A.-7013e86e.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_.B._.A.-7013e86e.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/试卷/2021（A卷）.pdf",
+      "path": "大学物理B/试卷/2021（A卷）.pdf",
+      "name": "2021（A卷）.pdf",
+      "type": "pdf",
+      "size": 365976,
+      "sha256": "92807cafd8858a13b1928989c380189f0df244d602be1ee88c72f6b63547f3bf",
+      "assetName": "2021_A._-92807caf.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2021_A._-92807caf.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/试卷/2021（A卷）答案.docx",
+      "path": "大学物理B/试卷/2021（A卷）答案.docx",
+      "name": "2021（A卷）答案.docx",
+      "type": "docx",
+      "size": 207402,
+      "sha256": "b0fdc29b9076fb60942c140de5c0c3fe087d9eb46a42c9afa1c3b0d7a2f29f22",
+      "assetName": "2021_A._.-b0fdc29b.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2021_A._.-b0fdc29b.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/试卷/2021A（A卷）’.pdf",
+      "path": "大学物理B/试卷/2021A（A卷）’.pdf",
+      "name": "2021A（A卷）’.pdf",
+      "type": "pdf",
+      "size": 454887,
+      "sha256": "665e5afc7f7735a963e3be4cddbad121bc4fb3bdb4211be2e339e82612d1971b",
+      "assetName": "2021A_A._-665e5afc.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2021A_A._-665e5afc.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/试卷/2021A（A卷）答案.docx",
+      "path": "大学物理B/试卷/2021A（A卷）答案.docx",
+      "name": "2021A（A卷）答案.docx",
+      "type": "docx",
+      "size": 191277,
+      "sha256": "77e0fa8e725529d5acc2c0826bdc3fe2d3c3b35a7660fd1933f9217e2e13bf31",
+      "assetName": "2021A_A._.-77e0fa8e.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2021A_A._.-77e0fa8e.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/试卷/B期中复习题.doc",
+      "path": "大学物理B/试卷/B期中复习题.doc",
+      "name": "B期中复习题.doc",
+      "type": "doc",
+      "size": 384000,
+      "sha256": "e9fae80473c5d1297abb12e8017127b3add1ce9f2a700b7b107f9a5ce52cf6fe",
+      "assetName": "B.-e9fae804.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/B.-e9fae804.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/试卷/B下A卷参考答案-1.pdf",
+      "path": "大学物理B/试卷/B下A卷参考答案-1.pdf",
+      "name": "B下A卷参考答案-1.pdf",
+      "type": "pdf",
+      "size": 537579,
+      "sha256": "5ef4baec5bc1f909be5c406681dbd8e1b805dfbc190b912bb848490160425148",
+      "assetName": "B.A.-1-5ef4baec.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/B.A.-1-5ef4baec.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/试卷/B下A卷参考答案.pdf",
+      "path": "大学物理B/试卷/B下A卷参考答案.pdf",
+      "name": "B下A卷参考答案.pdf",
+      "type": "pdf",
+      "size": 330584,
+      "sha256": "20f8aa64a1627af48a24eab205041651ad7c0843923ddb5c11e1c270eb140ae1",
+      "assetName": "B.A.-20f8aa64.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/B.A.-20f8aa64.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/刚体的定轴转动2.pdf",
+      "path": "大学物理B/作业答案/刚体的定轴转动2.pdf",
+      "name": "刚体的定轴转动2.pdf",
+      "type": "pdf",
+      "size": 133595,
+      "sha256": "6c1d5f897d8245876daa58685086bdb4cd4235949001fb555114cf4fa209767d",
+      "assetName": "2-6c1d5f89.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2-6c1d5f89.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/恒定磁场1-答案.pdf",
+      "path": "大学物理B/作业答案/恒定磁场1-答案.pdf",
+      "name": "恒定磁场1-答案.pdf",
+      "type": "pdf",
+      "size": 379089,
+      "sha256": "97cdc64f62f1b37ccfc21a40e1fb2fe1af68bc403a03b22f0fc5108c706a34b7",
+      "assetName": "1-.-97cdc64f.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/1-.-97cdc64f.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/静电场1-答案.pdf",
+      "path": "大学物理B/作业答案/静电场1-答案.pdf",
+      "name": "静电场1-答案.pdf",
+      "type": "pdf",
+      "size": 337435,
+      "sha256": "1b91407048d4cb0a6a2c287cd29a07aa5b8217d7a007c47f715083322fe6c71e",
+      "assetName": "1-230a8241-1b914070.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/1-230a8241-1b914070.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/静电场2-答案.pdf",
+      "path": "大学物理B/作业答案/静电场2-答案.pdf",
+      "name": "静电场2-答案.pdf",
+      "type": "pdf",
+      "size": 135149,
+      "sha256": "47fec01b2a1e9eaf3a784ad002a50d547110894894dae5225491979a7a531be2",
+      "assetName": "2-b6687f74-47fec01b.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2-b6687f74-47fec01b.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/静电场中的导体与电介质1-答案.pdf",
+      "path": "大学物理B/作业答案/静电场中的导体与电介质1-答案.pdf",
+      "name": "静电场中的导体与电介质1-答案.pdf",
+      "type": "pdf",
+      "size": 452627,
+      "sha256": "4899a155c96695afe7800816879e9a0d6ce2f50f29be81d21c11385b62b90a06",
+      "assetName": "1-556e758d-4899a155.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/1-556e758d-4899a155.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/静电场中的导体与电介质2-答案.pdf",
+      "path": "大学物理B/作业答案/静电场中的导体与电介质2-答案.pdf",
+      "name": "静电场中的导体与电介质2-答案.pdf",
+      "type": "pdf",
+      "size": 225514,
+      "sha256": "7412a45cc9f9f08fd1c9b23bd68d8ebb1038cd02df0592208f4fc88a88b63bef",
+      "assetName": "2-8b7c697d-7412a45c.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2-8b7c697d-7412a45c.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/振动与波动1.pdf",
+      "path": "大学物理B/作业答案/振动与波动1.pdf",
+      "name": "振动与波动1.pdf",
+      "type": "pdf",
+      "size": 363629,
+      "sha256": "e2fae41fe20d1144664edad037bebefe804769b23b3aadb4db45d88a3ae8dc6e",
+      "assetName": "1-e2fae41f.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/1-e2fae41f.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/振动与波动2.pdf",
+      "path": "大学物理B/作业答案/振动与波动2.pdf",
+      "name": "振动与波动2.pdf",
+      "type": "pdf",
+      "size": 681952,
+      "sha256": "db1d7ee0104a55b8729e469b8004639488034036ac34656a4bd1162d208a8dce",
+      "assetName": "2-db1d7ee0.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2-db1d7ee0.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/A. 质点运动学1.pdf",
+      "path": "大学物理B/作业答案/A. 质点运动学1.pdf",
+      "name": "A. 质点运动学1.pdf",
+      "type": "pdf",
+      "size": 141601,
+      "sha256": "b0ca2ca223f5beb19f9ed923d40ee6fcb67d9617c4d706e6c8825a3f259bcb8c",
+      "assetName": "A._.1-b0ca2ca2.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/A._.1-b0ca2ca2.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/B.质点运动学2.pdf",
+      "path": "大学物理B/作业答案/B.质点运动学2.pdf",
+      "name": "B.质点运动学2.pdf",
+      "type": "pdf",
+      "size": 183098,
+      "sha256": "815f98b1c28d653cacf745cf33a6178453902b202ec5c5d1b4c4a1bddabb8e48",
+      "assetName": "B.2-815f98b1.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/B.2-815f98b1.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/C.质点动力学1.pdf",
+      "path": "大学物理B/作业答案/C.质点动力学1.pdf",
+      "name": "C.质点动力学1.pdf",
+      "type": "pdf",
+      "size": 136822,
+      "sha256": "95a718190f561f73f180b50b02928a3a977a1e759d6792fae1b5e20ab2412099",
+      "assetName": "C.1-95a71819.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/C.1-95a71819.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/D.质点动力学2.pdf",
+      "path": "大学物理B/作业答案/D.质点动力学2.pdf",
+      "name": "D.质点动力学2.pdf",
+      "type": "pdf",
+      "size": 101660,
+      "sha256": "73167faac82ada5e59cb39e410b72819567a99b923953ceb99386bad4dd1e92f",
+      "assetName": "D.2-73167faa.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/D.2-73167faa.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/E.刚体的定轴转动1.pdf",
+      "path": "大学物理B/作业答案/E.刚体的定轴转动1.pdf",
+      "name": "E.刚体的定轴转动1.pdf",
+      "type": "pdf",
+      "size": 124339,
+      "sha256": "a66dc6565e36a27a48ecd0db4f4f03b7178228dc942ecd60500e014ad0d17550",
+      "assetName": "E.1-a66dc656.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/E.1-a66dc656.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/G. 振动与波动1(1).pdf",
+      "path": "大学物理B/作业答案/G. 振动与波动1(1).pdf",
+      "name": "G. 振动与波动1(1).pdf",
+      "type": "pdf",
+      "size": 152965,
+      "sha256": "c1269dbde422407a6948cfa66dee9d6326ca0967e926da1bab573036022dc1e2",
+      "assetName": "G._.1_1_-c1269dbd.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/G._.1_1_-c1269dbd.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/H. 振动与波动2(1).pdf",
+      "path": "大学物理B/作业答案/H. 振动与波动2(1).pdf",
+      "name": "H. 振动与波动2(1).pdf",
+      "type": "pdf",
+      "size": 199265,
+      "sha256": "e289e2cc9b6863d95a242c6d1a5d699294c8086709a038e5f4fdaf17a674a033",
+      "assetName": "H._.2_1_-e289e2cc.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/H._.2_1_-e289e2cc.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/I. 静电场1(2).pdf",
+      "path": "大学物理B/作业答案/I. 静电场1(2).pdf",
+      "name": "I. 静电场1(2).pdf",
+      "type": "pdf",
+      "size": 180333,
+      "sha256": "47a6376a55cbf195320a3f746a6bf3122f07468c85441d23e0ffe95ec8542b51",
+      "assetName": "I._.1_2_-47a6376a.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/I._.1_2_-47a6376a.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/J. 静电场2(1).pdf",
+      "path": "大学物理B/作业答案/J. 静电场2(1).pdf",
+      "name": "J. 静电场2(1).pdf",
+      "type": "pdf",
+      "size": 95193,
+      "sha256": "44245161032497f62d95ca8e25211688df54859b985b96d396b2f6ea239a4a1f",
+      "assetName": "J._.2_1_-44245161.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/J._.2_1_-44245161.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/K. 静电场中的导体与电介质1(1).pdf",
+      "path": "大学物理B/作业答案/K. 静电场中的导体与电介质1(1).pdf",
+      "name": "K. 静电场中的导体与电介质1(1).pdf",
+      "type": "pdf",
+      "size": 191101,
+      "sha256": "4205dd30377599c8cbf78474f94140cb45ef58a6c767796fbaf61d6c72166094",
+      "assetName": "K._.1_1_-4205dd30.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/K._.1_1_-4205dd30.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/L. 静电场中的导体与电介质2(1).pdf",
+      "path": "大学物理B/作业答案/L. 静电场中的导体与电介质2(1).pdf",
+      "name": "L. 静电场中的导体与电介质2(1).pdf",
+      "type": "pdf",
+      "size": 122856,
+      "sha256": "d14f4663bcd32f874caa05aeeb34287070ce449d82d9c9c4009c7c390354d85f",
+      "assetName": "L._.2_1_-d14f4663.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/L._.2_1_-d14f4663.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/M. 恒定磁场1(1).pdf",
+      "path": "大学物理B/作业答案/M. 恒定磁场1(1).pdf",
+      "name": "M. 恒定磁场1(1).pdf",
+      "type": "pdf",
+      "size": 215474,
+      "sha256": "0fefdabe64d51454174eb57e20da8f72644f628543f9ba8b6cd3b0e9a098893c",
+      "assetName": "M._.1_1_-0fefdabe.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/M._.1_1_-0fefdabe.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/N. 恒定磁场2(1).pdf",
+      "path": "大学物理B/作业答案/N. 恒定磁场2(1).pdf",
+      "name": "N. 恒定磁场2(1).pdf",
+      "type": "pdf",
+      "size": 73987,
+      "sha256": "f5da024f4776427a0bbc81f95e110ab614f8a04f0c8980b29fd18041b7fa3cf4",
+      "assetName": "N._.2_1_-f5da024f.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/N._.2_1_-f5da024f.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/O. 变化的电磁场(1).pdf",
+      "path": "大学物理B/作业答案/O. 变化的电磁场(1).pdf",
+      "name": "O. 变化的电磁场(1).pdf",
+      "type": "pdf",
+      "size": 123998,
+      "sha256": "62b2e6500414f1bde35ecfd878384e761c785d2b9f8a92f551b3ea8a40d21034",
+      "assetName": "O._._1_-62b2e650.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/O._._1_-62b2e650.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/O. 变化的电磁场a.pdf",
+      "path": "大学物理B/作业答案/O. 变化的电磁场a.pdf",
+      "name": "O. 变化的电磁场a.pdf",
+      "type": "pdf",
+      "size": 77765,
+      "sha256": "eec993624da80be9d542302c5bc0b3f7a2f9a5d4f270c56abe8bd009b49c9d18",
+      "assetName": "O._.a-eec99362.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/O._.a-eec99362.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/P. 波动光学1(1).pdf",
+      "path": "大学物理B/作业答案/P. 波动光学1(1).pdf",
+      "name": "P. 波动光学1(1).pdf",
+      "type": "pdf",
+      "size": 116751,
+      "sha256": "76669c0ac19078509e3f7d49d6f5ae174adc95d1d6688e802aace8b95a51bce6",
+      "assetName": "P._.1_1_-76669c0a.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/P._.1_1_-76669c0a.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/P. 波动光学1a.pdf",
+      "path": "大学物理B/作业答案/P. 波动光学1a.pdf",
+      "name": "P. 波动光学1a.pdf",
+      "type": "pdf",
+      "size": 100433,
+      "sha256": "bed9ba5f1948b725b84081be1be47d1cbf25d20b91639d967a8540d678f5bf48",
+      "assetName": "P._.1a-bed9ba5f.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/P._.1a-bed9ba5f.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:大学物理B/作业答案/Q. 波动光学2(1).pdf",
+      "path": "大学物理B/作业答案/Q. 波动光学2(1).pdf",
+      "name": "Q. 波动光学2(1).pdf",
+      "type": "pdf",
+      "size": 121506,
+      "sha256": "d22f534da198bb405042a3f9322c703d3e854b04c854145de94929034e43e803",
+      "assetName": "Q._.2_1_-d22f534d.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/Q._.2_1_-d22f534d.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:电路原理/二极管三极管mos管教材—童诗白模拟电子技术基础 第六版高等教育出版社(1章).pdf",
+      "path": "电路原理/二极管三极管mos管教材—童诗白模拟电子技术基础 第六版高等教育出版社(1章).pdf",
+      "name": "二极管三极管mos管教材—童诗白模拟电子技术基础 第六版高等教育出版社(1章).pdf",
+      "type": "pdf",
+      "size": 304485146,
+      "sha256": "8a2789d240c7fde60afe23fe333afcc744ca92da51e39e157ae7d7791b654e3c",
+      "assetName": "mos._._._1._-8a2789d2.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/mos._._._1._-8a2789d2.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:电路原理/门电路教材—阎石数字电子技术基础第六版高等教育出版社(3章).pdf",
+      "path": "电路原理/门电路教材—阎石数字电子技术基础第六版高等教育出版社(3章).pdf",
+      "name": "门电路教材—阎石数字电子技术基础第六版高等教育出版社(3章).pdf",
+      "type": "pdf",
+      "size": 69799189,
+      "sha256": "85020fab39663632d92d2addf815904a7f14db4e78c30132fe879e55dab63394",
+      "assetName": "3-17b3dc1a-85020fab.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/3-17b3dc1a-85020fab.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:电路原理/门电路教材—阎石数字电子技术基础第六版高等教育出版社(3章)(1).pdf",
+      "path": "电路原理/门电路教材—阎石数字电子技术基础第六版高等教育出版社(3章)(1).pdf",
+      "name": "门电路教材—阎石数字电子技术基础第六版高等教育出版社(3章)(1).pdf",
+      "type": "pdf",
+      "size": 116953707,
+      "sha256": "b373f81c8007be1b70ad260ace5b7050a1375c3cb484532bcce3a7cad27c4d44",
+      "assetName": "3_1-15af9f25-b373f81c.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/3_1-15af9f25-b373f81c.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:管理学原理B/管原重点2025-12.31.pdf",
+      "path": "管理学原理B/管原重点2025-12.31.pdf",
+      "name": "管原重点2025-12.31.pdf",
+      "type": "pdf",
+      "size": 6318919,
+      "sha256": "8d2ffa989724fa1bda9cdca178d4b0bdbc87827246429995def0f44e31c4a8e1",
+      "assetName": "2025-12.31-8d2ffa98.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2025-12.31-8d2ffa98.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:宏观经济学/【仅答案】宏观经济学期末卷.pdf",
+      "path": "宏观经济学/【仅答案】宏观经济学期末卷.pdf",
+      "name": "【仅答案】宏观经济学期末卷.pdf",
+      "type": "pdf",
+      "size": 1391363,
+      "sha256": "2f02cac6bf73071ec7614726fe0e8fd5cf1842cfb0d60d77f88deb251bb5e09f",
+      "assetName": "_._.-2f02cac6.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_._.-2f02cac6.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:宏观经济学/22期末.docx",
+      "path": "宏观经济学/22期末.docx",
+      "name": "22期末.docx",
+      "type": "docx",
+      "size": 21239,
+      "sha256": "9fbb248093b69390ab5788275ac9804b4d6fe5fe30bcde68de0f01d240791fd1",
+      "assetName": "22.-9fbb2480.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/22.-9fbb2480.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:宏观经济学/2015宏观A卷答案.docx",
+      "path": "宏观经济学/2015宏观A卷答案.docx",
+      "name": "2015宏观A卷答案.docx",
+      "type": "docx",
+      "size": 56938,
+      "sha256": "692e8030452ba275f5ed585b1fde1f06e5441139382c7e04be5082074c55909d",
+      "assetName": "2015.A.-692e8030.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2015.A.-692e8030.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:宏观经济学/2017宏观经济答案.pdf",
+      "path": "宏观经济学/2017宏观经济答案.pdf",
+      "name": "2017宏观经济答案.pdf",
+      "type": "pdf",
+      "size": 227265,
+      "sha256": "8b6da235eeef9ddd5fbf13a29dccd84fab6acbea2c1422c7d7d1c92ae5f0ba0a",
+      "assetName": "2017.-8b6da235.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2017.-8b6da235.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:宏观经济学/2017宏观经济学试卷.docx",
+      "path": "宏观经济学/2017宏观经济学试卷.docx",
+      "name": "2017宏观经济学试卷.docx",
+      "type": "docx",
+      "size": 64575,
+      "sha256": "8d7c36b1579932718940630daf5453d4ddac593506f90a38138e1efe3ecdb679",
+      "assetName": "2017.-8d7c36b1.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2017.-8d7c36b1.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:宏观经济学/2018期末 试卷.docx",
+      "path": "宏观经济学/2018期末 试卷.docx",
+      "name": "2018期末 试卷.docx",
+      "type": "docx",
+      "size": 116570,
+      "sha256": "11bc56942898a5e9b5eea863eb754ead355ff5af50a24b164072648a2e1bb95e",
+      "assetName": "2018._.-11bc5694.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2018._.-11bc5694.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:宏观经济学/2018期末答案.docx",
+      "path": "宏观经济学/2018期末答案.docx",
+      "name": "2018期末答案.docx",
+      "type": "docx",
+      "size": 113982,
+      "sha256": "afc0dfc96e607de62ed5b3f004547671b9ad956ada98ea97614863f33e2d6b7e",
+      "assetName": "2018.-afc0dfc9.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2018.-afc0dfc9.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:宏观经济学/宏观 2019卷子.pdf",
+      "path": "宏观经济学/宏观 2019卷子.pdf",
+      "name": "宏观 2019卷子.pdf",
+      "type": "pdf",
+      "size": 1324675,
+      "sha256": "7654590985637de741841c4840a53c690868d92e1978cd133bd1ecdeffd8778b",
+      "assetName": "_2019.-76545909.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_2019.-76545909.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:宏观经济学/宏观经济学期末答案A卷.pdf",
+      "path": "宏观经济学/宏观经济学期末答案A卷.pdf",
+      "name": "宏观经济学期末答案A卷.pdf",
+      "type": "pdf",
+      "size": 226106,
+      "sha256": "9571c1f0048a8e397ea342fb6cc3aa0d0d695cee87853fd6b7b0be0264bb2cc7",
+      "assetName": "A.-9571c1f0.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/A.-9571c1f0.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:宏观经济学/某年卷子.pdf",
+      "path": "宏观经济学/某年卷子.pdf",
+      "name": "某年卷子.pdf",
+      "type": "pdf",
+      "size": 14197063,
+      "sha256": "ea1be15b64ff01216602d7a4156095e51edec201d907e5601eae0d5ac20af411",
+      "assetName": "-ea1be15b.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-ea1be15b.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/2012厦门大学会计学原理试题.doc",
+      "path": "会计学原理/2012厦门大学会计学原理试题.doc",
+      "name": "2012厦门大学会计学原理试题.doc",
+      "type": "doc",
+      "size": 72192,
+      "sha256": "9ea2eaecab2f3afaf6438eef99c457e7b49d70f31746d332e8424d1c1120b54e",
+      "assetName": "2012.-9ea2eaec.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2012.-9ea2eaec.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/2013会计学原理期中练习.doc",
+      "path": "会计学原理/2013会计学原理期中练习.doc",
+      "name": "2013会计学原理期中练习.doc",
+      "type": "doc",
+      "size": 58368,
+      "sha256": "17bd0ca3438848c90baeae68b9e4b046029b5e2d6b4d8b9fdb10d5faa165e385",
+      "assetName": "2013.-17bd0ca3.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2013.-17bd0ca3.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/2023会原期中试卷含答案/2024-11-07 153409.jpg",
+      "path": "会计学原理/2023会原期中试卷含答案/2024-11-07 153409.jpg",
+      "name": "2024-11-07 153409.jpg",
+      "type": "jpg",
+      "size": 184330,
+      "sha256": "8a38b72f94c7395e1d7e03337eecdcf0eec76f631cf73eca2e9f9e25c5bf9f20",
+      "assetName": "2024-11-07_153409-8a38b72f.jpg",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2024-11-07_153409-8a38b72f.jpg",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/2023会原期中试卷含答案/2024-11-07 153409(1).jpg",
+      "path": "会计学原理/2023会原期中试卷含答案/2024-11-07 153409(1).jpg",
+      "name": "2024-11-07 153409(1).jpg",
+      "type": "jpg",
+      "size": 183684,
+      "sha256": "194faa0f18a522430b5df4cb24ba967ccae08937745de1f584933d02627820d1",
+      "assetName": "2024-11-07_153409_1_-194faa0f.jpg",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2024-11-07_153409_1_-194faa0f.jpg",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/2023会原期中试卷含答案/IMG_20231221_104727.jpg",
+      "path": "会计学原理/2023会原期中试卷含答案/IMG_20231221_104727.jpg",
+      "name": "IMG_20231221_104727.jpg",
+      "type": "jpg",
+      "size": 2129905,
+      "sha256": "bf8bc80d52456f63b299d7e70abf5f6b4783d50a74813a788f52ca56cabeaa07",
+      "assetName": "IMG_20231221_104727-bf8bc80d.jpg",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/IMG_20231221_104727-bf8bc80d.jpg",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/2023会原期中试卷含答案/IMG_20231221_105430.jpg",
+      "path": "会计学原理/2023会原期中试卷含答案/IMG_20231221_105430.jpg",
+      "name": "IMG_20231221_105430.jpg",
+      "type": "jpg",
+      "size": 2008212,
+      "sha256": "9430032d7d6b81f464a063ee8879045e897817f8043b4f565f2150ef9e363769",
+      "assetName": "IMG_20231221_105430-9430032d.jpg",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/IMG_20231221_105430-9430032d.jpg",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/2023会原期中试卷含答案/IMG_20231221_112432.jpg",
+      "path": "会计学原理/2023会原期中试卷含答案/IMG_20231221_112432.jpg",
+      "name": "IMG_20231221_112432.jpg",
+      "type": "jpg",
+      "size": 1885285,
+      "sha256": "62995db82580df78459410038afb09ad723048f7153184a8ae6a46c031c8d1a6",
+      "assetName": "IMG_20231221_112432-62995db8.jpg",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/IMG_20231221_112432-62995db8.jpg",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/2023会原期中试卷含答案/IMG_20231221_112518.jpg",
+      "path": "会计学原理/2023会原期中试卷含答案/IMG_20231221_112518.jpg",
+      "name": "IMG_20231221_112518.jpg",
+      "type": "jpg",
+      "size": 2086121,
+      "sha256": "a5c077557955a78e351fb446700c7eb234f55c6dbb6dd717dcb6ec3685046ed2",
+      "assetName": "IMG_20231221_112518-a5c07755.jpg",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/IMG_20231221_112518-a5c07755.jpg",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/2023会原期中试卷含答案/mmexport1730963086610.jpg",
+      "path": "会计学原理/2023会原期中试卷含答案/mmexport1730963086610.jpg",
+      "name": "mmexport1730963086610.jpg",
+      "type": "jpg",
+      "size": 440809,
+      "sha256": "c5a98b7a54e91c55738d3c9fa52b3ed5612f0bd51816e76c5b4894a4896ca304",
+      "assetName": "mmexport1730963086610-c5a98b7a.jpg",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/mmexport1730963086610-c5a98b7a.jpg",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/2023会原期中试卷含答案/mmexport1730963089372.jpg",
+      "path": "会计学原理/2023会原期中试卷含答案/mmexport1730963089372.jpg",
+      "name": "mmexport1730963089372.jpg",
+      "type": "jpg",
+      "size": 417987,
+      "sha256": "0f6786f9134f5a2d3e0d516f8406f0804f6fadd638aacb113668b43835c7ac4f",
+      "assetName": "mmexport1730963089372-0f6786f9.jpg",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/mmexport1730963089372-0f6786f9.jpg",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/2023会原期中试卷含答案/mmexport1730963092331.jpg",
+      "path": "会计学原理/2023会原期中试卷含答案/mmexport1730963092331.jpg",
+      "name": "mmexport1730963092331.jpg",
+      "type": "jpg",
+      "size": 488885,
+      "sha256": "d39b703625fb5cd1a1a85c2b8e123e0d75afe318f77e804b802f4a145bb731f5",
+      "assetName": "mmexport1730963092331-d39b7036.jpg",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/mmexport1730963092331-d39b7036.jpg",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/2023会原期中试卷含答案/mmexport1730963095222.jpg",
+      "path": "会计学原理/2023会原期中试卷含答案/mmexport1730963095222.jpg",
+      "name": "mmexport1730963095222.jpg",
+      "type": "jpg",
+      "size": 490011,
+      "sha256": "ac544282ca81f1ce5d22f67aa3bfb2a197ab6d28c29021569d0d4ccd5f3556c2",
+      "assetName": "mmexport1730963095222-ac544282.jpg",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/mmexport1730963095222-ac544282.jpg",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/2023会原期中试卷含答案/mmexport1730963097814.jpg",
+      "path": "会计学原理/2023会原期中试卷含答案/mmexport1730963097814.jpg",
+      "name": "mmexport1730963097814.jpg",
+      "type": "jpg",
+      "size": 397529,
+      "sha256": "9f3485e7b03cdee8a955eb9733e56da92bb52de873be200c82cca024c656d968",
+      "assetName": "mmexport1730963097814-9f3485e7.jpg",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/mmexport1730963097814-9f3485e7.jpg",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/会计学原理名词解释25年11月5日.docx",
+      "path": "会计学原理/会计学原理名词解释25年11月5日.docx",
+      "name": "会计学原理名词解释25年11月5日.docx",
+      "type": "docx",
+      "size": 19292,
+      "sha256": "68fb99459d2ce7141626972364d59ce2a21a2852ad1c9ac3b28576fe50c93f2a",
+      "assetName": "25.11.5.-68fb9945.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/25.11.5.-68fb9945.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:会计学原理/会原名词解释.pdf",
+      "path": "会计学原理/会原名词解释.pdf",
+      "name": "会原名词解释.pdf",
+      "type": "pdf",
+      "size": 197314,
+      "sha256": "a73bf4503cbc1b1030164f64abbd088255fcfe0dc42fea1ea3586831339a52f2",
+      "assetName": "-a73bf450.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-a73bf450.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:计算机组成原理/计算机组成原理.pdf",
+      "path": "计算机组成原理/计算机组成原理.pdf",
+      "name": "计算机组成原理.pdf",
+      "type": "pdf",
+      "size": 36541096,
+      "sha256": "13d26dca061faea4bf0a715d372453edef41e4fa4c74345c4fa48d66250ace2d",
+      "assetName": "-13d26dca.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-13d26dca.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:计算机组成原理/计算机组成原理笔记.pdf",
+      "path": "计算机组成原理/计算机组成原理笔记.pdf",
+      "name": "计算机组成原理笔记.pdf",
+      "type": "pdf",
+      "size": 12579036,
+      "sha256": "a186444340f6aff80ed37124b3ff1833faab72456c8aa07fd5138ed8a63ec5d8",
+      "assetName": "-a1864443.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-a1864443.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:计算机组成原理/计算机组成原理实验指导与习题解析 (谭志虎) (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+      "path": "计算机组成原理/计算机组成原理实验指导与习题解析 (谭志虎) (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+      "name": "计算机组成原理实验指导与习题解析 (谭志虎) (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+      "type": "pdf",
+      "size": 54201276,
+      "sha256": "beaa3729a4f3ff547ed0ebb6b3df1dd2fbbed4c455db249d617c87af211d3c03",
+      "assetName": "_._z-library.sk_1lib.sk_z-lib.sk_-beaa3729.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_._z-library.sk_1lib.sk_z-lib.sk_-beaa3729.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:近代史纲要/2020-2021学年近现代史纲要试卷.doc",
+      "path": "近代史纲要/2020-2021学年近现代史纲要试卷.doc",
+      "name": "2020-2021学年近现代史纲要试卷.doc",
+      "type": "doc",
+      "size": 54272,
+      "sha256": "57049230356a363e3f0520e2d83bd179185ac04996c6aaf39c02314dd2dab715",
+      "assetName": "2020-2021.-57049230.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2020-2021.-57049230.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:近代史纲要/2021-2022学年近代史纲要试卷.doc",
+      "path": "近代史纲要/2021-2022学年近代史纲要试卷.doc",
+      "name": "2021-2022学年近代史纲要试卷.doc",
+      "type": "doc",
+      "size": 92672,
+      "sha256": "19181a34c41a7cdbf129e8a95f2c98f35589b1b8b5da37ff6507b9da8027ed86",
+      "assetName": "2021-2022.-19181a34.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2021-2022.-19181a34.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:近代史纲要/近代史纲要 final.docx",
+      "path": "近代史纲要/近代史纲要 final.docx",
+      "name": "近代史纲要 final.docx",
+      "type": "docx",
+      "size": 25949,
+      "sha256": "3189c082d4f6ca9a248c44b35021258b72462eff7a55f0e325d3d224a773c7ea",
+      "assetName": "_final-3189c082.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_final-3189c082.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:近代史纲要/近代史纲要课后习题答案(重要)(1).doc",
+      "path": "近代史纲要/近代史纲要课后习题答案(重要)(1).doc",
+      "name": "近代史纲要课后习题答案(重要)(1).doc",
+      "type": "doc",
+      "size": 57856,
+      "sha256": "6dff3c288f8b8c6de562516de047cab6ad66baef9759b00e9929bd4798d9f9cf",
+      "assetName": "_._1_-6dff3c28.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_._1_-6dff3c28.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:近代史纲要/近代史网络考试题库.pdf",
+      "path": "近代史纲要/近代史网络考试题库.pdf",
+      "name": "近代史网络考试题库.pdf",
+      "type": "pdf",
+      "size": 5977555,
+      "sha256": "78bb5a2dd5d71f7ae29b2921c3919f465043633595f11a6e9e494fb8ddd7c2f2",
+      "assetName": "-78bb5a2d.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-78bb5a2d.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:近代史纲要/近代史网络考试题库(1)_20211218164612.pdf",
+      "path": "近代史纲要/近代史网络考试题库(1)_20211218164612.pdf",
+      "name": "近代史网络考试题库(1)_20211218164612.pdf",
+      "type": "pdf",
+      "size": 3826614,
+      "sha256": "42d85a57ad825ea04738fbcb82de5add817a8e8ae698da3d2ea1578918ed82bf",
+      "assetName": "_1__20211218164612-42d85a57.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_1__20211218164612-42d85a57.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:近代史纲要/近代史资料.docx",
+      "path": "近代史纲要/近代史资料.docx",
+      "name": "近代史资料.docx",
+      "type": "docx",
+      "size": 18883,
+      "sha256": "cba505b3d1d31cb5b89f874855b8c8c9357a94c54d54f1cca2e72dcd10887f2f",
+      "assetName": "-cba505b3.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-cba505b3.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:近代史纲要/近现代史材料题+答案(中编).doc",
+      "path": "近代史纲要/近现代史材料题+答案(中编).doc",
+      "name": "近现代史材料题+答案(中编).doc",
+      "type": "doc",
+      "size": 130048,
+      "sha256": "e19de6b5ca110a199fe9f00bf3e7fef22529b601c8d7adc9b0623d4056cae75a",
+      "assetName": "_._._-e19de6b5.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_._._-e19de6b5.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:近代史纲要/中国近代史纲要试题及答案(全套).doc",
+      "path": "近代史纲要/中国近代史纲要试题及答案(全套).doc",
+      "name": "中国近代史纲要试题及答案(全套).doc",
+      "type": "doc",
+      "size": 294400,
+      "sha256": "b6bc4a502c184cd6916d7152136d5653d7efbd55ec79981394800e3ef4fe4d0f",
+      "assetName": "_._-b6bc4a50.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_._-b6bc4a50.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:近代史纲要/中国近代史课后答案(1)(2).doc",
+      "path": "近代史纲要/中国近代史课后答案(1)(2).doc",
+      "name": "中国近代史课后答案(1)(2).doc",
+      "type": "doc",
+      "size": 130560,
+      "sha256": "8efe6b71d40d2dffb0360d80428a997b8354bac933825d46a3a67cdac8413445",
+      "assetName": "_1_2_-8efe6b71.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_1_2_-8efe6b71.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/【军理】复习提纲 (2).pdf",
+      "path": "军事理论/【军理】复习提纲 (2).pdf",
+      "name": "【军理】复习提纲 (2).pdf",
+      "type": "pdf",
+      "size": 372830,
+      "sha256": "dfcabe5e64dc7211e5f5ce7c7d3b8a7228a9957a1405ac197be2ea23173c6672",
+      "assetName": "_._._2_-dfcabe5e.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_._._2_-dfcabe5e.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/1_军事理论2024sgw重点.docx",
+      "path": "军事理论/1_军事理论2024sgw重点.docx",
+      "name": "1_军事理论2024sgw重点.docx",
+      "type": "docx",
+      "size": 48119,
+      "sha256": "c1239f1d4ea50cd1335d886557d11ae3d521a2a16bf4ef42e192492d81a0d423",
+      "assetName": "2025.-c1239f1d.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2025.-c1239f1d.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/6_军理论述.docx",
+      "path": "军事理论/6_军理论述.docx",
+      "name": "6_军理论述.docx",
+      "type": "docx",
+      "size": 43794,
+      "sha256": "6da1d8e85eb026c5a50702409f5abd624038a1a09bd7e76380f04d4ba5f59c6b",
+      "assetName": "6_.-6da1d8e8.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/6_.-6da1d8e8.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/2020级军理.pdf",
+      "path": "军事理论/2020级军理.pdf",
+      "name": "2020级军理.pdf",
+      "type": "pdf",
+      "size": 326475,
+      "sha256": "934f1ba2b3128812d4f53992fd3b180eed0e054b0de6f3d28888993acafb31e5",
+      "assetName": "2020.-934f1ba2.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2020.-934f1ba2.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/2021（下）b卷参考答案及评分标准(1).docx",
+      "path": "军事理论/2021（下）b卷参考答案及评分标准(1).docx",
+      "name": "2021（下）b卷参考答案及评分标准(1).docx",
+      "type": "docx",
+      "size": 19795,
+      "sha256": "04e17728a61164d0c06e44b14494d9649cf10799581a64d082b8fd316df576b4",
+      "assetName": "2021_._b._1_-04e17728.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2021_._b._1_-04e17728.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/各年资料汇总.docx",
+      "path": "军事理论/各年资料汇总.docx",
+      "name": "各年资料汇总.docx",
+      "type": "docx",
+      "size": 158374,
+      "sha256": "e0eb355eaa089bf8e35dfd26c800c7b98ec1be0d08d38c9f721c5eafb1604127",
+      "assetName": "-e0eb355e.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-e0eb355e.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/军理 by联（Final Version）.docx",
+      "path": "军事理论/军理 by联（Final Version）.docx",
+      "name": "军理 by联（Final Version）.docx",
+      "type": "docx",
+      "size": 32546,
+      "sha256": "660bfde8913f01b4504d278b9ac2fe252ca8719f4d09e0633c483df02d1dcf6f",
+      "assetName": "_by._Final_Version_-660bfde8.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_by._Final_Version_-660bfde8.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/军理复习.docx",
+      "path": "军事理论/军理复习.docx",
+      "name": "军理复习.docx",
+      "type": "docx",
+      "size": 2193953,
+      "sha256": "148a892b610d5babdc9ff88d960529e6c695b7745f1ab805ce444320ae637003",
+      "assetName": "-148a892b.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-148a892b.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/军理复习.pdf",
+      "path": "军事理论/军理复习.pdf",
+      "name": "军理复习.pdf",
+      "type": "pdf",
+      "size": 557879,
+      "sha256": "399ac46717aaf574f74c1ff20057d84b8fad93667e20ffb4a31d10d45903eb22",
+      "assetName": "-399ac467.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-399ac467.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/军理复习要点.docx",
+      "path": "军事理论/军理复习要点.docx",
+      "name": "军理复习要点.docx",
+      "type": "docx",
+      "size": 17748,
+      "sha256": "d8dbe418ded7256318a353a54acd0959db4d476c3d8ae1f51dfbe662cee2f8e1",
+      "assetName": "-d8dbe418.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-d8dbe418.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/军理名词解释.docx",
+      "path": "军事理论/军理名词解释.docx",
+      "name": "军理名词解释.docx",
+      "type": "docx",
+      "size": 17553,
+      "sha256": "2d20ccc48e9a8d8cbfb329908a1907e358fdcef19dae3c6c60a4d1555de5162a",
+      "assetName": "-2d20ccc4.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-2d20ccc4.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/军理期末（精确范围按题型）(1).docx",
+      "path": "军事理论/军理期末（精确范围按题型）(1).docx",
+      "name": "军理期末（精确范围按题型）(1).docx",
+      "type": "docx",
+      "size": 37630,
+      "sha256": "adf817e7cded0be33aa7115f8e5fe90158b79ecab523ed0a679932586ba5ff84",
+      "assetName": "_._1_-adf817e7.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_._1_-adf817e7.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/军事的理论试题库1.doc",
+      "path": "军事理论/军事的理论试题库1.doc",
+      "name": "军事的理论试题库1.doc",
+      "type": "doc",
+      "size": 87552,
+      "sha256": "8fdc2b03aaff0366ba4387805d370b0da915e12173a9aaf50e4802ca1147674f",
+      "assetName": "1-8fdc2b03.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/1-8fdc2b03.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/军事理论2025重点.docx",
+      "path": "军事理论/军事理论2025重点.docx",
+      "name": "军事理论2025重点.docx",
+      "type": "docx",
+      "size": 48119,
+      "sha256": "c1239f1d4ea50cd1335d886557d11ae3d521a2a16bf4ef42e192492d81a0d423",
+      "assetName": "2025.-c1239f1d.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2025.-c1239f1d.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:军事理论/军事理论往年考题汇总 (1).docx",
+      "path": "军事理论/军事理论往年考题汇总 (1).docx",
+      "name": "军事理论往年考题汇总 (1).docx",
+      "type": "docx",
+      "size": 27063,
+      "sha256": "679596f22981ecc961a5fb46b44e207d3c2c011f86ba42aef6357785ea7e6b90",
+      "assetName": "_1_-679596f2.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_1_-679596f2.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:毛泽东思想概论/毛概选择.pdf",
+      "path": "毛泽东思想概论/毛概选择.pdf",
+      "name": "毛概选择.pdf",
+      "type": "pdf",
+      "size": 1283303,
+      "sha256": "07d990216423a52163cc3909dc309b6f3c6c3358ff4e99c916829565f7deec17",
+      "assetName": "-07d99021.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-07d99021.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:毛泽东思想概论/毛概选择题题库and答案（AI版).docx",
+      "path": "毛泽东思想概论/毛概选择题题库and答案（AI版).docx",
+      "name": "毛概选择题题库and答案（AI版).docx",
+      "type": "docx",
+      "size": 51706,
+      "sha256": "aad1569bf9d6cab3ebedc5532d4f652e8a4304cd1d988113721dc665fdd34f6f",
+      "assetName": "and._AI._-aad1569b.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/and._AI._-aad1569b.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:毛泽东思想概论/矛盾论.pdf",
+      "path": "毛泽东思想概论/矛盾论.pdf",
+      "name": "矛盾论.pdf",
+      "type": "pdf",
+      "size": 654477,
+      "sha256": "50efff2b73e207addf9c681e622ea84d60d34c7bcf972c43fb76743432be7685",
+      "assetName": "-50efff2b.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-50efff2b.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:毛泽东思想概论/思考题cutcutcut.pdf",
+      "path": "毛泽东思想概论/思考题cutcutcut.pdf",
+      "name": "思考题cutcutcut.pdf",
+      "type": "pdf",
+      "size": 424755,
+      "sha256": "98f1eae4c0856a30877d2bd24c2b87903a79ea50a59cea7f6bf69b17d273fac4",
+      "assetName": "cutcutcut-98f1eae4.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/cutcutcut-98f1eae4.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:统计学原理/厦门大学统计学试卷A.doc",
+      "path": "统计学原理/厦门大学统计学试卷A.doc",
+      "name": "厦门大学统计学试卷A.doc",
+      "type": "doc",
+      "size": 120832,
+      "sha256": "0c7059e288a0003d2b4d95a5786fe84f318f9a4a99c8788f854f564b045bcee2",
+      "assetName": "A-0c7059e2.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/A-0c7059e2.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:统计学原理/统计学试卷C含答案.pdf",
+      "path": "统计学原理/统计学试卷C含答案.pdf",
+      "name": "统计学试卷C含答案.pdf",
+      "type": "pdf",
+      "size": 3768036,
+      "sha256": "9fa01bc767de9c4aa85bd81a8dc2371604a3d17e6cb94ae1a6dc878f865a00f3",
+      "assetName": "C.-9fa01bc7.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/C.-9fa01bc7.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:统计学原理/sj1.doc",
+      "path": "统计学原理/sj1.doc",
+      "name": "sj1.doc",
+      "type": "doc",
+      "size": 102912,
+      "sha256": "f6be6b546393f2f27cd40f7be4de24a1e25b5ddfdd97412f03c0b4278ec5db79",
+      "assetName": "sj1-f6be6b54.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/sj1-f6be6b54.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:统计学原理/sj2.doc",
+      "path": "统计学原理/sj2.doc",
+      "name": "sj2.doc",
+      "type": "doc",
+      "size": 98304,
+      "sha256": "1c60c6d14b9054b5799d4e62a93325426fddd9ce7b9ab616ac731a58caba6456",
+      "assetName": "sj2-1c60c6d1.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/sj2-1c60c6d1.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:统计学原理/sj3.doc",
+      "path": "统计学原理/sj3.doc",
+      "name": "sj3.doc",
+      "type": "doc",
+      "size": 97792,
+      "sha256": "9d011d38d150f6ea5c2b4a6c38a18b3b30a77e4653273a9220dc9ac81fb0ce90",
+      "assetName": "sj3-9d011d38.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/sj3-9d011d38.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:统计学原理/sj4.doc",
+      "path": "统计学原理/sj4.doc",
+      "name": "sj4.doc",
+      "type": "doc",
+      "size": 81920,
+      "sha256": "feac6a6b55cc3232485fae6424ff7f64df594dde647ce14009c448862f60c1dc",
+      "assetName": "sj4-feac6a6b.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/sj4-feac6a6b.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:统计学原理/sj5.doc",
+      "path": "统计学原理/sj5.doc",
+      "name": "sj5.doc",
+      "type": "doc",
+      "size": 97792,
+      "sha256": "331c2a12c3124a40d7a4cdba73bdfa2cafea53b3d907afe3b0b0198398d851f9",
+      "assetName": "sj5-331c2a12.doc",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/sj5-331c2a12.doc",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微观经济学/四种垄断形式.docx",
+      "path": "微观经济学/四种垄断形式.docx",
+      "name": "四种垄断形式.docx",
+      "type": "docx",
+      "size": 12514,
+      "sha256": "d70173e4d7a00da85ae3704608968bbdeb271f10e70240f2e08c3add8b93f9ad",
+      "assetName": "-d70173e4.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-d70173e4.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微观经济学/微观经济 简答题.docx",
+      "path": "微观经济学/微观经济 简答题.docx",
+      "name": "微观经济 简答题.docx",
+      "type": "docx",
+      "size": 11306,
+      "sha256": "c8ef0ddee79f973130913bc54f9ab55592cf525976c13f0f34a0b92ed58ef7e3",
+      "assetName": "_.-c8ef0dde.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_.-c8ef0dde.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微观经济学/微观经济 名词解释.docx",
+      "path": "微观经济学/微观经济 名词解释.docx",
+      "name": "微观经济 名词解释.docx",
+      "type": "docx",
+      "size": 11389,
+      "sha256": "e2fccfdae5aece283c5b6a3169ceebf9cea1f28923394a1ce42aa7236b4c02b6",
+      "assetName": "_.-e2fccfda.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_.-e2fccfda.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微观经济学/微观经济学笔记.docx",
+      "path": "微观经济学/微观经济学笔记.docx",
+      "name": "微观经济学笔记.docx",
+      "type": "docx",
+      "size": 896378,
+      "sha256": "5c87327eeb8f86f9663cf27598a44d5b17cd6245cbc0ec8c48cfbf00a68491cc",
+      "assetName": "-5c87327e.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/-5c87327e.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微观经济学/微经名词解释 带答案.pdf.pdf",
+      "path": "微观经济学/微经名词解释 带答案.pdf.pdf",
+      "name": "微经名词解释 带答案.pdf.pdf",
+      "type": "pdf",
+      "size": 13632528,
+      "sha256": "50187aecef35198b7a7057153955de6bcc375554335b7a19387e0cddedc9c3a7",
+      "assetName": "_.pdf-50187aec.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_.pdf-50187aec.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2018-2019学年第二学期微积分I-2期末试卷解答.pdf",
+      "path": "微积分I/2018-2019学年第二学期微积分I-2期末试卷解答.pdf",
+      "name": "2018-2019学年第二学期微积分I-2期末试卷解答.pdf",
+      "type": "pdf",
+      "size": 302384,
+      "sha256": "2ef8f1ccd6915714e3494d3338f5b7877fd88e8ea3b084e3a80f8993760572cd",
+      "assetName": "2018-2019.I-2.-2ef8f1cc.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2018-2019.I-2.-2ef8f1cc.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2019-2020学年第二学期微积分I-2期末试卷解答.pdf",
+      "path": "微积分I/2019-2020学年第二学期微积分I-2期末试卷解答.pdf",
+      "name": "2019-2020学年第二学期微积分I-2期末试卷解答.pdf",
+      "type": "pdf",
+      "size": 349720,
+      "sha256": "8b97ad0ae1ca5fb51bb5c4c0e9675957b14cbd98da499c0bb841331c51823c9f",
+      "assetName": "2019-2020.I-2.-8b97ad0a.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2019-2020.I-2.-8b97ad0a.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2020-2021学年第二学期微积分I-2期末考试解答.pdf",
+      "path": "微积分I/2020-2021学年第二学期微积分I-2期末考试解答.pdf",
+      "name": "2020-2021学年第二学期微积分I-2期末考试解答.pdf",
+      "type": "pdf",
+      "size": 301717,
+      "sha256": "e193464c7ab75e130e86b6d4b49390da5655f5851962fbcca95e231700a9c09c",
+      "assetName": "2020-2021.I-2.-e193464c.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2020-2021.I-2.-e193464c.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2021-2022学年第二学期微积分I-2期末考试.pdf",
+      "path": "微积分I/2021-2022学年第二学期微积分I-2期末考试.pdf",
+      "name": "2021-2022学年第二学期微积分I-2期末考试.pdf",
+      "type": "pdf",
+      "size": 189464,
+      "sha256": "6fd2f324e5657d36ad12a0f9e6684f91de20a78056b86e422a48e58337300e2e",
+      "assetName": "2021-2022.I-2.-6fd2f324.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2021-2022.I-2.-6fd2f324.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2021-2022学年第二学期微积分I-2期末考试解答.pdf",
+      "path": "微积分I/2021-2022学年第二学期微积分I-2期末考试解答.pdf",
+      "name": "2021-2022学年第二学期微积分I-2期末考试解答.pdf",
+      "type": "pdf",
+      "size": 239020,
+      "sha256": "f56fe240cf3ca994aec9139976493c39e82910ea5d670328eef7ac511234c84a",
+      "assetName": "2021-2022.I-2.-f56fe240.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2021-2022.I-2.-f56fe240.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2021-2022学年第二学期微积分I-2期中试卷.pdf",
+      "path": "微积分I/2021-2022学年第二学期微积分I-2期中试卷.pdf",
+      "name": "2021-2022学年第二学期微积分I-2期中试卷.pdf",
+      "type": "pdf",
+      "size": 205131,
+      "sha256": "373eb1b737d62e1457cf19e46ce4793d6f5390e708382f7bd1e900904d9cb0c6",
+      "assetName": "2021-2022.I-2.-373eb1b7.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2021-2022.I-2.-373eb1b7.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2021-2022学年第二学期微积分I-2期中试卷解答.pdf",
+      "path": "微积分I/2021-2022学年第二学期微积分I-2期中试卷解答.pdf",
+      "name": "2021-2022学年第二学期微积分I-2期中试卷解答.pdf",
+      "type": "pdf",
+      "size": 270880,
+      "sha256": "060a7f250625d91195f736369f064199e776254fa3370e817606ca7e4fbdcf25",
+      "assetName": "2021-2022.I-2.-060a7f25.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2021-2022.I-2.-060a7f25.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2022-2023学年第二学期微积分I-2期末考试.pdf",
+      "path": "微积分I/2022-2023学年第二学期微积分I-2期末考试.pdf",
+      "name": "2022-2023学年第二学期微积分I-2期末考试.pdf",
+      "type": "pdf",
+      "size": 228884,
+      "sha256": "04badadb0494334641825398f2a4564ed8d2aa0c95e7ba0104ff8d40dee57fa4",
+      "assetName": "2022-2023.I-2.-04badadb.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2022-2023.I-2.-04badadb.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2022-2023学年第二学期微积分I-2期末考试解答.pdf",
+      "path": "微积分I/2022-2023学年第二学期微积分I-2期末考试解答.pdf",
+      "name": "2022-2023学年第二学期微积分I-2期末考试解答.pdf",
+      "type": "pdf",
+      "size": 269382,
+      "sha256": "85ca9ef735cb0ceeed4f1612573ef942bbc4ce9ddd2defea86e06118482b493a",
+      "assetName": "2022-2023.I-2.-85ca9ef7.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2022-2023.I-2.-85ca9ef7.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2022-2023学年第二学期微积分I-2期中试卷.pdf",
+      "path": "微积分I/2022-2023学年第二学期微积分I-2期中试卷.pdf",
+      "name": "2022-2023学年第二学期微积分I-2期中试卷.pdf",
+      "type": "pdf",
+      "size": 382266,
+      "sha256": "ed0284df64e260993c56660b8683386c1f0668f43d950f32feb078f0f5ef8d9c",
+      "assetName": "2022-2023.I-2.-ed0284df.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2022-2023.I-2.-ed0284df.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2022-2023学年第二学期微积分I-2期中试卷解答.pdf",
+      "path": "微积分I/2022-2023学年第二学期微积分I-2期中试卷解答.pdf",
+      "name": "2022-2023学年第二学期微积分I-2期中试卷解答.pdf",
+      "type": "pdf",
+      "size": 429619,
+      "sha256": "95165f80dfb4b806a6a2dd8bdd937024e33018341e7a0938c3c8bbb696a9fe5e",
+      "assetName": "2022-2023.I-2.-95165f80.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2022-2023.I-2.-95165f80.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2023-2024学年第二学期微积分I-2期末考试 .pdf",
+      "path": "微积分I/2023-2024学年第二学期微积分I-2期末考试 .pdf",
+      "name": "2023-2024学年第二学期微积分I-2期末考试 .pdf",
+      "type": "pdf",
+      "size": 216726,
+      "sha256": "c5aada39b5ff0765b5d98db23be65bafcb67c2192a1652f2065ec2ebf6fbf978",
+      "assetName": "2023-2024.I-2._-c5aada39.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2023-2024.I-2._-c5aada39.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2023-2024学年第二学期微积分I-2期末考试解答.pdf",
+      "path": "微积分I/2023-2024学年第二学期微积分I-2期末考试解答.pdf",
+      "name": "2023-2024学年第二学期微积分I-2期末考试解答.pdf",
+      "type": "pdf",
+      "size": 255643,
+      "sha256": "e3806c43ed6efead5702ee5a63d30e8ddd2f54d600a74d6830fae50434f89d12",
+      "assetName": "2023-2024.I-2.-e3806c43.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2023-2024.I-2.-e3806c43.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2023-2024学年第二学期微积分I-2期中考试.pdf",
+      "path": "微积分I/2023-2024学年第二学期微积分I-2期中考试.pdf",
+      "name": "2023-2024学年第二学期微积分I-2期中考试.pdf",
+      "type": "pdf",
+      "size": 206615,
+      "sha256": "467bd368fdb07eac81f3d973bff51e0f07f2fbe179d7a861c082e5b04ad48557",
+      "assetName": "2023-2024.I-2.-467bd368.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2023-2024.I-2.-467bd368.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:微积分I/2023-2024学年第二学期微积分I-2期中考试解答.pdf",
+      "path": "微积分I/2023-2024学年第二学期微积分I-2期中考试解答.pdf",
+      "name": "2023-2024学年第二学期微积分I-2期中考试解答.pdf",
+      "type": "pdf",
+      "size": 262600,
+      "sha256": "be230777b6d9ecb8bc0b71289d0c20006ea99dafa67c9608f6ef18c5e7022590",
+      "assetName": "2023-2024.I-2.-be230777.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2023-2024.I-2.-be230777.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:习近平新时代中国特色社会主义思想概论/《概论二》学习资料.docx",
+      "path": "习近平新时代中国特色社会主义思想概论/《概论二》学习资料.docx",
+      "name": "《概论二》学习资料.docx",
+      "type": "docx",
+      "size": 12715,
+      "sha256": "56b6d9f6750b2b6bc7dce535b1a9a1223470b2f705b3bd8192a8b97e1ffac0bd",
+      "assetName": "_._.-56b6d9f6.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_._.-56b6d9f6.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:习近平新时代中国特色社会主义思想概论/12习概总复习更新.pptx",
+      "path": "习近平新时代中国特色社会主义思想概论/12习概总复习更新.pptx",
+      "name": "12习概总复习更新.pptx",
+      "type": "pptx",
+      "size": 882317,
+      "sha256": "a0dfaae2cbedf400d3186a185f494509fe602cb091ff43c4e77b3e0829ca56ab",
+      "assetName": "12.-a0dfaae2.pptx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/12.-a0dfaae2.pptx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:习近平新时代中国特色社会主义思想概论/2024春思考题汇总.pdf",
+      "path": "习近平新时代中国特色社会主义思想概论/2024春思考题汇总.pdf",
+      "name": "2024春思考题汇总.pdf",
+      "type": "pdf",
+      "size": 104532,
+      "sha256": "2c5c4ef6a8230e2160b17de8de31a4f8332f8c03b8158557fc4f8c61582bfa9b",
+      "assetName": "2024.-2c5c4ef6.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2024.-2c5c4ef6.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:习近平新时代中国特色社会主义思想概论/2024考试题目.txt",
+      "path": "习近平新时代中国特色社会主义思想概论/2024考试题目.txt",
+      "name": "2024考试题目.txt",
+      "type": "txt",
+      "size": 899,
+      "sha256": "4ab2a0f7918fee31cb9e81309857acc66e17ab6189729fe0387992dc9eac02aa",
+      "assetName": "2024.-4ab2a0f7.txt",
+      "uploaded": true,
+      "preview": false,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2024.-4ab2a0f7.txt",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:习近平新时代中国特色社会主义思想概论/2024期末思考题复习材料.docx",
+      "path": "习近平新时代中国特色社会主义思想概论/2024期末思考题复习材料.docx",
+      "name": "2024期末思考题复习材料.docx",
+      "type": "docx",
+      "size": 32922,
+      "sha256": "0a15670657568fb170c6876766b22b62a9e249fa1ab6cae3fa5d37d1faa7d803",
+      "assetName": "2024.-0a156706.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2024.-0a156706.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:习近平新时代中国特色社会主义思想概论/习概复习_冒力.pdf",
+      "path": "习近平新时代中国特色社会主义思想概论/习概复习_冒力.pdf",
+      "name": "习概复习_冒力.pdf",
+      "type": "pdf",
+      "size": 742521,
+      "sha256": "ce999d0b96ee45fbbff0c691d154f81ce40f13a138106111bb45c879749bc749",
+      "assetName": "_.-ce999d0b.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_.-ce999d0b.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:习近平新时代中国特色社会主义思想概论/习概期末重点思考题答案（AI版）.docx",
+      "path": "习近平新时代中国特色社会主义思想概论/习概期末重点思考题答案（AI版）.docx",
+      "name": "习概期末重点思考题答案（AI版）.docx",
+      "type": "docx",
+      "size": 78243,
+      "sha256": "1b6e576c25559ddc1f67d4aa4648928996e3abc20c11f3ee6accb7c29ae9d253",
+      "assetName": "_AI._-1b6e576c.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_AI._-1b6e576c.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:习近平新时代中国特色社会主义思想概论/习概题库 可导入疯狂刷题中.docx",
+      "path": "习近平新时代中国特色社会主义思想概论/习概题库 可导入疯狂刷题中.docx",
+      "name": "习概题库 可导入疯狂刷题中.docx",
+      "type": "docx",
+      "size": 79217,
+      "sha256": "a2941f774c02afea5f01facce810c05e11a65c896d9fd6d4d9ae10c34b1f6462",
+      "assetName": "_.-a2941f77.docx",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/_.-a2941f77.docx",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:习近平新时代中国特色社会主义思想概论/习近平新时代中国特色社会主义思想概论 _高等教育出版社、人民出版社 (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+      "path": "习近平新时代中国特色社会主义思想概论/习近平新时代中国特色社会主义思想概论 _高等教育出版社、人民出版社 (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+      "name": "习近平新时代中国特色社会主义思想概论 _高等教育出版社、人民出版社 (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+      "type": "pdf",
+      "size": 4453825,
+      "sha256": "fadacb66e0f47db3639b524fda55e0b968735768ec1f4818f043c27ddf83fe41",
+      "assetName": "__._._z-library.sk_1lib.sk_z-lib.sk_-fadacb66.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/__._._z-library.sk_1lib.sk_z-lib.sk_-fadacb66.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:营销学原理/chapter 1 Marketing Creating Customer Value and Engagement.pdf.pdf",
+      "path": "营销学原理/chapter 1 Marketing Creating Customer Value and Engagement.pdf.pdf",
+      "name": "chapter 1 Marketing Creating Customer Value and Engagement.pdf.pdf",
+      "type": "pdf",
+      "size": 190520,
+      "sha256": "6f243846c77f5707dd503fd4475523ca786e7e58a5093127c5ad2ee8a5df4bc8",
+      "assetName": "chapter_1_Marketing_Creating_Customer_Value_and_Engagement.pdf-6f243846.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/chapter_1_Marketing_Creating_Customer_Value_and_Engagement.pdf-6f243846.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:营销学原理/chapter 2 Company and Marketing Strategy.pdf.pdf",
+      "path": "营销学原理/chapter 2 Company and Marketing Strategy.pdf.pdf",
+      "name": "chapter 2 Company and Marketing Strategy.pdf.pdf",
+      "type": "pdf",
+      "size": 207287,
+      "sha256": "f4a7eb74611e2ba36ab5843a9f846668462cd1d66ac75fcd91726517c64e1667",
+      "assetName": "chapter_2_Company_and_Marketing_Strategy.pdf-f4a7eb74.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/chapter_2_Company_and_Marketing_Strategy.pdf-f4a7eb74.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:营销学原理/chapter 3 Analyzing the Marketing Environment.pdf.pdf",
+      "path": "营销学原理/chapter 3 Analyzing the Marketing Environment.pdf.pdf",
+      "name": "chapter 3 Analyzing the Marketing Environment.pdf.pdf",
+      "type": "pdf",
+      "size": 200695,
+      "sha256": "f341659adaaa87c99450634cf868601444b286d6d54b667a7d06da7efbc3d06e",
+      "assetName": "chapter_3_Analyzing_the_Marketing_Environment.pdf-f341659a.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/chapter_3_Analyzing_the_Marketing_Environment.pdf-f341659a.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:营销学原理/chapter 4 Marketing Information.pdf.pdf",
+      "path": "营销学原理/chapter 4 Marketing Information.pdf.pdf",
+      "name": "chapter 4 Marketing Information.pdf.pdf",
+      "type": "pdf",
+      "size": 191432,
+      "sha256": "dae8f47c71665daf573dabc2053650959d75113a29f69b4a008e93f9274e8397",
+      "assetName": "chapter_4_Marketing_Information.pdf-dae8f47c.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/chapter_4_Marketing_Information.pdf-dae8f47c.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:营销学原理/chapter 5 Consumer Behavior.pdf.pdf",
+      "path": "营销学原理/chapter 5 Consumer Behavior.pdf.pdf",
+      "name": "chapter 5 Consumer Behavior.pdf.pdf",
+      "type": "pdf",
+      "size": 132364,
+      "sha256": "56d0982d10612dd73ace80c3d610684d93c3e045b9fab40af80abc69eec3b39b",
+      "assetName": "chapter_5_Consumer_Behavior.pdf-56d0982d.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/chapter_5_Consumer_Behavior.pdf-56d0982d.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:营销学原理/chapter 6 Customer-Driven Marketing Strategy.pdf.pdf",
+      "path": "营销学原理/chapter 6 Customer-Driven Marketing Strategy.pdf.pdf",
+      "name": "chapter 6 Customer-Driven Marketing Strategy.pdf.pdf",
+      "type": "pdf",
+      "size": 172065,
+      "sha256": "5ef315d8aa34dc8bcdb6b15a7384271c260480540c8d83247e03abe8ca3e02f8",
+      "assetName": "chapter_6_Customer-Driven_Marketing_Strategy.pdf-5ef315d8.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/chapter_6_Customer-Driven_Marketing_Strategy.pdf-5ef315d8.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:营销学原理/chapter 7 Products, Services, and Brands.pdf.pdf",
+      "path": "营销学原理/chapter 7 Products, Services, and Brands.pdf.pdf",
+      "name": "chapter 7 Products, Services, and Brands.pdf.pdf",
+      "type": "pdf",
+      "size": 183893,
+      "sha256": "fa46b2d1e83127e689dc0405d6965639574cc61849a9aa404d832d908f39f1d4",
+      "assetName": "chapter_7_Products_Services_and_Brands.pdf-fa46b2d1.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/chapter_7_Products_Services_and_Brands.pdf-fa46b2d1.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:营销学原理/chapter 8 New Product Development and Product Life-Cycle Strategies.pdf.pdf",
+      "path": "营销学原理/chapter 8 New Product Development and Product Life-Cycle Strategies.pdf.pdf",
+      "name": "chapter 8 New Product Development and Product Life-Cycle Strategies.pdf.pdf",
+      "type": "pdf",
+      "size": 192264,
+      "sha256": "d5a66890adb2e76164dd93db3f01c36bc2812b69427b19ade8eaf3085ad4cb16",
+      "assetName": "chapter_8_New_Product_Development_and_Product_Life-Cycle_Strategies.pdf-d5a66890.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/chapter_8_New_Product_Development_and_Product_Life-Cycle_Strategies.pdf-d5a66890.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:营销学原理/chapter 9 Pricing.pdf.pdf",
+      "path": "营销学原理/chapter 9 Pricing.pdf.pdf",
+      "name": "chapter 9 Pricing.pdf.pdf",
+      "type": "pdf",
+      "size": 173783,
+      "sha256": "a68e55a8909c882bd7bdec250f44bb94536388d8117b1d7250db7b051d66bb1e",
+      "assetName": "chapter_9_Pricing.pdf-a68e55a8.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/chapter_9_Pricing.pdf-a68e55a8.pdf",
+      "mirrorUrl": null
+    },
+    {
+      "id": "release:营销学原理/chapter 10 Marketing Channels.pdf.pdf",
+      "path": "营销学原理/chapter 10 Marketing Channels.pdf.pdf",
+      "name": "chapter 10 Marketing Channels.pdf.pdf",
+      "type": "pdf",
+      "size": 179809,
+      "sha256": "c55988a993e405de8fff8c0c9e2a22833fe8b60e7ca6f6484c31f7a4ffbafde8",
+      "assetName": "chapter_10_Marketing_Channels.pdf-c55988a9.pdf",
+      "uploaded": true,
+      "preview": true,
+      "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/chapter_10_Marketing_Channels.pdf-c55988a9.pdf",
+      "mirrorUrl": null
+    }
+  ],
+  "tree": {
+    "name": "发布附件",
+    "type": "folder",
+    "children": [
+      {
+        "name": "财务管理A",
+        "type": "folder",
+        "children": [
+          {
+            "name": "21级期末答案（仅答案）.pdf",
+            "type": "file",
+            "resourceId": "release:财务管理A/21级期末答案（仅答案）.pdf"
+          },
+          {
+            "name": "22财管期末卷.pdf",
+            "type": "file",
+            "resourceId": "release:财务管理A/22财管期末卷.pdf"
+          },
+          {
+            "name": "22期末答案.doc",
+            "type": "file",
+            "resourceId": "release:财务管理A/22期末答案.doc"
+          },
+          {
+            "name": "2018级期末考试参考答案.pdf",
+            "type": "file",
+            "resourceId": "release:财务管理A/2018级期末考试参考答案.pdf"
+          },
+          {
+            "name": "2018级期末试卷.pdf",
+            "type": "file",
+            "resourceId": "release:财务管理A/2018级期末试卷.pdf"
+          },
+          {
+            "name": "财务管理测试及答案.doc",
+            "type": "file",
+            "resourceId": "release:财务管理A/财务管理测试及答案.doc"
+          },
+          {
+            "name": "财务管理基础题库1~18章.docx",
+            "type": "file",
+            "resourceId": "release:财务管理A/财务管理基础题库1~18章.docx"
+          },
+          {
+            "name": "财务管理无名期中测试含答案",
+            "type": "folder",
+            "children": [
+              {
+                "name": "财务管理无名期中测试.docx",
+                "type": "file",
+                "resourceId": "release:财务管理A/财务管理无名期中测试含答案/财务管理无名期中测试.docx"
+              },
+              {
+                "name": "财务管理无名期中测试答案.pdf",
+                "type": "file",
+                "resourceId": "release:财务管理A/财务管理无名期中测试含答案/财务管理无名期中测试答案.pdf"
+              }
+            ]
+          },
+          {
+            "name": "公司理财  原..13.pdf",
+            "type": "file",
+            "resourceId": "release:财务管理A/公司理财  原..13.pdf"
+          },
+          {
+            "name": "XXX1级期末试卷.pdf",
+            "type": "file",
+            "resourceId": "release:财务管理A/XXX1级期末试卷.pdf"
+          },
+          {
+            "name": "xxx2级期末试卷.pdf",
+            "type": "file",
+            "resourceId": "release:财务管理A/xxx2级期末试卷.pdf"
+          },
+          {
+            "name": "xxx3级期末试卷.pdf",
+            "type": "file",
+            "resourceId": "release:财务管理A/xxx3级期末试卷.pdf"
+          },
+          {
+            "name": "XXX4级期末试卷.pdf",
+            "type": "file",
+            "resourceId": "release:财务管理A/XXX4级期末试卷.pdf"
+          }
+        ]
+      },
+      {
+        "name": "大学物理B",
+        "type": "folder",
+        "children": [
+          {
+            "name": "试卷",
+            "type": "folder",
+            "children": [
+              {
+                "name": "《大学物理B下》期中试卷A卷.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/试卷/《大学物理B下》期中试卷A卷.pdf"
+              },
+              {
+                "name": "《大学物理B下》期中试卷A卷参考答案.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/试卷/《大学物理B下》期中试卷A卷参考答案.pdf"
+              },
+              {
+                "name": "2021（A卷）.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/试卷/2021（A卷）.pdf"
+              },
+              {
+                "name": "2021（A卷）答案.docx",
+                "type": "file",
+                "resourceId": "release:大学物理B/试卷/2021（A卷）答案.docx"
+              },
+              {
+                "name": "2021A（A卷）’.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/试卷/2021A（A卷）’.pdf"
+              },
+              {
+                "name": "2021A（A卷）答案.docx",
+                "type": "file",
+                "resourceId": "release:大学物理B/试卷/2021A（A卷）答案.docx"
+              },
+              {
+                "name": "B期中复习题.doc",
+                "type": "file",
+                "resourceId": "release:大学物理B/试卷/B期中复习题.doc"
+              },
+              {
+                "name": "B下A卷参考答案-1.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/试卷/B下A卷参考答案-1.pdf"
+              },
+              {
+                "name": "B下A卷参考答案.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/试卷/B下A卷参考答案.pdf"
+              }
+            ]
+          },
+          {
+            "name": "作业答案",
+            "type": "folder",
+            "children": [
+              {
+                "name": "刚体的定轴转动2.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/刚体的定轴转动2.pdf"
+              },
+              {
+                "name": "恒定磁场1-答案.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/恒定磁场1-答案.pdf"
+              },
+              {
+                "name": "静电场1-答案.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/静电场1-答案.pdf"
+              },
+              {
+                "name": "静电场2-答案.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/静电场2-答案.pdf"
+              },
+              {
+                "name": "静电场中的导体与电介质1-答案.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/静电场中的导体与电介质1-答案.pdf"
+              },
+              {
+                "name": "静电场中的导体与电介质2-答案.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/静电场中的导体与电介质2-答案.pdf"
+              },
+              {
+                "name": "振动与波动1.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/振动与波动1.pdf"
+              },
+              {
+                "name": "振动与波动2.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/振动与波动2.pdf"
+              },
+              {
+                "name": "A. 质点运动学1.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/A. 质点运动学1.pdf"
+              },
+              {
+                "name": "B.质点运动学2.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/B.质点运动学2.pdf"
+              },
+              {
+                "name": "C.质点动力学1.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/C.质点动力学1.pdf"
+              },
+              {
+                "name": "D.质点动力学2.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/D.质点动力学2.pdf"
+              },
+              {
+                "name": "E.刚体的定轴转动1.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/E.刚体的定轴转动1.pdf"
+              },
+              {
+                "name": "G. 振动与波动1(1).pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/G. 振动与波动1(1).pdf"
+              },
+              {
+                "name": "H. 振动与波动2(1).pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/H. 振动与波动2(1).pdf"
+              },
+              {
+                "name": "I. 静电场1(2).pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/I. 静电场1(2).pdf"
+              },
+              {
+                "name": "J. 静电场2(1).pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/J. 静电场2(1).pdf"
+              },
+              {
+                "name": "K. 静电场中的导体与电介质1(1).pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/K. 静电场中的导体与电介质1(1).pdf"
+              },
+              {
+                "name": "L. 静电场中的导体与电介质2(1).pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/L. 静电场中的导体与电介质2(1).pdf"
+              },
+              {
+                "name": "M. 恒定磁场1(1).pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/M. 恒定磁场1(1).pdf"
+              },
+              {
+                "name": "N. 恒定磁场2(1).pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/N. 恒定磁场2(1).pdf"
+              },
+              {
+                "name": "O. 变化的电磁场(1).pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/O. 变化的电磁场(1).pdf"
+              },
+              {
+                "name": "O. 变化的电磁场a.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/O. 变化的电磁场a.pdf"
+              },
+              {
+                "name": "P. 波动光学1(1).pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/P. 波动光学1(1).pdf"
+              },
+              {
+                "name": "P. 波动光学1a.pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/P. 波动光学1a.pdf"
+              },
+              {
+                "name": "Q. 波动光学2(1).pdf",
+                "type": "file",
+                "resourceId": "release:大学物理B/作业答案/Q. 波动光学2(1).pdf"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "电路原理",
+        "type": "folder",
+        "children": [
+          {
+            "name": "二极管三极管mos管教材—童诗白模拟电子技术基础 第六版高等教育出版社(1章).pdf",
+            "type": "file",
+            "resourceId": "release:电路原理/二极管三极管mos管教材—童诗白模拟电子技术基础 第六版高等教育出版社(1章).pdf"
+          },
+          {
+            "name": "门电路教材—阎石数字电子技术基础第六版高等教育出版社(3章).pdf",
+            "type": "file",
+            "resourceId": "release:电路原理/门电路教材—阎石数字电子技术基础第六版高等教育出版社(3章).pdf"
+          },
+          {
+            "name": "门电路教材—阎石数字电子技术基础第六版高等教育出版社(3章)(1).pdf",
+            "type": "file",
+            "resourceId": "release:电路原理/门电路教材—阎石数字电子技术基础第六版高等教育出版社(3章)(1).pdf"
+          }
+        ]
+      },
+      {
+        "name": "管理学原理B",
+        "type": "folder",
+        "children": [
+          {
+            "name": "管原重点2025-12.31.pdf",
+            "type": "file",
+            "resourceId": "release:管理学原理B/管原重点2025-12.31.pdf"
+          }
+        ]
+      },
+      {
+        "name": "宏观经济学",
+        "type": "folder",
+        "children": [
+          {
+            "name": "【仅答案】宏观经济学期末卷.pdf",
+            "type": "file",
+            "resourceId": "release:宏观经济学/【仅答案】宏观经济学期末卷.pdf"
+          },
+          {
+            "name": "22期末.docx",
+            "type": "file",
+            "resourceId": "release:宏观经济学/22期末.docx"
+          },
+          {
+            "name": "2015宏观A卷答案.docx",
+            "type": "file",
+            "resourceId": "release:宏观经济学/2015宏观A卷答案.docx"
+          },
+          {
+            "name": "2017宏观经济答案.pdf",
+            "type": "file",
+            "resourceId": "release:宏观经济学/2017宏观经济答案.pdf"
+          },
+          {
+            "name": "2017宏观经济学试卷.docx",
+            "type": "file",
+            "resourceId": "release:宏观经济学/2017宏观经济学试卷.docx"
+          },
+          {
+            "name": "2018期末 试卷.docx",
+            "type": "file",
+            "resourceId": "release:宏观经济学/2018期末 试卷.docx"
+          },
+          {
+            "name": "2018期末答案.docx",
+            "type": "file",
+            "resourceId": "release:宏观经济学/2018期末答案.docx"
+          },
+          {
+            "name": "宏观 2019卷子.pdf",
+            "type": "file",
+            "resourceId": "release:宏观经济学/宏观 2019卷子.pdf"
+          },
+          {
+            "name": "宏观经济学期末答案A卷.pdf",
+            "type": "file",
+            "resourceId": "release:宏观经济学/宏观经济学期末答案A卷.pdf"
+          },
+          {
+            "name": "某年卷子.pdf",
+            "type": "file",
+            "resourceId": "release:宏观经济学/某年卷子.pdf"
+          }
+        ]
+      },
+      {
+        "name": "会计学原理",
+        "type": "folder",
+        "children": [
+          {
+            "name": "2012厦门大学会计学原理试题.doc",
+            "type": "file",
+            "resourceId": "release:会计学原理/2012厦门大学会计学原理试题.doc"
+          },
+          {
+            "name": "2013会计学原理期中练习.doc",
+            "type": "file",
+            "resourceId": "release:会计学原理/2013会计学原理期中练习.doc"
+          },
+          {
+            "name": "2023会原期中试卷含答案",
+            "type": "folder",
+            "children": [
+              {
+                "name": "2024-11-07 153409.jpg",
+                "type": "file",
+                "resourceId": "release:会计学原理/2023会原期中试卷含答案/2024-11-07 153409.jpg"
+              },
+              {
+                "name": "2024-11-07 153409(1).jpg",
+                "type": "file",
+                "resourceId": "release:会计学原理/2023会原期中试卷含答案/2024-11-07 153409(1).jpg"
+              },
+              {
+                "name": "IMG_20231221_104727.jpg",
+                "type": "file",
+                "resourceId": "release:会计学原理/2023会原期中试卷含答案/IMG_20231221_104727.jpg"
+              },
+              {
+                "name": "IMG_20231221_105430.jpg",
+                "type": "file",
+                "resourceId": "release:会计学原理/2023会原期中试卷含答案/IMG_20231221_105430.jpg"
+              },
+              {
+                "name": "IMG_20231221_112432.jpg",
+                "type": "file",
+                "resourceId": "release:会计学原理/2023会原期中试卷含答案/IMG_20231221_112432.jpg"
+              },
+              {
+                "name": "IMG_20231221_112518.jpg",
+                "type": "file",
+                "resourceId": "release:会计学原理/2023会原期中试卷含答案/IMG_20231221_112518.jpg"
+              },
+              {
+                "name": "mmexport1730963086610.jpg",
+                "type": "file",
+                "resourceId": "release:会计学原理/2023会原期中试卷含答案/mmexport1730963086610.jpg"
+              },
+              {
+                "name": "mmexport1730963089372.jpg",
+                "type": "file",
+                "resourceId": "release:会计学原理/2023会原期中试卷含答案/mmexport1730963089372.jpg"
+              },
+              {
+                "name": "mmexport1730963092331.jpg",
+                "type": "file",
+                "resourceId": "release:会计学原理/2023会原期中试卷含答案/mmexport1730963092331.jpg"
+              },
+              {
+                "name": "mmexport1730963095222.jpg",
+                "type": "file",
+                "resourceId": "release:会计学原理/2023会原期中试卷含答案/mmexport1730963095222.jpg"
+              },
+              {
+                "name": "mmexport1730963097814.jpg",
+                "type": "file",
+                "resourceId": "release:会计学原理/2023会原期中试卷含答案/mmexport1730963097814.jpg"
+              }
+            ]
+          },
+          {
+            "name": "会计学原理名词解释25年11月5日.docx",
+            "type": "file",
+            "resourceId": "release:会计学原理/会计学原理名词解释25年11月5日.docx"
+          },
+          {
+            "name": "会原名词解释.pdf",
+            "type": "file",
+            "resourceId": "release:会计学原理/会原名词解释.pdf"
+          }
+        ]
+      },
+      {
+        "name": "计算机组成原理",
+        "type": "folder",
+        "children": [
+          {
+            "name": "计算机组成原理.pdf",
+            "type": "file",
+            "resourceId": "release:计算机组成原理/计算机组成原理.pdf"
+          },
+          {
+            "name": "计算机组成原理笔记.pdf",
+            "type": "file",
+            "resourceId": "release:计算机组成原理/计算机组成原理笔记.pdf"
+          },
+          {
+            "name": "计算机组成原理实验指导与习题解析 (谭志虎) (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+            "type": "file",
+            "resourceId": "release:计算机组成原理/计算机组成原理实验指导与习题解析 (谭志虎) (z-library.sk, 1lib.sk, z-lib.sk).pdf"
+          }
+        ]
+      },
+      {
+        "name": "近代史纲要",
+        "type": "folder",
+        "children": [
+          {
+            "name": "2020-2021学年近现代史纲要试卷.doc",
+            "type": "file",
+            "resourceId": "release:近代史纲要/2020-2021学年近现代史纲要试卷.doc"
+          },
+          {
+            "name": "2021-2022学年近代史纲要试卷.doc",
+            "type": "file",
+            "resourceId": "release:近代史纲要/2021-2022学年近代史纲要试卷.doc"
+          },
+          {
+            "name": "近代史纲要 final.docx",
+            "type": "file",
+            "resourceId": "release:近代史纲要/近代史纲要 final.docx"
+          },
+          {
+            "name": "近代史纲要课后习题答案(重要)(1).doc",
+            "type": "file",
+            "resourceId": "release:近代史纲要/近代史纲要课后习题答案(重要)(1).doc"
+          },
+          {
+            "name": "近代史网络考试题库.pdf",
+            "type": "file",
+            "resourceId": "release:近代史纲要/近代史网络考试题库.pdf"
+          },
+          {
+            "name": "近代史网络考试题库(1)_20211218164612.pdf",
+            "type": "file",
+            "resourceId": "release:近代史纲要/近代史网络考试题库(1)_20211218164612.pdf"
+          },
+          {
+            "name": "近代史资料.docx",
+            "type": "file",
+            "resourceId": "release:近代史纲要/近代史资料.docx"
+          },
+          {
+            "name": "近现代史材料题+答案(中编).doc",
+            "type": "file",
+            "resourceId": "release:近代史纲要/近现代史材料题+答案(中编).doc"
+          },
+          {
+            "name": "中国近代史纲要试题及答案(全套).doc",
+            "type": "file",
+            "resourceId": "release:近代史纲要/中国近代史纲要试题及答案(全套).doc"
+          },
+          {
+            "name": "中国近代史课后答案(1)(2).doc",
+            "type": "file",
+            "resourceId": "release:近代史纲要/中国近代史课后答案(1)(2).doc"
+          }
+        ]
+      },
+      {
+        "name": "军事理论",
+        "type": "folder",
+        "children": [
+          {
+            "name": "【军理】复习提纲 (2).pdf",
+            "type": "file",
+            "resourceId": "release:军事理论/【军理】复习提纲 (2).pdf"
+          },
+          {
+            "name": "1_军事理论2024sgw重点.docx",
+            "type": "file",
+            "resourceId": "release:军事理论/1_军事理论2024sgw重点.docx"
+          },
+          {
+            "name": "6_军理论述.docx",
+            "type": "file",
+            "resourceId": "release:军事理论/6_军理论述.docx"
+          },
+          {
+            "name": "2020级军理.pdf",
+            "type": "file",
+            "resourceId": "release:军事理论/2020级军理.pdf"
+          },
+          {
+            "name": "2021（下）b卷参考答案及评分标准(1).docx",
+            "type": "file",
+            "resourceId": "release:军事理论/2021（下）b卷参考答案及评分标准(1).docx"
+          },
+          {
+            "name": "各年资料汇总.docx",
+            "type": "file",
+            "resourceId": "release:军事理论/各年资料汇总.docx"
+          },
+          {
+            "name": "军理 by联（Final Version）.docx",
+            "type": "file",
+            "resourceId": "release:军事理论/军理 by联（Final Version）.docx"
+          },
+          {
+            "name": "军理复习.docx",
+            "type": "file",
+            "resourceId": "release:军事理论/军理复习.docx"
+          },
+          {
+            "name": "军理复习.pdf",
+            "type": "file",
+            "resourceId": "release:军事理论/军理复习.pdf"
+          },
+          {
+            "name": "军理复习要点.docx",
+            "type": "file",
+            "resourceId": "release:军事理论/军理复习要点.docx"
+          },
+          {
+            "name": "军理名词解释.docx",
+            "type": "file",
+            "resourceId": "release:军事理论/军理名词解释.docx"
+          },
+          {
+            "name": "军理期末（精确范围按题型）(1).docx",
+            "type": "file",
+            "resourceId": "release:军事理论/军理期末（精确范围按题型）(1).docx"
+          },
+          {
+            "name": "军事的理论试题库1.doc",
+            "type": "file",
+            "resourceId": "release:军事理论/军事的理论试题库1.doc"
+          },
+          {
+            "name": "军事理论2025重点.docx",
+            "type": "file",
+            "resourceId": "release:军事理论/军事理论2025重点.docx"
+          },
+          {
+            "name": "军事理论往年考题汇总 (1).docx",
+            "type": "file",
+            "resourceId": "release:军事理论/军事理论往年考题汇总 (1).docx"
+          }
+        ]
+      },
+      {
+        "name": "毛泽东思想概论",
+        "type": "folder",
+        "children": [
+          {
+            "name": "毛概选择.pdf",
+            "type": "file",
+            "resourceId": "release:毛泽东思想概论/毛概选择.pdf"
+          },
+          {
+            "name": "毛概选择题题库and答案（AI版).docx",
+            "type": "file",
+            "resourceId": "release:毛泽东思想概论/毛概选择题题库and答案（AI版).docx"
+          },
+          {
+            "name": "矛盾论.pdf",
+            "type": "file",
+            "resourceId": "release:毛泽东思想概论/矛盾论.pdf"
+          },
+          {
+            "name": "思考题cutcutcut.pdf",
+            "type": "file",
+            "resourceId": "release:毛泽东思想概论/思考题cutcutcut.pdf"
+          }
+        ]
+      },
+      {
+        "name": "统计学原理",
+        "type": "folder",
+        "children": [
+          {
+            "name": "厦门大学统计学试卷A.doc",
+            "type": "file",
+            "resourceId": "release:统计学原理/厦门大学统计学试卷A.doc"
+          },
+          {
+            "name": "统计学试卷C含答案.pdf",
+            "type": "file",
+            "resourceId": "release:统计学原理/统计学试卷C含答案.pdf"
+          },
+          {
+            "name": "sj1.doc",
+            "type": "file",
+            "resourceId": "release:统计学原理/sj1.doc"
+          },
+          {
+            "name": "sj2.doc",
+            "type": "file",
+            "resourceId": "release:统计学原理/sj2.doc"
+          },
+          {
+            "name": "sj3.doc",
+            "type": "file",
+            "resourceId": "release:统计学原理/sj3.doc"
+          },
+          {
+            "name": "sj4.doc",
+            "type": "file",
+            "resourceId": "release:统计学原理/sj4.doc"
+          },
+          {
+            "name": "sj5.doc",
+            "type": "file",
+            "resourceId": "release:统计学原理/sj5.doc"
+          }
+        ]
+      },
+      {
+        "name": "微观经济学",
+        "type": "folder",
+        "children": [
+          {
+            "name": "四种垄断形式.docx",
+            "type": "file",
+            "resourceId": "release:微观经济学/四种垄断形式.docx"
+          },
+          {
+            "name": "微观经济 简答题.docx",
+            "type": "file",
+            "resourceId": "release:微观经济学/微观经济 简答题.docx"
+          },
+          {
+            "name": "微观经济 名词解释.docx",
+            "type": "file",
+            "resourceId": "release:微观经济学/微观经济 名词解释.docx"
+          },
+          {
+            "name": "微观经济学笔记.docx",
+            "type": "file",
+            "resourceId": "release:微观经济学/微观经济学笔记.docx"
+          },
+          {
+            "name": "微经名词解释 带答案.pdf.pdf",
+            "type": "file",
+            "resourceId": "release:微观经济学/微经名词解释 带答案.pdf.pdf"
+          }
+        ]
+      },
+      {
+        "name": "微积分I",
+        "type": "folder",
+        "children": [
+          {
+            "name": "2018-2019学年第二学期微积分I-2期末试卷解答.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2018-2019学年第二学期微积分I-2期末试卷解答.pdf"
+          },
+          {
+            "name": "2019-2020学年第二学期微积分I-2期末试卷解答.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2019-2020学年第二学期微积分I-2期末试卷解答.pdf"
+          },
+          {
+            "name": "2020-2021学年第二学期微积分I-2期末考试解答.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2020-2021学年第二学期微积分I-2期末考试解答.pdf"
+          },
+          {
+            "name": "2021-2022学年第二学期微积分I-2期末考试.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2021-2022学年第二学期微积分I-2期末考试.pdf"
+          },
+          {
+            "name": "2021-2022学年第二学期微积分I-2期末考试解答.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2021-2022学年第二学期微积分I-2期末考试解答.pdf"
+          },
+          {
+            "name": "2021-2022学年第二学期微积分I-2期中试卷.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2021-2022学年第二学期微积分I-2期中试卷.pdf"
+          },
+          {
+            "name": "2021-2022学年第二学期微积分I-2期中试卷解答.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2021-2022学年第二学期微积分I-2期中试卷解答.pdf"
+          },
+          {
+            "name": "2022-2023学年第二学期微积分I-2期末考试.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2022-2023学年第二学期微积分I-2期末考试.pdf"
+          },
+          {
+            "name": "2022-2023学年第二学期微积分I-2期末考试解答.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2022-2023学年第二学期微积分I-2期末考试解答.pdf"
+          },
+          {
+            "name": "2022-2023学年第二学期微积分I-2期中试卷.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2022-2023学年第二学期微积分I-2期中试卷.pdf"
+          },
+          {
+            "name": "2022-2023学年第二学期微积分I-2期中试卷解答.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2022-2023学年第二学期微积分I-2期中试卷解答.pdf"
+          },
+          {
+            "name": "2023-2024学年第二学期微积分I-2期末考试 .pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2023-2024学年第二学期微积分I-2期末考试 .pdf"
+          },
+          {
+            "name": "2023-2024学年第二学期微积分I-2期末考试解答.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2023-2024学年第二学期微积分I-2期末考试解答.pdf"
+          },
+          {
+            "name": "2023-2024学年第二学期微积分I-2期中考试.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2023-2024学年第二学期微积分I-2期中考试.pdf"
+          },
+          {
+            "name": "2023-2024学年第二学期微积分I-2期中考试解答.pdf",
+            "type": "file",
+            "resourceId": "release:微积分I/2023-2024学年第二学期微积分I-2期中考试解答.pdf"
+          }
+        ]
+      },
+      {
+        "name": "习近平新时代中国特色社会主义思想概论",
+        "type": "folder",
+        "children": [
+          {
+            "name": "《概论二》学习资料.docx",
+            "type": "file",
+            "resourceId": "release:习近平新时代中国特色社会主义思想概论/《概论二》学习资料.docx"
+          },
+          {
+            "name": "12习概总复习更新.pptx",
+            "type": "file",
+            "resourceId": "release:习近平新时代中国特色社会主义思想概论/12习概总复习更新.pptx"
+          },
+          {
+            "name": "2024春思考题汇总.pdf",
+            "type": "file",
+            "resourceId": "release:习近平新时代中国特色社会主义思想概论/2024春思考题汇总.pdf"
+          },
+          {
+            "name": "2024考试题目.txt",
+            "type": "file",
+            "resourceId": "release:习近平新时代中国特色社会主义思想概论/2024考试题目.txt"
+          },
+          {
+            "name": "2024期末思考题复习材料.docx",
+            "type": "file",
+            "resourceId": "release:习近平新时代中国特色社会主义思想概论/2024期末思考题复习材料.docx"
+          },
+          {
+            "name": "习概复习_冒力.pdf",
+            "type": "file",
+            "resourceId": "release:习近平新时代中国特色社会主义思想概论/习概复习_冒力.pdf"
+          },
+          {
+            "name": "习概期末重点思考题答案（AI版）.docx",
+            "type": "file",
+            "resourceId": "release:习近平新时代中国特色社会主义思想概论/习概期末重点思考题答案（AI版）.docx"
+          },
+          {
+            "name": "习概题库 可导入疯狂刷题中.docx",
+            "type": "file",
+            "resourceId": "release:习近平新时代中国特色社会主义思想概论/习概题库 可导入疯狂刷题中.docx"
+          },
+          {
+            "name": "习近平新时代中国特色社会主义思想概论 _高等教育出版社、人民出版社 (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+            "type": "file",
+            "resourceId": "release:习近平新时代中国特色社会主义思想概论/习近平新时代中国特色社会主义思想概论 _高等教育出版社、人民出版社 (z-library.sk, 1lib.sk, z-lib.sk).pdf"
+          }
+        ]
+      },
+      {
+        "name": "营销学原理",
+        "type": "folder",
+        "children": [
+          {
+            "name": "chapter 1 Marketing Creating Customer Value and Engagement.pdf.pdf",
+            "type": "file",
+            "resourceId": "release:营销学原理/chapter 1 Marketing Creating Customer Value and Engagement.pdf.pdf"
+          },
+          {
+            "name": "chapter 2 Company and Marketing Strategy.pdf.pdf",
+            "type": "file",
+            "resourceId": "release:营销学原理/chapter 2 Company and Marketing Strategy.pdf.pdf"
+          },
+          {
+            "name": "chapter 3 Analyzing the Marketing Environment.pdf.pdf",
+            "type": "file",
+            "resourceId": "release:营销学原理/chapter 3 Analyzing the Marketing Environment.pdf.pdf"
+          },
+          {
+            "name": "chapter 4 Marketing Information.pdf.pdf",
+            "type": "file",
+            "resourceId": "release:营销学原理/chapter 4 Marketing Information.pdf.pdf"
+          },
+          {
+            "name": "chapter 5 Consumer Behavior.pdf.pdf",
+            "type": "file",
+            "resourceId": "release:营销学原理/chapter 5 Consumer Behavior.pdf.pdf"
+          },
+          {
+            "name": "chapter 6 Customer-Driven Marketing Strategy.pdf.pdf",
+            "type": "file",
+            "resourceId": "release:营销学原理/chapter 6 Customer-Driven Marketing Strategy.pdf.pdf"
+          },
+          {
+            "name": "chapter 7 Products, Services, and Brands.pdf.pdf",
+            "type": "file",
+            "resourceId": "release:营销学原理/chapter 7 Products, Services, and Brands.pdf.pdf"
+          },
+          {
+            "name": "chapter 8 New Product Development and Product Life-Cycle Strategies.pdf.pdf",
+            "type": "file",
+            "resourceId": "release:营销学原理/chapter 8 New Product Development and Product Life-Cycle Strategies.pdf.pdf"
+          },
+          {
+            "name": "chapter 9 Pricing.pdf.pdf",
+            "type": "file",
+            "resourceId": "release:营销学原理/chapter 9 Pricing.pdf.pdf"
+          },
+          {
+            "name": "chapter 10 Marketing Channels.pdf.pdf",
+            "type": "file",
+            "resourceId": "release:营销学原理/chapter 10 Marketing Channels.pdf.pdf"
+          }
+        ]
+      }
+    ]
+  }
+}
