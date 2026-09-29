@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-09-29T18:52:42.766Z",
+  "generatedAt": "2026-09-29T19:13:14.647Z",
   "source": "release-staging",
   "releaseBaseUrl": "https://github.com/Lucifer-cgl/XU/releases/download/resources",
   "mirrorBaseUrl": null,
@@ -1835,7 +1835,7 @@
       "sha256": "4ab2a0f7918fee31cb9e81309857acc66e17ab6189729fe0387992dc9eac02aa",
       "assetName": "2024.-4ab2a0f7.txt",
       "uploaded": true,
-      "preview": false,
+      "preview": true,
       "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2024.-4ab2a0f7.txt",
       "mirrorUrl": null
     },

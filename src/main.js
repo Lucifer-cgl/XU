@@ -20,6 +20,9 @@ const themeToggle = document.querySelector("#theme-toggle");
 let catalog;
 let searchIndex;
 let releaseManifest = { files: [], tree: null };
+let resourceView = null;
+let resourceViewCapturedByClick = false;
+let activeRoute = "";
 let currentSource = "";
 let currentDocument;
 let currentTocHtml = "";
@@ -161,6 +164,7 @@ const releaseRouteFor = (id) => `#/release/${encodeURIComponent(id)}`;
 const localRouteFor = (id) => `#/local/${encodeURIComponent(id)}`;
 const hrefFor = (doc) => routeFor(doc.id);
 const releaseHrefFor = (item) => item.mirrorUrl || item.url || "#";
+const releasePreviewFor = (item) => `/api/release-preview?id=${encodeURIComponent(item.id)}`;
 const labelFor = (doc) => doc.displayTitle || doc.title;
 const safeId = (value = "") => `b-${Array.from(value).map((char) => char.codePointAt(0).toString(36)).join("-")}`;
 const localFileExtensions = new Set(["md", "markdown", "html", "htm", "pdf", "txt", "png", "jpg", "jpeg", "webp", "svg", "gif", "doc", "docx", "odt", "rtf", "ppt", "pptx", "odp", "xls", "xlsx", "ods", "csv"]);
@@ -721,8 +725,27 @@ function renderResourcesHome() {
   nav.innerHTML = "";
   tocPanel.innerHTML = "";
   document.title = `RESOURCE · ${catalog.site.title}`;
-  main.innerHTML = `<section class="resource-library-head"><p class="eyebrow">XU / RESOURCE LIBRARY</p><h1>每一份资料，<br><em>都有它的归处。</em></h1><p>沿着文件夹寻找试卷、课件与参考材料。目录按原有层级组织，打开文件时才加载内容。</p><label class="resource-search"><span class="sr-only">搜索资料</span><input id="resource-search-input" type="search" placeholder="搜索文件名或文件夹，例如 财务管理、期末卷" autocomplete="off"><span class="resource-search-icon" aria-hidden="true">⌕</span></label><div class="resource-library-stats"><span><strong>${(releaseManifest.files || []).length}</strong> 份资料</span><span><strong>${countReleaseFolders(releaseManifest.tree)}</strong> 个文件夹</span><span>PDF · WORD · EXCEL · PPT</span></div></section><section class="resource-guide"><span class="resource-guide-mark" aria-hidden="true">✦</span><p>从文件夹进入，按需预览或下载单个文件。资料会保持原样，方便保存和引用。</p><a href="https://github.com/Lucifer-cgl/XU" target="_blank" rel="noopener noreferrer">查看开源仓库 ↗</a></section><div id="resource-search-results" class="resource-search-results" hidden></div><div id="resource-directory">${renderReleaseSection() || '<section class="release-preview-empty"><h2>资料库暂时为空</h2><p>把文件放入 release-staging 后重新生成目录。</p></section>'}</div>`;
+  main.innerHTML = `<section class="resource-library-head"><p class="eyebrow">XU / RESOURCE LIBRARY</p><h1>每一份资料，<br><em>都有它的归处。</em></h1><p>沿着文件夹寻找试卷、课件与参考材料。目录按原有层级组织，打开文件时才加载内容。</p><label class="resource-search"><span class="sr-only">搜索资料</span><input id="resource-search-input" type="search" placeholder="搜索文件名或文件夹，例如 财务管理、期末卷" autocomplete="off"><span class="resource-search-icon" aria-hidden="true">⌕</span></label><div class="resource-library-stats"><span><strong>${(releaseManifest.files || []).length}</strong> 份资料</span><span><strong>${countReleaseFolders(releaseManifest.tree)}</strong> 个文件夹</span><span>PDF · WORD · EXCEL · PPT · TXT</span></div></section><section class="resource-guide"><span class="resource-guide-mark" aria-hidden="true">✦</span><p>XU 细分管理学院课程资料。还想找其他学院的试卷、笔记和课件？推荐去鹭岛书阁继续查找。</p><div class="resource-guide-links"><a class="resource-guide-recommend" href="https://xmu.vintces.icu/" target="_blank" rel="noopener noreferrer">推荐 · 鹭岛书阁 ↗</a><a class="resource-guide-source" href="https://github.com/Lucifer-cgl/XU" target="_blank" rel="noopener noreferrer">XU 开源仓库 ↗</a></div></section><div id="resource-search-results" class="resource-search-results" hidden></div><div id="resource-directory">${renderReleaseSection() || '<section class="release-preview-empty"><h2>资料库暂时为空</h2><p>把文件放入 release-staging 后重新生成目录。</p></section>'}</div>`;
   document.querySelector("#resource-search-input").addEventListener("input", handleResourceSearch);
+  if (resourceView) {
+    const input = document.querySelector("#resource-search-input");
+    input.value = resourceView.query;
+    if (input.value) handleResourceSearch({ target: input });
+    main.querySelectorAll("details.release-folder").forEach((folder, index) => {
+      folder.open = resourceView.openFolders.includes(index);
+    });
+    requestAnimationFrame(() => window.scrollTo({ top: resourceView.scrollY, behavior: "instant" }));
+  }
+}
+
+function rememberResourceView() {
+  const input = document.querySelector("#resource-search-input");
+  if (!input) return;
+  resourceView = {
+    query: input.value,
+    openFolders: [...main.querySelectorAll("details.release-folder")].flatMap((folder, index) => folder.open ? [index] : []),
+    scrollY: window.scrollY
+  };
 }
 
 function countReleaseFolders(node) {
@@ -1567,7 +1590,9 @@ function renderReleaseResource(id) {
   if (!ready) {
     preview = `<div class="release-preview-empty"><p class="eyebrow">WAITING FOR RELEASE</p><h2>文件尚未发布</h2><p>目录已经生成，上传 Release 后预览和下载入口会自动生效。</p></div>`;
   } else if (type === "pdf") {
-    preview = `<iframe class="release-preview-frame" src="${escapeHtml(href)}" title="${escapeHtml(item.name)} PDF 预览"></iframe>`;
+    preview = `<iframe class="release-preview-frame" src="${escapeHtml(releasePreviewFor(item))}" title="${escapeHtml(item.name)} PDF 预览"></iframe>`;
+  } else if (type === "txt") {
+    preview = `<iframe class="release-preview-frame" src="${escapeHtml(releasePreviewFor(item))}" title="${escapeHtml(item.name)} 文本预览" sandbox></iframe>`;
   } else if (officeTypes.has(type)) {
     const officeViewer = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(href)}`;
     preview = `<iframe class="release-preview-frame" src="${escapeHtml(officeViewer)}" title="${escapeHtml(item.name)} Office 在线预览"></iframe>`;
@@ -1598,6 +1623,9 @@ function renderReleaseResource(id) {
 
 function route() {
   saveCurrentTabScroll();
+  if (activeRoute === "#/resources" && !resourceViewCapturedByClick) rememberResourceView();
+  resourceViewCapturedByClick = false;
+  activeRoute = location.hash;
   main.classList.remove("release-active");
   const releaseMatch = location.hash.match(/^#\/release\/(.+)$/);
   if (releaseMatch) {
@@ -1680,6 +1708,10 @@ tocPanel.addEventListener("click", (event) => {
   scrollToWithHeaderOffset(target);
 });
 main.addEventListener("click", (event) => {
+  if (event.target.closest('a[href^="#/release/"]') && location.hash === "#/resources") {
+    rememberResourceView();
+    resourceViewCapturedByClick = true;
+  }
   const childFolderButton = event.target.closest("[data-release-child-folder]");
   if (childFolderButton) {
     event.preventDefault();

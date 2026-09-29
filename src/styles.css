@@ -492,6 +492,9 @@ body[data-section-mode="resources"] .release-heading .eyebrow { color: #f3bba1; 
 .resource-guide-mark { color: #f5b99f; font-size: 22px; }
 .resource-guide p { flex: 1; margin: 0; color: #e8eff4; font-size: 13px; }
 .resource-guide a { color: #f5b99f; font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap; }
+.resource-guide-links { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; }
+.resource-guide a.resource-guide-recommend { display: inline-flex; align-items: center; min-height: 34px; padding: 0 12px; border: 1px solid rgba(245,185,159,.7); border-radius: 999px; background: rgba(245,185,159,.12); color: #ffd4bd; }
+.resource-guide a.resource-guide-recommend:hover, .resource-guide a.resource-guide-recommend:focus-visible { background: rgba(245,185,159,.24); }
 body[data-section-mode="resources"] .release-section { max-width: 1180px; margin: 0 auto; padding: 0; border: 0; background: none; box-shadow: none; }
 body[data-section-mode="resources"] .release-heading { align-items: end; margin: 0 0 18px; }
 body[data-section-mode="resources"] .release-heading h2 { color: #fff; font-size: clamp(28px, 3vw, 38px); }
@@ -654,6 +657,7 @@ html[data-theme="light"] .resource-library-head h1 em,
 html[data-theme="light"] .resource-guide-mark,
 html[data-theme="light"] .resource-guide a,
 html[data-theme="light"] body[data-section-mode="resources"] .release-card .format-badge { color: #a3533b; }
+html[data-theme="light"] .resource-guide a.resource-guide-recommend { color: #8f3f2a; background: rgba(163,83,59,.09); border-color: rgba(143,63,42,.42); }
 html[data-theme="light"] .resource-library-stats strong,
 html[data-theme="light"] .release-root-label strong { color: #172d3a; }
 html[data-theme="light"] .resource-guide p,
@@ -754,7 +758,7 @@ html[data-theme="light"] body[data-section-mode="resources"] .release-preview-em
   .resource-library-head h1 { font-size: clamp(42px, 11vw, 62px); }
   .resource-guide { align-items: start; flex-wrap: wrap; }
   .resource-guide p { flex: 1 1 calc(100% - 45px); }
-  .resource-guide a { margin-left: 38px; }
+  .resource-guide-links { margin-left: 38px; }
   body[data-section-mode="resources"] .release-tree { grid-template-columns: 1fr; }
   body[data-section-mode="resources"] .release-folder > summary { min-height: 165px; }
 }

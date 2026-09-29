@@ -10,7 +10,7 @@ const trackedManifest = path.join(root, "release-resources.json");
 const slash = (value) => value.split(path.sep).join("/");
 const natural = new Intl.Collator("zh-CN", { numeric: true, sensitivity: "base" });
 const ignored = new Set([".DS_Store", "Thumbs.db", "desktop.ini"]);
-const previewTypes = new Set(["pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "png", "jpg", "jpeg", "webp", "gif", "svg"]);
+const previewTypes = new Set(["pdf", "txt", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "png", "jpg", "jpeg", "webp", "gif", "svg"]);
 
 async function exists(file) {
   try { await access(file); return true; } catch { return false; }

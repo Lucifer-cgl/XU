@@ -6,7 +6,7 @@
 
 “墟”取意于“归墟”。这个项目希望让分散的课程笔记有一处稳定归档，也让知识在记录、分享、修订和再次阅读中持续流转。
 
-XU 是一个以 GitHub 为内容仓库、以 Cloudflare Workers Static Assets 为主发布平台的纯静态课程知识库。维护者只需在 `content/` 中增加或修改文件，构建程序就会自动生成目录、搜索索引和下载清单；访客可以在线阅读、搜索、复制原文、下载原文件，并通过浏览器打印为 A4/PDF。较大的 PDF、DOCX、XLSX 和 Office DIST 包可放入 GitHub/Gitee Release，由清单按需连接，不进入网页仓库历史。
+XU 以 GitHub 为内容仓库、Cloudflare Workers Static Assets 为主发布平台：`NOTE` 分享课程笔记，`RESOURCE` 按原有文件夹层级整理附件。资料库目前更聚焦管理学院课程，分类相对细，但不追求覆盖所有学院；跨学科或更全面的课程资料，推荐互补使用 [鹭岛书阁](https://xmu.vintces.icu/)（[开源仓库](https://github.com/vintcessun/XMUHub)）。较大的 PDF、DOCX、XLSX 等资料放在 GitHub Release，不进入网页仓库历史。
 
 当前有两个访问入口：
 
@@ -40,7 +40,7 @@ XU 的策略是：**内容进入 Git，索引在构建时生成，阅读与下�
 - GitHub Actions 内容检查与 Cloudflare Git 自动部署。
 - 无后端、无数据库、无用户账户、无服务端 ZIP/PDF 任务。
 - Release 附件清单：扫描本地 `release-staging/` 后生成树形目录、大小和 SHA-256，不把大资料提交进 Git 历史。
-- 公共附件按需打开：PDF 可交给浏览器预览，DOCX/XLSX 保留在线预览或下载入口，Office DIST 作为独立压缩包发布。
+- 公共附件按需打开：PDF/TXT 由同源预览入口以在线查看方式返回，原文件下载仍直达 GitHub Release；DOCX/XLSX 等保留在线预览或下载入口。
 - 首页是独立导航入口，只提供 `NOTE` 与 `RESOURCE` 两个大选项：NOTE 保留左右目录阅读，RESOURCE 使用无侧栏的文件资料库界面。
 - 入口和资料库的主题切换使用同场景的 `public/static/xu-night-forest-v2.png`（夜景，山体原有暖光局部提亮）与 `public/static/xu-day-forest.png`（日景）；原始夜景保留在 `public/static/xu-night-forest.jfif` 便于对照。光影和卡片颜色随主题变化，偏好保存在浏览器本地。
 
@@ -80,9 +80,11 @@ XU 可以连接独立下载的 `XU-Office-Editor` 目录，把其中约 250 MiB 
 XU 入口页明确分成两块：
 
 - `NOTE` 对应 `content/`。Markdown 与 HTML 进入带左右目录的文章阅读器，参与全文搜索、文章目录和前后篇导航。
-- `RESOURCE` 对应 `release-staging/`。PDF、Word、Excel、PowerPoint 等大文件保留原文件夹层级，采用无左右侧栏的资料库界面，聚焦在线预览和单文件下载。
+- `RESOURCE` 对应 `release-staging/`。PDF、TXT、Word、Excel、PowerPoint 等文件保留原文件夹层级，采用无左右侧栏的资料库界面，聚焦在线预览和单文件下载。XU 主要细分管理学院课程；需要跨学院资料时可前往 [鹭岛书阁](https://xmu.vintces.icu/) 补充查找。
 
 两块区域只共享站点外壳，不混用展示逻辑，也不会为了打开笔记而下载 Release 大文件。
+
+GitHub Release 的 PDF/TXT 附件默认可能强制下载。线上预览通过 `worker/index.js` 的受限、流式同源入口设置 `Content-Disposition: inline`，只允许清单中已发布的 PDF/TXT；本地 Vite 预览使用相同逻辑。它不提供账号、数据库或通用文件代理。浏览资料库后点进文件，再返回资料库，会保留搜索词、展开的目录和滚动位置。
 
 ### Markdown
 
