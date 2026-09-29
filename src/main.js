@@ -20,6 +20,7 @@ const themeToggle = document.querySelector("#theme-toggle");
 let catalog;
 let searchIndex;
 let releaseManifest = { files: [], tree: null };
+let releasePreviewController = null;
 let resourceView = null;
 let resourceViewCapturedByClick = false;
 let activeRoute = "";
@@ -1590,9 +1591,9 @@ function renderReleaseResource(id) {
   if (!ready) {
     preview = `<div class="release-preview-empty"><p class="eyebrow">WAITING FOR RELEASE</p><h2>文件尚未发布</h2><p>目录已经生成，上传 Release 后预览和下载入口会自动生效。</p></div>`;
   } else if (type === "pdf") {
-    preview = `<iframe class="release-preview-frame" src="${escapeHtml(releasePreviewFor(item))}" title="${escapeHtml(item.name)} PDF 预览"></iframe>`;
+    preview = '<div class="release-document-stage" id="release-inline-preview" role="status">正在加载 PDF 预览…</div>';
   } else if (type === "txt") {
-    preview = `<iframe class="release-preview-frame" src="${escapeHtml(releasePreviewFor(item))}" title="${escapeHtml(item.name)} 文本预览" sandbox></iframe>`;
+    preview = '<div class="release-document-stage" id="release-inline-preview" role="status">正在加载文本预览…</div>';
   } else if (officeTypes.has(type)) {
     const officeViewer = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(href)}`;
     preview = `<iframe class="release-preview-frame" src="${escapeHtml(officeViewer)}" title="${escapeHtml(item.name)} Office 在线预览"></iframe>`;
@@ -1619,9 +1620,26 @@ function renderReleaseResource(id) {
   </section>`;
   sidebar.classList.remove("open");
   main.focus();
+  if (ready && (type === "pdf" || type === "txt")) {
+    const controller = new AbortController();
+    releasePreviewController = controller;
+    const stage = main.querySelector("#release-inline-preview");
+    void import("./release-document-preview.js").then(async ({ showReleasePdf, showReleaseText }) => {
+      if (controller.signal.aborted) return;
+      try {
+        await (type === "pdf" ? showReleasePdf : showReleaseText)(stage, releasePreviewFor(item), controller.signal, item.size);
+      } catch (error) {
+        if (!controller.signal.aborted) stage.textContent = `预览失败：${error.message}。请下载原文件查看。`;
+      }
+    }).catch((error) => {
+      if (!controller.signal.aborted) stage.textContent = `预览组件加载失败：${error.message}。请下载原文件查看。`;
+    });
+  }
 }
 
 function route() {
+  releasePreviewController?.abort();
+  releasePreviewController = null;
   saveCurrentTabScroll();
   if (activeRoute === "#/resources" && !resourceViewCapturedByClick) rememberResourceView();
   resourceViewCapturedByClick = false;

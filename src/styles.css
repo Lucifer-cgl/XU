@@ -256,6 +256,13 @@ body.is-resizing { cursor: col-resize; user-select: none; }
 .release-meta dd { margin: 3px 0 0; overflow: hidden; font-size: 13px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
 .release-preview-shell { min-height: min(760px, calc(100vh - 270px)); border: 1px solid var(--line); border-radius: 18px; background: #d9ddd9; box-shadow: var(--shadow); overflow: hidden; }
 .release-preview-frame { display: block; width: 100%; min-height: min(760px, calc(100vh - 270px)); border: 0; background: #fff; }
+.release-document-stage { min-height: min(760px, calc(100vh - 270px)); padding: 18px; background: #e2e6e8; color: #243240; }
+.release-document-count { margin: 0 0 16px; color: #536473; font-size: 13px; text-align: center; }
+.release-pdf-pages { display: grid; justify-items: center; gap: 18px; }
+.release-pdf-page { display: grid; place-items: center; width: min(100%, 1000px); min-height: 420px; background: #fff; box-shadow: 0 5px 22px rgba(23,38,54,.18); color: #74808a; font-size: 13px; }
+.release-pdf-page canvas { display: block; max-width: 100%; }
+.release-text-content { max-width: 1000px; min-height: min(680px, calc(100vh - 310px)); margin: 0 auto; padding: clamp(20px, 4vw, 48px); background: #fff; box-shadow: 0 5px 22px rgba(23,38,54,.14); color: #243240; font: 15px/1.85 ui-monospace, SFMono-Regular, Consolas, "Microsoft YaHei", monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+.release-document-message { margin: 30px auto; padding: 22px; max-width: 650px; border-radius: 14px; background: #fff; text-align: center; }
 .release-image-stage { display: grid; place-items: center; min-height: min(760px, calc(100vh - 270px)); padding: 28px; }
 .release-image-stage img { display: block; max-width: 100%; max-height: calc(100vh - 320px); object-fit: contain; }
 .release-preview-empty { display: grid; place-content: center; min-height: min(760px, calc(100vh - 270px)); padding: 40px; text-align: center; }
