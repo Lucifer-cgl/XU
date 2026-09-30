@@ -35,6 +35,10 @@
           <span class="sr-only">收起或展开本文目录</span>
         </button>
         <aside id="sidebar" class="sidebar" aria-label="课程目录">
+          <div class="sidebar-section-tabs" role="tablist" aria-label="切换笔记目录">
+            <button id="sidebar-notes-tab" type="button" role="tab" aria-controls="course-nav" aria-selected="true" data-sidebar-view="notes">笔记目录</button>
+            <button id="sidebar-article-tab" type="button" role="tab" aria-controls="sidebar-article-nav" aria-selected="false" data-sidebar-view="article" disabled>本文目录</button>
+          </div>
           <div class="sidebar-heading">
             <span>内容目录</span>
             <span class="tree-actions">
@@ -43,6 +47,7 @@
             </span>
           </div>
           <nav id="course-nav"></nav>
+          <nav id="sidebar-article-nav" class="sidebar-article-nav" aria-label="本文目录"></nav>
         </aside>
         <div id="left-panel-resizer" class="panel-resizer panel-resizer-left" role="separator" aria-label="调整课程目录宽度" aria-orientation="vertical" aria-controls="sidebar" aria-valuemin="190" aria-valuemax="420" aria-valuenow="260" tabindex="0"></div>
         <main id="main-content" class="main-content" tabindex="-1">

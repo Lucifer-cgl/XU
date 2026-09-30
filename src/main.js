@@ -10,6 +10,9 @@ const main = document.querySelector("#main-content");
 const nav = document.querySelector("#course-nav");
 const tocPanel = document.querySelector("#toc-panel");
 const sidebar = document.querySelector("#sidebar");
+const sidebarArticleNav = document.querySelector("#sidebar-article-nav");
+const sidebarNotesTab = document.querySelector("#sidebar-notes-tab");
+const sidebarArticleTab = document.querySelector("#sidebar-article-tab");
 const siteLayout = document.querySelector("#site-layout");
 const navToggle = document.querySelector("#nav-toggle");
 const leftPanelToggle = document.querySelector("#left-panel-toggle");
@@ -610,6 +613,7 @@ function renderNavigation(activeId = "") {
 function setSectionMode(mode) {
   siteLayout.dataset.sectionMode = mode;
   document.body.dataset.sectionMode = mode;
+  if (mode !== "notes") setSidebarView("notes");
   document.querySelectorAll(".primary-nav a").forEach((link) => {
     const selected = (mode === "landing" && link.getAttribute("href") === "#/")
       || (mode === "notes" && link.getAttribute("href") === "#/notes")
@@ -617,6 +621,14 @@ function setSectionMode(mode) {
     if (selected) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
   });
+}
+
+function setSidebarView(view) {
+  const selected = view === "article" && !sidebarArticleTab.disabled ? "article" : "notes";
+  sidebar.dataset.view = selected;
+  sidebarNotesTab.setAttribute("aria-selected", String(selected === "notes"));
+  sidebarArticleTab.setAttribute("aria-selected", String(selected === "article"));
+  sidebar.scrollTop = 0;
 }
 
 function renderReleaseNavigation(activeId = "") {
@@ -710,6 +722,9 @@ function renderNotesHome() {
   currentTocHtml = "";
   renderNavigation();
   tocPanel.innerHTML = '<div class="toc-title">笔记说明</div><p class="bookmark-empty">左侧选择课程与文章；打开文章后，右侧显示本文目录与书签。</p>';
+  sidebarArticleNav.innerHTML = "";
+  sidebarArticleTab.disabled = true;
+  setSidebarView("notes");
   document.title = `NOTE · ${catalog.site.title}`;
   main.innerHTML = `<section class="notes-library-head"><div><p class="eyebrow">NOTE / CONTENT</p><h1>笔记与文章</h1><p>适合连续阅读、全文检索与按章节浏览的 Markdown / HTML 内容。</p></div><a href="#/">返回入口</a></section><section class="notes-search"><label class="search-box"><span>搜索</span><input id="search-input" type="search" placeholder="课程、章节或正文关键词" autocomplete="off" /></label><div id="search-results" class="search-results" aria-live="polite"></div></section>${renderNotesSection()}`;
   const input = document.querySelector("#search-input");
@@ -1171,15 +1186,21 @@ function renderRightPanel() {
   if (!currentDocument) {
     currentTocHtml = "";
     tocPanel.innerHTML = "";
+    sidebarArticleNav.innerHTML = "";
+    sidebarArticleTab.disabled = true;
+    setSidebarView("notes");
     return;
   }
+  sidebarArticleTab.disabled = false;
   const activeToc = tocMode === "toc" ? "active" : "";
   const activeBookmarks = tocMode === "bookmarks" ? "active" : "";
   const body = tocMode === "bookmarks" ? renderBookmarkList() : currentTocHtml;
-  tocPanel.innerHTML = `<div class="toc-switch" role="tablist" aria-label="右侧栏切换">
+  const contents = `<div class="toc-switch" role="tablist" aria-label="本文导航切换">
     <button type="button" class="${activeToc}" data-toc-mode="toc">目录</button>
     <button type="button" class="${activeBookmarks}" data-toc-mode="bookmarks">书签</button>
   </div>${body}`;
+  tocPanel.innerHTML = contents;
+  sidebarArticleNav.innerHTML = contents;
 }
 
 function renderBookmarkList() {
@@ -1364,6 +1385,7 @@ async function renderLocalFile(id) {
       currentTocHtml = `<p class="bookmark-empty">本地资源已在中间预览区打开。</p>`;
       renderRightPanel();
     }
+    setSidebarView("article");
     document.querySelector('[data-action="copy"]')?.addEventListener("click", copySource);
     document.querySelectorAll('[data-action="html-open-tab"]').forEach((button) => button.addEventListener("click", openHtmlInNewTab));
     main.focus();
@@ -1489,6 +1511,7 @@ async function renderArticle(id) {
       htmlFrame.srcdoc = safeHtmlPreview;
     }
     enhanceArticle(document.querySelector("#article"));
+    setSidebarView("article");
     document.querySelector('[data-action="copy"]').addEventListener("click", copySource);
     document.querySelector('[data-action="print"]').addEventListener("click", openPrintPreview);
     document.querySelectorAll('[data-action="html-open-tab"]').forEach((button) => button.addEventListener("click", openHtmlInNewTab));
@@ -1666,6 +1689,10 @@ navToggle.addEventListener("click", () => {
   const open = sidebar.classList.toggle("open");
   navToggle.setAttribute("aria-expanded", String(open));
 });
+sidebar.querySelector(".sidebar-section-tabs").addEventListener("click", (event) => {
+  const tab = event.target.closest("[data-sidebar-view]");
+  if (tab && !tab.disabled) setSidebarView(tab.dataset.sidebarView);
+});
 leftPanelToggle.addEventListener("click", () => togglePanel("left"));
 rightPanelToggle.addEventListener("click", () => togglePanel("right"));
 function applyTheme(theme) {
@@ -1681,7 +1708,7 @@ themeToggle.addEventListener("click", () => {
   localStorage.setItem("xu-theme", next);
 });
 applyTheme(localStorage.getItem("xu-theme") || "light");
-tocPanel.addEventListener("click", (event) => {
+function handleArticleNavClick(event) {
   const outlineButton = event.target.closest("[data-workbench-outline]");
   if (outlineButton && activeWorkbenchFrame?.contentWindow) {
     activeWorkbenchFrame.contentWindow.postMessage({ source: "xu-knowledge-base", type: "outline-jump", id: outlineButton.dataset.workbenchOutline }, window.location.origin);
@@ -1724,7 +1751,13 @@ tocPanel.addEventListener("click", (event) => {
   event.preventDefault();
   const target = document.getElementById(decodeURIComponent(link.dataset.section));
   scrollToWithHeaderOffset(target);
-});
+  if (window.matchMedia("(max-width: 760px)").matches) {
+    sidebar.classList.remove("open");
+    navToggle.setAttribute("aria-expanded", "false");
+  }
+}
+tocPanel.addEventListener("click", handleArticleNavClick);
+sidebarArticleNav.addEventListener("click", handleArticleNavClick);
 main.addEventListener("click", (event) => {
   if (event.target.closest('a[href^="#/release/"]') && location.hash === "#/resources") {
     rememberResourceView();

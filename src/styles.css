@@ -55,6 +55,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .icon-button, .article-tools button, .article-tools a { border: 1px solid var(--line); border-radius: 999px; color: var(--ink); background: var(--surface); padding: 7px 13px; text-decoration: none; cursor: pointer; }
 .icon-button:hover, .article-tools button:hover, .article-tools a:hover { border-color: var(--accent); }
 .mobile-only { display: none; }
+.sidebar-section-tabs, .sidebar-article-nav { display: none; }
 .site-layout {
   --left-column: var(--left-panel-size);
   --left-handle: 6px;
@@ -353,8 +354,8 @@ body.is-resizing { cursor: col-resize; user-select: none; }
 .toc-switch { position: sticky; top: 0; z-index: 4; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 14px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); box-shadow: 0 -72px 0 54px var(--paper), 0 0 0 12px var(--paper), 0 12px 24px rgba(23, 33, 29, .09); }
 .toc-switch button { min-width: 0; padding: 5px 8px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: 12px; font-weight: 700; cursor: pointer; }
 .toc-switch button.active { background: var(--accent); color: #fff; }
-.toc-panel a, .bookmark-jump { display: block; overflow: hidden; width: 100%; padding: 5px 0; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 12px; line-height: 1.45; text-align: left; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
-.toc-panel a:hover, .bookmark-jump:hover { color: var(--accent); }
+.toc-panel a, .sidebar-article-nav a, .bookmark-jump { display: block; overflow: hidden; width: 100%; padding: 5px 0; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 12px; line-height: 1.45; text-align: left; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+.toc-panel a:hover, .sidebar-article-nav a:hover, .bookmark-jump:hover { color: var(--accent); }
 .toc-level-3 { padding-left: 12px !important; }
 .toc-level-4 { padding-left: 24px !important; }
 .bookmark-add { width: 100%; margin-bottom: 10px; padding: 7px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--accent); font-size: 12px; font-weight: 700; cursor: pointer; }
@@ -690,6 +691,26 @@ html[data-theme="light"] body[data-section-mode="resources"] .release-preview-em
 @media (max-width: 940px) {
   .brand-story, .open-source-section { grid-template-columns: 1fr; }
   .brand-glyph { width: 140px; }
+}
+
+@media (max-width: 1100px) {
+  .site-layout[data-section-mode="notes"] { --right-column: 0px; --right-handle: 0px; }
+  .site-layout[data-section-mode="notes"] #toc-panel,
+  .site-layout[data-section-mode="notes"] #right-panel-resizer,
+  .site-layout[data-section-mode="notes"] #right-panel-toggle { display: none; }
+  .site-layout[data-section-mode="notes"] .sidebar { display: flex; flex-direction: column; overflow: hidden; }
+  .site-layout[data-section-mode="notes"] .sidebar-section-tabs { display: grid; flex: none; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 14px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+  .sidebar-section-tabs button { padding: 7px 5px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: 12px; font-weight: 700; cursor: pointer; }
+  .sidebar-section-tabs button[aria-selected="true"] { background: var(--accent); color: #fff; }
+  .sidebar-section-tabs button:disabled { opacity: .45; cursor: not-allowed; }
+  .site-layout[data-section-mode="notes"] .sidebar > .sidebar-heading { flex: none; margin-bottom: 4px; justify-content: flex-end; }
+  .site-layout[data-section-mode="notes"] .sidebar > .sidebar-heading > span:first-child,
+  .site-layout[data-section-mode="notes"] #course-nav > .sidebar-heading { display: none; }
+  .site-layout[data-section-mode="notes"] .sidebar[data-view="article"] > .sidebar-heading,
+  .site-layout[data-section-mode="notes"] .sidebar[data-view="article"] #course-nav { display: none; }
+  .site-layout[data-section-mode="notes"] #course-nav,
+  .site-layout[data-section-mode="notes"] .sidebar[data-view="article"] .sidebar-article-nav { flex: 1; min-height: 0; overflow: auto; }
+  .site-layout[data-section-mode="notes"] .sidebar[data-view="article"] .sidebar-article-nav { display: block; }
 }
 
 @media (max-width: 760px) {
