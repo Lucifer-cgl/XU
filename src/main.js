@@ -1006,8 +1006,10 @@ function scrollToWithHeaderOffset(target, behavior = "smooth") {
 
 function restoreTabScroll(docId) {
   const scrollY = loadTabScrolls()[docId];
-  if (Number.isFinite(scrollY)) window.scrollTo({ top: Math.max(0, scrollY), behavior: "auto" });
-  else window.scrollTo({ top: 0, behavior: "auto" });
+  // `auto` follows the page-level `scroll-behavior: smooth`; tab restoration
+  // must happen before the next paint without replaying the whole scroll path.
+  if (Number.isFinite(scrollY)) window.scrollTo({ top: Math.max(0, scrollY), behavior: "instant" });
+  else window.scrollTo({ top: 0, behavior: "instant" });
 }
 
 function sanitizePlainText(value = "", maxLength = 80) {
