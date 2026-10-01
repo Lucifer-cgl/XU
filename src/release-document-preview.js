@@ -1,4 +1,6 @@
-import pdfWorkerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
+import PdfWorker from "pdfjs-dist/build/pdf.worker.min.mjs?worker";
+
+let pdfWorker;
 
 const previewError = (stage, message) => {
   stage.replaceChildren();
@@ -97,7 +99,8 @@ export async function showReleasePdf(stage, urls, signal, fileSize = 0, sha256 =
   }
   const pdfjs = await import("pdfjs-dist");
   if (signal.aborted) return;
-  pdfjs.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
+  pdfWorker ||= new PdfWorker();
+  pdfjs.GlobalWorkerOptions.workerPort = pdfWorker;
   stage.textContent = "正在下载 PDF…";
   const bytes = await fetchRelease(urls, signal, fileSize, sha256, stage);
   if (signal.aborted) return;

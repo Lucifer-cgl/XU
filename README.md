@@ -89,7 +89,7 @@ GitHub Release 的 PDF/TXT 附件默认可能强制下载。页面先读取 `pub
 
 当前在线候选源使用 [weekoo2025/Ghproxy](https://github.com/weekoo2025/Ghproxy) 的每日更新名单，并同时提供 jsDelivr 与 GitHub Raw 两个读取入口。它只负责提供候选项，不能绕过上述本机实测与文件校验。增删来源或调整探测附件时，只需修改 `public/release-mirrors.json`，无需重新上传 Release 附件。
 
-PDF/TXT 预览会按测速顺序逐条尝试，全部失败后再通过 `worker/index.js` 的受限同源入口读取；页面用 PDF.js 绘制 PDF（滚动时按需绘制后续页面），TXT 则解码为纯文本显示。超过 80 MB 的 PDF 不在浏览器内加载，可下载原文件；本地 Vite 预览使用相同逻辑。它不提供账号、数据库或通用文件代理。浏览资料库后点进文件，再返回资料库，会保留搜索词、展开的目录和滚动位置。
+PDF/TXT 预览会按测速顺序逐条尝试，全部失败后再通过 `worker/index.js` 的受限同源入口读取；页面用 PDF.js 绘制 PDF（滚动时按需绘制后续页面），TXT 则解码为纯文本显示。PDF.js Worker 由 Vite 构建成普通 `.js`，避免部分国内静态托管把 `.mjs` 错误返回为二进制类型。超过 80 MB 的 PDF 不在浏览器内加载，可下载原文件；本地 Vite 预览使用相同逻辑。它不提供账号、数据库或通用文件代理。浏览资料库后点进文件，再返回资料库，会保留搜索词、展开的目录和滚动位置。
 
 ### Markdown
 
@@ -275,6 +275,8 @@ npm run preview
 | `npm run dev` | 生成内容后启动本地开发服务器 |
 | `npm run build` | 生成 `dist/` 正式静态站点 |
 | `npm run preview` | 本地预览正式构建结果 |
+
+正式构建不输出 source map；它们不参与线上运行，关闭后可减小 `dist/` 和静态托管上传体积。开发时仍可使用 Vite 开发服务器定位源码问题。
 
 ## 为什么足够轻量
 
