@@ -40,7 +40,7 @@ XU 的策略是：**内容进入 Git，索引在构建时生成，阅读与下�
 - GitHub Actions 内容检查与 Cloudflare Git 自动部署。
 - 无后端、无数据库、无用户账户、无服务端 ZIP/PDF 任务。
 - Release 附件清单：扫描本地 `release-staging/` 后生成树形目录、大小和 SHA-256，不把大资料提交进 Git 历史。
-- 公共附件按需打开：附件仍只发布到 GitHub Release；浏览器会检测国内可达的 GitHub 加速线路并优先使用，失败时依次切换，最终回退到原地址或 Cloudflare 同源预览入口。每条入选线路都用真实附件完成大小与 SHA-256 校验。
+- 公共附件按需打开：附件仍只发布到 GitHub Release；浏览器会检测 GitHub 直连能力并实测可达的加速线路。GitHub 可直连时，原文件下载直接走 GitHub；无法直连时才选择加速线路。页面内预览失败时依次切换，最终回退到 Cloudflare 同源入口。
 - PDF/TXT 在页面内绘制或显示；超过 80 MB 的 PDF 提供原文件下载，DOCX/XLSX 等保留在线预览或下载入口。
 - 首页是独立导航入口，只提供 `NOTE` 与 `RESOURCE` 两个大选项：NOTE 保留左右目录阅读，RESOURCE 使用无侧栏的文件资料库界面。
 - 入口和资料库的主题切换使用同场景的 `public/static/xu-night-forest-v2.png`（夜景，山体原有暖光局部提亮）与 `public/static/xu-day-forest.png`（日景）；原始夜景保留在 `public/static/xu-night-forest.jfif` 便于对照。光影和卡片颜色随主题变化，偏好保存在浏览器本地。
@@ -85,7 +85,7 @@ XU 入口页明确分成两块：
 
 两块区域只共享站点外壳，不混用展示逻辑，也不会为了打开笔记而下载 Release 大文件。
 
-GitHub Release 的 PDF/TXT 附件默认可能强制下载。页面先读取 `public/release-mirrors.json`：其中 `bootstrap` 是随站点维护的基础线路，`sources` 是会持续更新的候选名单。候选地址只允许无账号、无端口的公网 HTTPS 地址；浏览器再用清单中固定的小型附件实测，只有文件大小与 SHA-256 都正确的线路才会加入本机排序，结果缓存 30 分钟。实时名单不可用时仍可使用基础线路或上次七天内的成功结果，不会把名单中的地址直接当成可信下载源。
+GitHub Release 的 PDF/TXT 附件默认可能强制下载。页面先读取 `public/release-mirrors.json`：其中 `bootstrap` 是随站点维护的基础线路，`sources` 是会持续更新的候选名单。候选地址只允许无账号、无端口的公网 HTTPS 地址；浏览器再用清单中固定的小型附件检测 GitHub 原地址是否可达，并测速候选线路。镜像只有在文件大小与 SHA-256 都正确时才会加入本机排序，结果缓存 30 分钟。开着代理、GitHub 可直连的访客会直接使用 GitHub，不会被强制绕到镜像；无法直连的访客才会自动选择可用加速线路。由于 GitHub 对浏览器跨域读取有限制，未经完整校验的直连可达结果只在当前页面使用，不写入长期缓存。实时名单不可用时仍可使用基础线路或上次七天内的成功结果，不会把名单中的地址直接当成可信下载源。
 
 当前在线候选源使用 [weekoo2025/Ghproxy](https://github.com/weekoo2025/Ghproxy) 的每日更新名单，并同时提供 jsDelivr 与 GitHub Raw 两个读取入口。它只负责提供候选项，不能绕过上述本机实测与文件校验。增删来源或调整探测附件时，只需修改 `public/release-mirrors.json`，无需重新上传 Release 附件。
 

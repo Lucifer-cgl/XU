@@ -49,7 +49,7 @@ function loadCache() {
   try {
     const saved = JSON.parse(localStorage.getItem(cacheKey) || "null");
     if (!saved || Date.now() - Number(saved.checkedAt) > cacheUsableMs || !Array.isArray(saved.mirrors)) return null;
-    const mirrors = saved.mirrors.filter((item) => normalizeMirrorPrefix(item.prefix));
+    const mirrors = saved.mirrors.filter((item) => item.direct === true || normalizeMirrorPrefix(item.prefix));
     return { checkedAt: Number(saved.checkedAt), mirrors };
   } catch {
     return null;
@@ -58,7 +58,8 @@ function loadCache() {
 
 function saveCache() {
   try {
-    localStorage.setItem(cacheKey, JSON.stringify({ checkedAt: Date.now(), mirrors: ranked }));
+    const cacheable = ranked.filter((item) => !item.direct || item.verified !== false);
+    localStorage.setItem(cacheKey, JSON.stringify({ checkedAt: Date.now(), mirrors: cacheable }));
   } catch {
     // Private browsing can disable storage; the in-memory ranking still works.
   }
@@ -113,10 +114,38 @@ async function probeMirror(prefix, probe) {
   const elapsedMs = Math.max(1, Math.round(performance.now() - started));
   return {
     prefix,
+    direct: !prefix,
+    verified: true,
     elapsedMs,
     speedKbps: Math.round(probe.size * 1000 / 1024 / elapsedMs),
     checkedAt: Date.now()
   };
+}
+
+async function probeDirect(probe) {
+  const controller = new AbortController();
+  const timer = window.setTimeout(() => controller.abort(), 5000);
+  const started = performance.now();
+  try {
+    const githubOrigin = new URL(probe.url).origin;
+    await fetch(`${githubOrigin}/favicon.ico`, {
+      mode: "no-cors",
+      cache: "no-store",
+      credentials: "omit",
+      referrerPolicy: "no-referrer",
+      signal: controller.signal
+    });
+    return {
+      prefix: "",
+      direct: true,
+      verified: false,
+      elapsedMs: Math.max(1, Math.round(performance.now() - started)),
+      speedKbps: 0,
+      checkedAt: Date.now()
+    };
+  } finally {
+    window.clearTimeout(timer);
+  }
 }
 
 function uniqueCandidates(values) {
@@ -124,27 +153,39 @@ function uniqueCandidates(values) {
 }
 
 async function refreshMirrors() {
-  dispatchStatus("checking", ranked.length ? "正在后台更新国内线路…" : "正在检测国内线路…");
+  dispatchStatus("checking", ranked.length ? "正在后台更新下载线路…" : "正在比较 GitHub 直连与加速线路…");
   try {
     config = await fetch(configUrl, { cache: "no-cache" }).then((response) => {
       if (!response.ok) throw new Error(`镜像配置读取失败（${response.status}）`);
       return response.json();
     });
-    const cachedPrefixes = ranked.map((item) => item.prefix);
+    const cachedPrefixes = ranked.filter((item) => !item.direct).map((item) => item.prefix);
     const bootstrap = (config.bootstrap || []).map((item) => item.prefix);
     const dynamic = await loadDynamicCandidates(config.sources);
     const candidates = uniqueCandidates([...cachedPrefixes, ...bootstrap, ...dynamic]);
     const healthy = [];
     for (let index = 0; index < candidates.length && healthy.length < maxHealthy; index += batchSize) {
-      const results = await Promise.allSettled(candidates.slice(index, index + batchSize).map((prefix) => probeMirror(prefix, config.probe)));
+      const probes = candidates.slice(index, index + batchSize).map((prefix) => probeMirror(prefix, config.probe));
+      if (index === 0) probes.unshift(probeDirect(config.probe));
+      const results = await Promise.allSettled(probes);
       for (const result of results) {
         if (result.status === "fulfilled") healthy.push(result.value);
       }
     }
     if (healthy.length) {
-      ranked = healthy.sort((a, b) => a.elapsedMs - b.elapsedMs).slice(0, maxHealthy);
+      ranked = healthy.sort((a, b) => {
+        if (a.direct && a.verified === false) return -1;
+        if (b.direct && b.verified === false) return 1;
+        return a.elapsedMs - b.elapsedMs;
+      }).slice(0, maxHealthy);
       saveCache();
-      dispatchStatus("ready", `国内线路 ${ranked.length} 条可用 · 已选择最快线路`);
+      const mirrorCount = ranked.filter((item) => !item.direct).length;
+      dispatchStatus(
+        "ready",
+        ranked[0].direct
+          ? `GitHub 可直连 · 另有 ${mirrorCount} 条备用线路`
+          : `加速线路最快 · ${mirrorCount} 条可用`
+      );
     } else if (ranked.length) {
       dispatchStatus("stale", "实时检测失败 · 暂用上次可用线路");
     } else {
@@ -188,5 +229,7 @@ export async function releasePreviewUrls(githubUrl, fallbackUrl = "") {
 }
 
 export function mirrorStatusText() {
-  return ranked.length ? `国内线路 ${ranked.length} 条可用` : "国内线路检测中";
+  if (!ranked.length) return "下载线路检测中";
+  if (ranked[0].direct) return "GitHub 可直连";
+  return `加速线路 ${ranked.filter((item) => !item.direct).length} 条可用`;
 }
