@@ -8,16 +8,80 @@ const previewError = (stage, message) => {
   stage.appendChild(notice);
 };
 
-export async function showReleaseText(stage, url, signal) {
-  const response = await fetch(url, { signal });
-  if (!response.ok) throw new Error(`文本读取失败（${response.status}）`);
-  const bytes = await response.arrayBuffer();
+const sha256Hex = async (buffer) => {
+  const digest = await crypto.subtle.digest("SHA-256", buffer);
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+};
+
+async function readResponseBytes(response, controller, expectedSize) {
+  if (!response.body?.getReader) return response.arrayBuffer();
+  const reader = response.body.getReader();
+  const chunks = [];
+  let total = 0;
+  let idleTimer;
+  const resetIdleTimer = () => {
+    window.clearTimeout(idleTimer);
+    idleTimer = window.setTimeout(() => controller.abort(), 15000);
+  };
+  try {
+    resetIdleTimer();
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      chunks.push(value);
+      total += value.byteLength;
+      if (expectedSize && total > expectedSize) throw new Error("文件大小不符");
+      resetIdleTimer();
+    }
+  } finally {
+    window.clearTimeout(idleTimer);
+  }
+  const bytes = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return bytes.buffer;
+}
+
+async function fetchRelease(urls, signal, expectedSize, expectedSha256, stage) {
+  let lastError;
+  for (let index = 0; index < urls.length; index += 1) {
+    if (signal.aborted) throw new DOMException("Aborted", "AbortError");
+    const url = urls[index];
+    const controller = new AbortController();
+    const abort = () => controller.abort();
+    signal.addEventListener("abort", abort, { once: true });
+    const connectionTimer = window.setTimeout(() => controller.abort(), 12000);
+    try {
+      stage.textContent = index ? `上一条线路不可用，正在尝试第 ${index + 1} 条…` : "正在连接国内线路…";
+      const response = await fetch(url, { signal: controller.signal, credentials: url.startsWith("/") ? "same-origin" : "omit", referrerPolicy: "no-referrer" });
+      window.clearTimeout(connectionTimer);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const bytes = await readResponseBytes(response, controller, expectedSize);
+      if (expectedSize && bytes.byteLength !== expectedSize) throw new Error("文件大小不符");
+      if (expectedSha256 && await sha256Hex(bytes) !== expectedSha256.toLowerCase()) throw new Error("文件校验失败");
+      return bytes;
+    } catch (error) {
+      if (signal.aborted) throw error;
+      lastError = error;
+    } finally {
+      window.clearTimeout(connectionTimer);
+      signal.removeEventListener("abort", abort);
+    }
+  }
+  throw lastError || new Error("没有可用的读取线路");
+}
+
+export async function showReleaseText(stage, urls, signal, fileSize = 0, sha256 = "") {
+  const bytes = await fetchRelease(urls, signal, fileSize, sha256, stage);
   if (signal.aborted) return;
   let content;
   try {
-    content = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+    content = new TextDecoder("utf-8", { fatal: true }).decode(new Uint8Array(bytes));
   } catch {
-    content = new TextDecoder("gb18030").decode(bytes);
+    content = new TextDecoder("gb18030").decode(new Uint8Array(bytes));
   }
   const pre = document.createElement("pre");
   pre.className = "release-text-content";
@@ -25,7 +89,7 @@ export async function showReleaseText(stage, url, signal) {
   stage.replaceChildren(pre);
 }
 
-export async function showReleasePdf(stage, url, signal, fileSize = 0) {
+export async function showReleasePdf(stage, urls, signal, fileSize = 0, sha256 = "") {
   const maxPreviewBytes = 80 * 1024 * 1024;
   if (fileSize > maxPreviewBytes) {
     previewError(stage, "此 PDF 超过 80 MB，暂不适合在浏览器中完整加载。");
@@ -35,15 +99,7 @@ export async function showReleasePdf(stage, url, signal, fileSize = 0) {
   if (signal.aborted) return;
   pdfjs.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
   stage.textContent = "正在下载 PDF…";
-  const response = await fetch(url, { signal });
-  if (!response.ok) throw new Error(`PDF 读取失败（${response.status}）`);
-  const contentLength = Number(response.headers.get("content-length") || 0);
-  if (contentLength > maxPreviewBytes) {
-    await response.body?.cancel();
-    previewError(stage, "此 PDF 超过 80 MB，暂不适合在浏览器中完整加载。");
-    return;
-  }
-  const bytes = await response.arrayBuffer();
+  const bytes = await fetchRelease(urls, signal, fileSize, sha256, stage);
   if (signal.aborted) return;
   if (bytes.byteLength > maxPreviewBytes) {
     previewError(stage, "此 PDF 超过 80 MB，暂不适合在浏览器中完整加载。");

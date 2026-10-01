@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "probe": {
+    "url": "https://github.com/Lucifer-cgl/XU/releases/download/resources/2023-2024.I-2.-be230777.pdf",
+    "size": 262600,
+    "sha256": "be230777b6d9ecb8bc0b71289d0c20006ea99dafa67c9608f6ef18c5e7022590"
+  },
+  "bootstrap": [
+    { "name": "gh-proxy", "prefix": "https://gh-proxy.com" },
+    { "name": "ghfast", "prefix": "https://ghfast.top" },
+    { "name": "ghproxy.net", "prefix": "https://ghproxy.net" },
+    { "name": "isteed CORS", "prefix": "https://cors.isteed.cc" },
+    { "name": "ddlc", "prefix": "https://gh.ddlc.top" },
+    { "name": "idayer", "prefix": "https://gh.idayer.com" },
+    { "name": "llkk", "prefix": "https://gh.llkk.cc" },
+    { "name": "monlor", "prefix": "https://gh.monlor.com" }
+  ],
+  "sources": [
+    "https://cdn.jsdelivr.net/gh/weekoo2025/Ghproxy@main/url.txt",
+    "https://raw.githubusercontent.com/weekoo2025/Ghproxy/main/url.txt"
+  ]
+}

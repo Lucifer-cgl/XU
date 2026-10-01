@@ -3,6 +3,7 @@ import { marked } from "marked";
 import markedKatex from "marked-katex-extension";
 import "katex/dist/katex.min.css";
 import "./styles.css";
+import { initializeReleaseMirrors, mirrorStatusText, releaseDownloadUrl, releasePreviewUrls } from "./release-mirrors.js";
 import supportMemeUrl from "../支持/支持一下.png";
 import wechatQrUrl from "../支持/微信二维码.jpeg";
 
@@ -167,7 +168,7 @@ const routeFor = (id) => `#/read/${encodeURIComponent(id)}`;
 const releaseRouteFor = (id) => `#/release/${encodeURIComponent(id)}`;
 const localRouteFor = (id) => `#/local/${encodeURIComponent(id)}`;
 const hrefFor = (doc) => routeFor(doc.id);
-const releaseHrefFor = (item) => item.mirrorUrl || item.url || "#";
+const releaseHrefFor = (item) => item.mirrorUrl || releaseDownloadUrl(item.url) || "#";
 const releasePreviewFor = (item) => `/api/release-preview?id=${encodeURIComponent(item.id)}`;
 const labelFor = (doc) => doc.displayTitle || doc.title;
 const safeId = (value = "") => `b-${Array.from(value).map((char) => char.codePointAt(0).toString(36)).join("-")}`;
@@ -741,7 +742,7 @@ function renderResourcesHome() {
   nav.innerHTML = "";
   tocPanel.innerHTML = "";
   document.title = `RESOURCE · ${catalog.site.title}`;
-  main.innerHTML = `<section class="resource-library-head"><p class="eyebrow">XU / RESOURCE LIBRARY</p><h1>每一份资料，<br><em>都有它的归处。</em></h1><p>沿着文件夹寻找试卷、课件与参考材料。目录按原有层级组织，打开文件时才加载内容。</p><label class="resource-search"><span class="sr-only">搜索资料</span><input id="resource-search-input" type="search" placeholder="搜索文件名或文件夹，例如 财务管理、期末卷" autocomplete="off"><span class="resource-search-icon" aria-hidden="true">⌕</span></label><div class="resource-library-stats"><span><strong>${(releaseManifest.files || []).length}</strong> 份资料</span><span><strong>${countReleaseFolders(releaseManifest.tree)}</strong> 个文件夹</span><span>PDF · WORD · EXCEL · PPT · TXT</span></div></section><section class="resource-guide"><span class="resource-guide-mark" aria-hidden="true">✦</span><p>XU 细分管理学院课程资料。还想找其他学院的试卷、笔记和课件？推荐去鹭岛书阁继续查找。</p><div class="resource-guide-links"><a class="resource-guide-recommend" href="https://xmu.vintces.icu/" target="_blank" rel="noopener noreferrer">推荐 · 鹭岛书阁 ↗</a><a class="resource-guide-source" href="https://github.com/Lucifer-cgl/XU" target="_blank" rel="noopener noreferrer">XU 开源仓库 ↗</a></div></section><div id="resource-search-results" class="resource-search-results" hidden></div><div id="resource-directory">${renderReleaseSection() || '<section class="release-preview-empty"><h2>资料库暂时为空</h2><p>把文件放入 release-staging 后重新生成目录。</p></section>'}</div>`;
+  main.innerHTML = `<section class="resource-library-head"><p class="eyebrow">XU / RESOURCE LIBRARY</p><h1>每一份资料，<br><em>都有它的归处。</em></h1><p>沿着文件夹寻找试卷、课件与参考材料。目录按原有层级组织，打开文件时才加载内容。</p><label class="resource-search"><span class="sr-only">搜索资料</span><input id="resource-search-input" type="search" placeholder="搜索文件名或文件夹，例如 财务管理、期末卷" autocomplete="off"><span class="resource-search-icon" aria-hidden="true">⌕</span></label><div class="resource-library-stats"><span><strong>${(releaseManifest.files || []).length}</strong> 份资料</span><span><strong>${countReleaseFolders(releaseManifest.tree)}</strong> 个文件夹</span><span id="release-mirror-status">${escapeHtml(mirrorStatusText())}</span></div></section><section class="resource-guide"><span class="resource-guide-mark" aria-hidden="true">✦</span><p>XU 细分管理学院课程资料。还想找其他学院的试卷、笔记和课件？推荐去鹭岛书阁继续查找。</p><div class="resource-guide-links"><a class="resource-guide-recommend" href="https://xmu.vintces.icu/" target="_blank" rel="noopener noreferrer">推荐 · 鹭岛书阁 ↗</a><a class="resource-guide-source" href="https://github.com/Lucifer-cgl/XU" target="_blank" rel="noopener noreferrer">XU 开源仓库 ↗</a></div></section><div id="resource-search-results" class="resource-search-results" hidden></div><div id="resource-directory">${renderReleaseSection() || '<section class="release-preview-empty"><h2>资料库暂时为空</h2><p>把文件放入 release-staging 后重新生成目录。</p></section>'}</div>`;
   document.querySelector("#resource-search-input").addEventListener("input", handleResourceSearch);
   if (resourceView) {
     const input = document.querySelector("#resource-search-input");
@@ -822,7 +823,7 @@ function renderReleaseNode(node, depth) {
 function renderReleaseFileCard(item) {
   const href = releaseHrefFor(item);
   const ready = Boolean(item.url || item.mirrorUrl);
-  return `<article class="release-card"><div class="release-card-top"><span class="format-badge">${escapeHtml(item.type.toUpperCase())}</span><span>${formatBytes(item.size)}</span></div><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.path)}</p><div class="release-actions">${ready && item.preview ? `<a href="${releaseRouteFor(item.id)}">预览</a>` : ""}<a href="${ready ? escapeHtml(href) : "#"}" ${ready ? 'target="_blank" rel="noopener noreferrer" download' : 'aria-disabled="true"'}>${ready ? "下载" : "等待发布"} <span aria-hidden="true">↗</span></a></div></article>`;
+  return `<article class="release-card"><div class="release-card-top"><span class="format-badge">${escapeHtml(item.type.toUpperCase())}</span><span>${formatBytes(item.size)}</span></div><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.path)}</p><div class="release-actions">${ready && item.preview ? `<a href="${releaseRouteFor(item.id)}">预览</a>` : ""}<a href="${ready ? escapeHtml(href) : "#"}" ${ready ? `data-release-download="${escapeHtml(item.id)}" target="_blank" rel="noopener noreferrer" download` : 'aria-disabled="true"'}>${ready ? "下载" : "等待发布"} <span aria-hidden="true">↗</span></a></div></article>`;
 }
 
 function formatBytes(bytes = 0) {
@@ -1636,7 +1637,7 @@ function renderReleaseResource(id) {
   document.title = `${item.name} · 资料附件 · ${catalog.site.title}`;
   main.innerHTML = `<section class="release-detail">
     <nav class="breadcrumbs"><a href="#/">首页</a><span>/</span><a href="#/resources">资料库</a><span>/</span><strong>${escapeHtml(item.name)}</strong></nav>
-    <header class="release-detail-head"><div><p class="eyebrow">RELEASE RESOURCE</p><h1>${escapeHtml(item.name)}</h1><p>${escapeHtml(item.path)}</p></div><div class="release-detail-actions">${ready ? `<a class="primary" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" download>下载原文件</a>` : ""}<a href="#/resources">返回资料库</a></div></header>
+    <header class="release-detail-head"><div><p class="eyebrow">RELEASE RESOURCE</p><h1>${escapeHtml(item.name)}</h1><p>${escapeHtml(item.path)}</p></div><div class="release-detail-actions">${ready ? `<a class="primary" href="${escapeHtml(href)}" data-release-download="${escapeHtml(item.id)}" target="_blank" rel="noopener noreferrer" download>下载原文件</a>` : ""}<a href="#/resources">返回资料库</a></div></header>
     <dl class="release-meta"><div><dt>格式</dt><dd>${escapeHtml(type.toUpperCase())}</dd></div><div><dt>大小</dt><dd>${formatBytes(item.size)}</dd></div><div><dt>文件校验</dt><dd title="${escapeHtml(item.sha256 || "")}">${escapeHtml((item.sha256 || "").slice(0, 12) || "—")}</dd></div><div><dt>存储</dt><dd>GitHub Release</dd></div></dl>
     <div class="release-preview-shell">${preview}</div>
     ${officeTypes.has(type) && ready ? '<p class="release-preview-note">Office 预览由微软在线查看器读取公开附件；若网络不可用，请直接下载原文件。</p>' : ""}
@@ -1650,7 +1651,8 @@ function renderReleaseResource(id) {
     void import("./release-document-preview.js").then(async ({ showReleasePdf, showReleaseText }) => {
       if (controller.signal.aborted) return;
       try {
-        await (type === "pdf" ? showReleasePdf : showReleaseText)(stage, releasePreviewFor(item), controller.signal, item.size);
+        const urls = await releasePreviewUrls(item.url, releasePreviewFor(item));
+        await (type === "pdf" ? showReleasePdf : showReleaseText)(stage, urls, controller.signal, item.size, item.sha256);
       } catch (error) {
         if (!controller.signal.aborted) stage.textContent = `预览失败：${error.message}。请下载原文件查看。`;
       }
@@ -1759,6 +1761,11 @@ function handleArticleNavClick(event) {
 tocPanel.addEventListener("click", handleArticleNavClick);
 sidebarArticleNav.addEventListener("click", handleArticleNavClick);
 main.addEventListener("click", (event) => {
+  const releaseDownload = event.target.closest("[data-release-download]");
+  if (releaseDownload) {
+    const item = (releaseManifest.files || []).find((file) => file.id === releaseDownload.dataset.releaseDownload);
+    if (item?.url) releaseDownload.href = releaseDownloadUrl(item.url);
+  }
   if (event.target.closest('a[href^="#/release/"]') && location.hash === "#/resources") {
     rememberResourceView();
     resourceViewCapturedByClick = true;
@@ -1817,6 +1824,10 @@ sidebar.addEventListener("click", (event) => {
   nav.querySelectorAll("details.course-group").forEach((details) => { details.open = expand; });
 });
 window.addEventListener("hashchange", route);
+window.addEventListener("xu:mirror-status", (event) => {
+  const status = document.querySelector("#release-mirror-status");
+  if (status) status.textContent = event.detail?.message || mirrorStatusText();
+});
 window.addEventListener("pointermove", (event) => {
   const edge = 30;
   const nearRight = window.innerWidth - event.clientX <= edge;
@@ -1835,6 +1846,7 @@ window.addEventListener("scroll", () => {
 try {
   catalog = await loadJson("/generated/catalog.json");
   try { releaseManifest = await loadJson("/generated/release-resources.json"); } catch { releaseManifest = { files: [], tree: null }; }
+  void initializeReleaseMirrors();
   await Promise.race([
     Promise.all([restoreLocalFolder(), restoreOfficeRuntime()]),
     new Promise((resolve) => window.setTimeout(resolve, 1200))

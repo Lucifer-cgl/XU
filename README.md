@@ -40,7 +40,8 @@ XU 的策略是：**内容进入 Git，索引在构建时生成，阅读与下�
 - GitHub Actions 内容检查与 Cloudflare Git 自动部署。
 - 无后端、无数据库、无用户账户、无服务端 ZIP/PDF 任务。
 - Release 附件清单：扫描本地 `release-staging/` 后生成树形目录、大小和 SHA-256，不把大资料提交进 Git 历史。
-- 公共附件按需打开：PDF/TXT 经同源预览入口读取，并在页面内绘制 PDF 或显示文本；原文件下载仍直达 GitHub Release。超过 80 MB 的 PDF 提供原文件下载；DOCX/XLSX 等保留在线预览或下载入口。
+- 公共附件按需打开：附件仍只发布到 GitHub Release；浏览器会检测国内可达的 GitHub 加速线路并优先使用，失败时依次切换，最终回退到原地址或 Cloudflare 同源预览入口。每条入选线路都用真实附件完成大小与 SHA-256 校验。
+- PDF/TXT 在页面内绘制或显示；超过 80 MB 的 PDF 提供原文件下载，DOCX/XLSX 等保留在线预览或下载入口。
 - 首页是独立导航入口，只提供 `NOTE` 与 `RESOURCE` 两个大选项：NOTE 保留左右目录阅读，RESOURCE 使用无侧栏的文件资料库界面。
 - 入口和资料库的主题切换使用同场景的 `public/static/xu-night-forest-v2.png`（夜景，山体原有暖光局部提亮）与 `public/static/xu-day-forest.png`（日景）；原始夜景保留在 `public/static/xu-night-forest.jfif` 便于对照。光影和卡片颜色随主题变化，偏好保存在浏览器本地。
 
@@ -84,7 +85,11 @@ XU 入口页明确分成两块：
 
 两块区域只共享站点外壳，不混用展示逻辑，也不会为了打开笔记而下载 Release 大文件。
 
-GitHub Release 的 PDF/TXT 附件默认可能强制下载。线上预览通过 `worker/index.js` 的受限同源入口读取清单中已发布的 PDF/TXT；页面用 PDF.js 绘制 PDF（滚动时按需绘制后续页面），TXT 则解码为纯文本显示。超过 80 MB 的 PDF 不在浏览器内加载，可下载原文件；本地 Vite 预览使用相同逻辑。它不提供账号、数据库或通用文件代理。浏览资料库后点进文件，再返回资料库，会保留搜索词、展开的目录和滚动位置。
+GitHub Release 的 PDF/TXT 附件默认可能强制下载。页面先读取 `public/release-mirrors.json`：其中 `bootstrap` 是随站点维护的基础线路，`sources` 是会持续更新的候选名单。候选地址只允许无账号、无端口的公网 HTTPS 地址；浏览器再用清单中固定的小型附件实测，只有文件大小与 SHA-256 都正确的线路才会加入本机排序，结果缓存 30 分钟。实时名单不可用时仍可使用基础线路或上次七天内的成功结果，不会把名单中的地址直接当成可信下载源。
+
+当前在线候选源使用 [weekoo2025/Ghproxy](https://github.com/weekoo2025/Ghproxy) 的每日更新名单，并同时提供 jsDelivr 与 GitHub Raw 两个读取入口。它只负责提供候选项，不能绕过上述本机实测与文件校验。增删来源或调整探测附件时，只需修改 `public/release-mirrors.json`，无需重新上传 Release 附件。
+
+PDF/TXT 预览会按测速顺序逐条尝试，全部失败后再通过 `worker/index.js` 的受限同源入口读取；页面用 PDF.js 绘制 PDF（滚动时按需绘制后续页面），TXT 则解码为纯文本显示。超过 80 MB 的 PDF 不在浏览器内加载，可下载原文件；本地 Vite 预览使用相同逻辑。它不提供账号、数据库或通用文件代理。浏览资料库后点进文件，再返回资料库，会保留搜索词、展开的目录和滚动位置。
 
 ### Markdown
 
@@ -159,6 +164,7 @@ XU/
 ├── release-resources.json       # 已发布附件的树形目录、地址与 SHA-256（需要提交）
 ├── public/
 │   ├── _headers                 # 缓存与安全响应头
+│   ├── release-mirrors.json     # 基础镜像与在线候选名单来源
 │   └── static/html-tools.js     # 独立 HTML 可使用的受控工具
 ├── .github/workflows/quality.yml
 ├── index.html
