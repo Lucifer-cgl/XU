@@ -131,7 +131,7 @@ for (const file of contentFiles) {
   const segments = relative.split("/");
   const fileName = segments.pop();
   if (segments.length > maxCourseDepth) validationErrors.push(`${relative}: 目录层级为 ${segments.length}，最多允许 ${maxCourseDepth} 层`);
-  const coursePath = segments.join("/") || "未分类";
+  const coursePath = segments.join("/");
   const fallback = path.basename(fileName, extension);
   const text = stripMarkup(body, type);
   documents.push({
@@ -156,6 +156,7 @@ if (validationErrors.length) {
 documents.sort((a, b) => natural.compare(a.coursePath, b.coursePath) || a.order - b.order || natural.compare(a.displayTitle, b.displayTitle));
 const courseMap = new Map();
 for (const document of documents) {
+  if (!document.coursePath) continue;
   if (!courseMap.has(document.coursePath)) {
     const config = courseConfigs.get(document.coursePath) || {};
     courseMap.set(document.coursePath, {
@@ -171,7 +172,8 @@ for (const document of documents) {
 }
 const courses = [...courseMap.values()].sort((a, b) => a.order - b.order || natural.compare(a.name, b.name));
 const catalogDocuments = documents.map(({ searchText, ...document }) => document);
-const catalog = { site: { title: "墟 · XU 开源知识库", generatedAt: new Date().toISOString() }, courses, documents: catalogDocuments };
+const rootDocuments = catalogDocuments.filter((document) => !document.coursePath);
+const catalog = { site: { title: "墟 · XU 开源知识库", generatedAt: new Date().toISOString() }, courses, rootDocuments, documents: catalogDocuments };
 const searchIndex = documents.map(({ id, title, displayTitle, description, coursePath, type, searchText }) => ({ id, title, displayTitle, description, coursePath, type, text: searchText }));
 
 const downloadCourses = new Map(courses.map((course) => [course.id, {

@@ -31,7 +31,9 @@ let activeRoute = "";
 let currentSource = "";
 let currentDocument;
 let currentTocHtml = "";
+let currentTocHeadingIds = [];
 let tocMode = "toc";
+let tocScrollFrame = 0;
 let activeWorkbenchFrame = null;
 let activeWorkbenchItem = null;
 let activeWorkbenchFile = null;
@@ -155,8 +157,30 @@ applyLayoutState();
 setupPanelResizer(leftPanelResizer, "left");
 setupPanelResizer(rightPanelResizer, "right");
 
+const highlightExtension = {
+  name: "highlight",
+  level: "inline",
+  start(source) {
+    const index = source.indexOf("==");
+    return index >= 0 ? index : undefined;
+  },
+  tokenizer(source) {
+    const match = /^==(?=\S)([^\n]*?\S)==/.exec(source);
+    if (!match) return undefined;
+    return {
+      type: "highlight",
+      raw: match[0],
+      text: match[1],
+      tokens: this.lexer.inlineTokens(match[1])
+    };
+  },
+  renderer(token) {
+    return `<mark>${this.parser.parseInline(token.tokens)}</mark>`;
+  }
+};
+
 marked.use(
-  { gfm: true, breaks: false },
+  { gfm: true, breaks: false, extensions: [highlightExtension] },
   markedKatex({
     throwOnError: false,
     nonStandard: true,
@@ -412,6 +436,18 @@ function renderCourseNodes(nodes, activeId, depth = 0) {
   }).join("")}</ul>`;
 }
 
+function rootDocuments() {
+  return catalog.rootDocuments || catalog.documents.filter((document) => !document.coursePath);
+}
+
+function renderRootDocuments(activeId = "") {
+  const documents = rootDocuments();
+  if (!documents.length) return "";
+  return `<section class="root-documents" aria-label="内容根目录文章">
+    <div class="course-links">${documents.map((doc) => `<a href="${hrefFor(doc)}" class="${doc.id === activeId ? "active" : ""}" title="${escapeHtml(labelFor(doc))}"><span class="format-badge">${doc.type === "markdown" ? "MD" : "HTML"}</span><span class="course-link-title">${escapeHtml(labelFor(doc))}</span></a>`).join("")}</div>
+  </section>`;
+}
+
 function buildLocalTree() {
   const root = { name: "我的资源", path: "", children: new Map(), files: [] };
   const ensureDirectory = (relativePath) => {
@@ -607,6 +643,7 @@ async function removeLocalFolder() {
 function renderNavigation(activeId = "") {
   nav.innerHTML = `
     <div class="sidebar-heading"><span>笔记目录</span></div>
+    ${renderRootDocuments(activeId)}
     ${renderCourseNodes(buildCourseTree(catalog.courses), activeId)}
     ${renderLocalResources(activeId)}`;
 }
@@ -782,8 +819,10 @@ function handleResourceSearch(event) {
 }
 
 function renderNotesSection() {
+  const directDocuments = rootDocuments();
   return `<section class="notes-section" aria-labelledby="notes-title">
     <div class="section-heading"><div><p class="eyebrow">NOTES &amp; ARTICLES</p><h2 id="notes-title">笔记与文章</h2><p>Markdown 和 HTML 按课程整理，专注阅读、搜索与清晰的文章结构。</p></div><span class="release-count">${catalog.documents.length} 篇</span></div>
+    ${directDocuments.length ? `<div class="root-document-grid" aria-label="根目录文章">${directDocuments.map((doc) => `<article class="root-document-card"><span>AI / GUIDE</span><h3>${escapeHtml(labelFor(doc))}</h3><p>${escapeHtml(doc.description || "内容根目录中的独立文章")}</p><a href="${hrefFor(doc)}">打开文章 <span aria-hidden="true">→</span></a></article>`).join("")}</div>` : ""}
     <div class="course-grid" aria-label="课程列表">
       ${catalog.courses.map((course, index) => `<article class="course-card"><span class="course-number">${String(index + 1).padStart(2, "0")}</span><h2>${escapeHtml(course.name)}</h2><p>${escapeHtml(course.description || `${course.documents.length} 篇内容`)}</p><a href="${course.documents[0] ? hrefFor(course.documents[0]) : "#/"}">开始阅读 <span aria-hidden="true">→</span></a></article>`).join("")}
     </div>
@@ -863,7 +902,7 @@ async function handleSearch(event) {
   target.innerHTML = results.length
     ? results.map((item) => item.release
       ? `<a href="${escapeHtml(item.url)}"><strong>${escapeHtml(labelFor(item))}</strong><span>${escapeHtml(item.coursePath)} · ${item.type.toUpperCase()}</span><small>${escapeHtml(item.description)}</small></a>`
-      : `<a href="${hrefFor(item)}"><strong>${escapeHtml(labelFor(item))}</strong><span>${escapeHtml(item.coursePath)} · ${item.type.toUpperCase()}</span><small>${escapeHtml(item.description)}</small></a>`).join("")
+      : `<a href="${hrefFor(item)}"><strong>${escapeHtml(labelFor(item))}</strong><span>${escapeHtml(item.coursePath || "内容根目录")} · ${item.type.toUpperCase()}</span><small>${escapeHtml(item.description)}</small></a>`).join("")
     : "<p>没有找到相关内容。</p>";
 }
 
@@ -1204,7 +1243,101 @@ function renderRightPanel() {
   </div>${body}`;
   tocPanel.innerHTML = contents;
   sidebarArticleNav.innerHTML = contents;
+  if (tocMode === "toc") syncActiveTocHeading();
 }
+
+function buildTocTree(headings) {
+  const roots = [];
+  const stack = [];
+  for (const heading of headings) {
+    const item = {
+      id: heading.id,
+      title: heading.textContent.trim(),
+      level: Number(heading.tagName.slice(1)),
+      children: []
+    };
+    while (stack.length && stack.at(-1).level >= item.level) stack.pop();
+    if (stack.length) stack.at(-1).children.push(item);
+    else roots.push(item);
+    stack.push(item);
+  }
+  return roots;
+}
+
+function renderTocNodes(items, depth = 0) {
+  return `<ul class="toc-tree toc-depth-${depth}">${items.map((item) => {
+    const hasChildren = item.children.length > 0;
+    return `<li class="toc-item" data-toc-title="${escapeHtml(item.title.toLocaleLowerCase())}">
+      <div class="toc-row">
+        ${hasChildren ? `<button type="button" class="toc-fold" data-toc-fold aria-expanded="true" aria-label="收起 ${escapeHtml(item.title)} 的子标题"></button>` : `<span class="toc-fold-spacer" aria-hidden="true"></span>`}
+        <a class="toc-link toc-level-${item.level}" href="${routeFor(currentDocument.id)}" data-section="${encodeURIComponent(item.id)}" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</a>
+      </div>
+      ${hasChildren ? renderTocNodes(item.children, depth + 1) : ""}
+    </li>`;
+  }).join("")}</ul>`;
+}
+
+function renderArticleToc(headings) {
+  if (!headings.length) return `<p class="bookmark-empty">本文暂无目录。</p>`;
+  return `<div class="toc-heading-row">
+    <div class="toc-title">本文目录 <span>${headings.length}</span></div>
+    <div class="toc-tree-actions">
+      <button type="button" data-toc-action="expand" title="展开全部标题">展开</button>
+      <button type="button" data-toc-action="collapse" title="收起子标题">收起</button>
+    </div>
+  </div>
+  <label class="toc-filter"><span class="sr-only">筛选本文目录</span><input type="search" data-toc-filter placeholder="筛选标题" autocomplete="off"></label>
+  <nav class="toc-outline" aria-label="文章标题树">${renderTocNodes(buildTocTree(headings))}</nav>
+  <p class="toc-filter-empty" hidden>没有匹配的标题。</p>`;
+}
+
+function activeTocHeadingId() {
+  const headings = currentTocHeadingIds.map((id) => document.getElementById(id)).filter(Boolean);
+  if (!headings.length) return "";
+  const headerHeight = document.querySelector(".site-header")?.offsetHeight || 76;
+  const dockHeight = document.querySelector(".doc-tab-dock")?.offsetHeight || 0;
+  const anchor = headerHeight + dockHeight + 32;
+  let active = headings[0];
+  for (const heading of headings) {
+    if (heading.getBoundingClientRect().top <= anchor) active = heading;
+    else break;
+  }
+  return active.id;
+}
+
+function keepTocLinkVisible(container, link) {
+  if (!container || !link || container.offsetParent === null) return;
+  const containerRect = container.getBoundingClientRect();
+  const linkRect = link.getBoundingClientRect();
+  if (linkRect.top < containerRect.top + 86) container.scrollTop -= containerRect.top + 86 - linkRect.top;
+  else if (linkRect.bottom > containerRect.bottom - 18) container.scrollTop += linkRect.bottom - containerRect.bottom + 18;
+}
+
+function syncActiveTocHeading() {
+  const activeId = activeTocHeadingId();
+  for (const container of [tocPanel, sidebarArticleNav]) {
+    let activeLink = null;
+    for (const link of container.querySelectorAll("a[data-section]")) {
+      const active = decodeURIComponent(link.dataset.section) === activeId;
+      link.classList.toggle("active", active);
+      if (active) {
+        link.setAttribute("aria-current", "location");
+        activeLink = link;
+      } else link.removeAttribute("aria-current");
+    }
+    if (activeLink) keepTocLinkVisible(container, activeLink);
+  }
+}
+
+function scheduleTocSync() {
+  if (tocScrollFrame) return;
+  tocScrollFrame = requestAnimationFrame(() => {
+    tocScrollFrame = 0;
+    syncActiveTocHeading();
+  });
+}
+
+window.addEventListener("scroll", scheduleTocSync, { passive: true });
 
 function renderBookmarkList() {
   const items = bookmarksFor();
@@ -1221,8 +1354,81 @@ function renderBookmarkList() {
   </div>`;
 }
 
+const calloutAliases = {
+  abstract: "summary",
+  tldr: "summary",
+  hint: "tip",
+  important: "important",
+  check: "success",
+  done: "success",
+  help: "question",
+  faq: "question",
+  caution: "warning",
+  attention: "warning",
+  fail: "failure",
+  missing: "failure",
+  error: "danger",
+  cite: "quote"
+};
+const calloutLabels = {
+  note: "说明",
+  summary: "摘要",
+  info: "信息",
+  todo: "待办",
+  tip: "提示",
+  important: "重点",
+  success: "结论",
+  question: "问题",
+  warning: "注意",
+  failure: "易错",
+  danger: "警告",
+  bug: "问题",
+  example: "例题",
+  quote: "引用"
+};
+
+function enhanceCallouts(article) {
+  for (const blockquote of article.querySelectorAll("blockquote")) {
+    const lead = blockquote.firstElementChild;
+    if (!lead || lead.tagName !== "P") continue;
+    const match = lead.innerHTML.match(/^\s*\[!([a-z0-9_-]+)\]([+-])?[ \t]*([^\n<]*)(?:\n|<br\s*\/?\s*>|$)/i);
+    if (!match) continue;
+    const requestedType = match[1].toLowerCase();
+    const type = calloutAliases[requestedType] || requestedType;
+    const title = match[3].trim() || calloutLabels[type] || calloutLabels.note;
+    blockquote.classList.add("callout", `callout-${type}`);
+    blockquote.dataset.callout = type;
+    const heading = document.createElement("div");
+    heading.className = "callout-title";
+    heading.innerHTML = `<span class="callout-icon" aria-hidden="true"></span><strong>${escapeHtml(title)}</strong>`;
+    lead.innerHTML = lead.innerHTML.slice(match[0].length).trimStart();
+    blockquote.prepend(heading);
+    if (!lead.textContent.trim() && !lead.children.length) lead.remove();
+  }
+}
+
+function enhanceFigures(article) {
+  for (const paragraph of article.querySelectorAll("p")) {
+    if (paragraph.textContent.trim() || paragraph.children.length !== 1) continue;
+    const child = paragraph.firstElementChild;
+    const image = child?.tagName === "IMG" ? child : child?.tagName === "A" ? child.querySelector(":scope > img:only-child") : null;
+    if (!image) continue;
+    const figure = document.createElement("figure");
+    figure.className = "article-figure";
+    paragraph.replaceWith(figure);
+    figure.append(child);
+    const captionText = image.getAttribute("title")?.trim();
+    if (captionText) {
+      const caption = document.createElement("figcaption");
+      caption.textContent = captionText;
+      figure.append(caption);
+    }
+  }
+}
+
 function enhanceArticle(article) {
   if (article.classList.contains("html-source")) {
+    currentTocHeadingIds = [];
     currentTocHtml = `<p class="bookmark-empty">HTML 文档已在中间预览区打开。</p>`;
     renderRightPanel();
     return;
@@ -1237,6 +1443,7 @@ function enhanceArticle(article) {
     used.add(id);
     heading.id = id;
   });
+  currentTocHeadingIds = headings.map((heading) => heading.id);
   for (const table of article.querySelectorAll("table")) {
     if (table.parentElement?.classList.contains("table-scroll")) continue;
     const wrapper = document.createElement("div");
@@ -1244,6 +1451,8 @@ function enhanceArticle(article) {
     table.replaceWith(wrapper);
     wrapper.append(table);
   }
+  enhanceCallouts(article);
+  enhanceFigures(article);
   for (const link of article.querySelectorAll('a[href^="http"]')) {
     link.target = "_blank";
     link.rel = "noopener noreferrer";
@@ -1252,7 +1461,7 @@ function enhanceArticle(article) {
   article.querySelectorAll("p, li, blockquote, table, pre, .answer-space").forEach((node, index) => {
     if (!node.id) node.id = `${safeId(currentDocument.id)}-line-${index + 1}`;
   });
-  currentTocHtml = headings.length ? `<div class="toc-title">本文目录</div>${headings.map((heading) => `<a class="toc-level-${heading.tagName.slice(1)}" href="${routeFor(currentDocument.id)}" data-section="${encodeURIComponent(heading.id)}" title="${escapeHtml(heading.textContent)}">${escapeHtml(heading.textContent)}</a>`).join("")}` : `<p class="bookmark-empty">本文暂无目录。</p>`;
+  currentTocHtml = renderArticleToc(headings);
   renderRightPanel();
 }
 
@@ -1499,7 +1708,7 @@ async function renderArticle(id) {
     main.innerHTML = `
       ${renderDocumentTabs()}
       <div class="article-head no-print">
-        <div class="breadcrumbs"><a href="#/">首页</a><span>/</span><span>${escapeHtml(doc.coursePath)}</span><span>/</span><strong>${escapeHtml(labelFor(doc))}</strong></div>
+        <div class="breadcrumbs"><a href="#/">首页</a><span>/</span><span>${escapeHtml(doc.coursePath || "内容根目录")}</span><span>/</span><strong>${escapeHtml(labelFor(doc))}</strong></div>
         ${articleTools(doc)}
       </div>
       <article id="article" class="article ${doc.type === "html" ? "html-source" : "markdown-source"}">${doc.type === "html" ? `<div class="html-preview-shell"><button type="button" class="html-preview-fullscreen no-print" data-action="html-open-tab">新标签页</button><iframe id="html-preview-frame" class="html-preview-frame" title="${escapeHtml(labelFor(doc))}" sandbox="allow-same-origin"></iframe></div>` : safe}</article>
@@ -1713,6 +1922,24 @@ themeToggle.addEventListener("click", () => {
 });
 applyTheme(localStorage.getItem("xu-theme") || "light");
 function handleArticleNavClick(event) {
+  const foldButton = event.target.closest("[data-toc-fold]");
+  if (foldButton) {
+    const item = foldButton.closest(".toc-item");
+    const collapsed = item.classList.toggle("collapsed");
+    foldButton.setAttribute("aria-expanded", String(!collapsed));
+    foldButton.setAttribute("aria-label", `${collapsed ? "展开" : "收起"} ${item.dataset.tocTitle || "当前标题"} 的子标题`);
+    return;
+  }
+  const tocAction = event.target.closest("[data-toc-action]");
+  if (tocAction) {
+    const container = tocAction.closest("#toc-panel, #sidebar-article-nav");
+    const collapsed = tocAction.dataset.tocAction === "collapse";
+    container?.querySelectorAll(".toc-item:has(> .toc-tree)").forEach((item) => {
+      item.classList.toggle("collapsed", collapsed);
+      item.querySelector(":scope > .toc-row > [data-toc-fold]")?.setAttribute("aria-expanded", String(!collapsed));
+    });
+    return;
+  }
   const outlineButton = event.target.closest("[data-workbench-outline]");
   if (outlineButton && activeWorkbenchFrame?.contentWindow) {
     activeWorkbenchFrame.contentWindow.postMessage({ source: "xu-knowledge-base", type: "outline-jump", id: outlineButton.dataset.workbenchOutline }, window.location.origin);
@@ -1760,8 +1987,40 @@ function handleArticleNavClick(event) {
     navToggle.setAttribute("aria-expanded", "false");
   }
 }
+
+function filterToc(container, value) {
+  const query = value.trim().toLocaleLowerCase();
+  const walk = (list) => {
+    let visibleCount = 0;
+    for (const item of list.querySelectorAll(":scope > .toc-item")) {
+      const childList = item.querySelector(":scope > .toc-tree");
+      const childMatches = childList ? walk(childList) : 0;
+      const ownMatch = !query || item.dataset.tocTitle.includes(query);
+      const visible = ownMatch || childMatches > 0;
+      item.hidden = !visible;
+      if (query && childMatches) {
+        item.classList.remove("collapsed");
+        item.querySelector(":scope > .toc-row > [data-toc-fold]")?.setAttribute("aria-expanded", "true");
+      }
+      if (visible) visibleCount += 1;
+    }
+    return visibleCount;
+  };
+  const tree = container.querySelector(".toc-outline > .toc-tree");
+  const visibleCount = tree ? walk(tree) : 0;
+  const empty = container.querySelector(".toc-filter-empty");
+  if (empty) empty.hidden = visibleCount > 0;
+}
+
+function handleTocFilter(event) {
+  if (!event.target.matches("[data-toc-filter]")) return;
+  const container = event.target.closest("#toc-panel, #sidebar-article-nav");
+  if (container) filterToc(container, event.target.value);
+}
 tocPanel.addEventListener("click", handleArticleNavClick);
 sidebarArticleNav.addEventListener("click", handleArticleNavClick);
+tocPanel.addEventListener("input", handleTocFilter);
+sidebarArticleNav.addEventListener("input", handleTocFilter);
 main.addEventListener("click", (event) => {
   const releaseDownload = event.target.closest("[data-release-download]");
   if (releaseDownload) {

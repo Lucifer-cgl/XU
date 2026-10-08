@@ -33,6 +33,8 @@
   .article .answer-space.small { min-height: 22mm; }
   .article .answer-space.large { min-height: 70mm; }
   .article img, .article figure, .article svg, .article pre, .article blockquote, .katex-display { break-inside: avoid; page-break-inside: avoid; }
+  .article .callout, .article .article-figure { box-shadow: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .article mark { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .table-scroll { overflow: visible; }
   .article table { font-size: 9pt; }
   .article thead { display: table-header-group; }
