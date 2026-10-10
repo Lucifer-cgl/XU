@@ -4,6 +4,7 @@ import markedKatex from "marked-katex-extension";
 import "katex/dist/katex.min.css";
 import "./styles.css";
 import { initializeReleaseMirrors, mirrorStatusText, releaseDownloadUrl, releasePreviewUrls } from "./release-mirrors.js";
+import { initializeSiteMirrors } from "./site-mirrors.js";
 import supportMemeUrl from "../支持/支持一下.png";
 import wechatQrUrl from "../支持/微信二维码.jpeg";
 
@@ -21,6 +22,8 @@ const rightPanelToggle = document.querySelector("#right-panel-toggle");
 const leftPanelResizer = document.querySelector("#left-panel-resizer");
 const rightPanelResizer = document.querySelector("#right-panel-resizer");
 const themeToggle = document.querySelector("#theme-toggle");
+const siteLineToggle = document.querySelector("#site-line-toggle");
+const siteLineMenu = document.querySelector("#site-line-menu");
 let catalog;
 let searchIndex;
 let releaseManifest = { files: [], tree: null };
@@ -1921,6 +1924,7 @@ themeToggle.addEventListener("click", () => {
   localStorage.setItem("xu-theme", next);
 });
 applyTheme(localStorage.getItem("xu-theme") || "light");
+void initializeSiteMirrors({ button: siteLineToggle, menu: siteLineMenu });
 function handleArticleNavClick(event) {
   const foldButton = event.target.closest("[data-toc-fold]");
   if (foldButton) {

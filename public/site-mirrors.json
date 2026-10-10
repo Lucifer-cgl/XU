@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "probePath": "/static/site-probe.svg",
+  "timeoutMs": 4500,
+  "directMaxMs": 2500,
+  "routes": [
+    {
+      "id": "cloudflare",
+      "name": "Cloudflare 主站",
+      "baseUrl": "https://xu.lucifer-cgl.workers.dev",
+      "role": "direct"
+    },
+    {
+      "id": "china",
+      "name": "国内线路",
+      "baseUrl": "https://lucifer.gicp.fun",
+      "role": "domestic"
+    }
+  ]
+}
