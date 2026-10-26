@@ -111,15 +111,15 @@ $$
     <line x1="95" y1="370" x2="95" y2="52" stroke="#334e68" stroke-width="2.5" marker-end="url(#tech-solow-arrow)"/>
     <path d="M95 370 C220 185 430 120 690 100" fill="none" stroke="#2563eb" stroke-width="5"/>
     <line x1="95" y1="370" x2="690" y2="70" stroke="#dc2626" stroke-width="5"/>
-    <circle cx="480" cy="176" r="8" fill="#111827"/>
-    <line x1="480" y1="176" x2="480" y2="370" stroke="#64748b" stroke-width="1.8" stroke-dasharray="6 5"/>
+    <circle cx="616.5" cy="107" r="8" fill="#111827"/>
+    <line x1="616.5" y1="107" x2="616.5" y2="370" stroke="#64748b" stroke-width="1.8" stroke-dasharray="6 5"/>
     <text x="28" y="58" font-size="21" fill="#243b53" font-family="Arial, sans-serif">每效率工人投资</text>
-    <text x="585" y="414" font-size="21" fill="#243b53" font-family="Arial, sans-serif">每效率工人资本 k</text>
-    <text x="625" y="180" font-size="21" fill="#2563eb" font-family="Arial, sans-serif">sf(k)</text>
+    <text x="555" y="432" font-size="21" fill="#243b53" font-family="Arial, sans-serif">每效率工人资本 k</text>
+    <text x="650" y="135" font-size="21" fill="#2563eb" font-family="Arial, sans-serif">sf(k)</text>
     <text x="505" y="78" font-size="21" fill="#dc2626" font-family="Arial, sans-serif">(δ+n+g)k</text>
-    <text x="465" y="400" font-size="20" fill="#111827" font-family="Arial, sans-serif">k*</text>
+    <text x="602" y="400" font-size="20" fill="#111827" font-family="Arial, sans-serif">k*</text>
     <text x="210" y="310" font-size="17" fill="#52606d" font-family="Arial, sans-serif">sf(k) &gt; (δ+n+g)k，k 增加</text>
-    <text x="520" y="245" font-size="17" fill="#52606d" font-family="Arial, sans-serif">sf(k) &lt; (δ+n+g)k，k 减少</text>
+    <text x="625" y="230" text-anchor="middle" font-size="17" fill="#52606d" font-family="Arial, sans-serif">sf(k) &lt; (δ+n+g)k，k 减少</text>
   </svg>
   <figcaption style="margin-top:.55rem;color:#52606d;font-size:.92rem;">图 1：技术进步版索洛模型的稳态图。凹形曲线是实际投资 $sf(k)$，直线是收支相抵投资 $(\delta+n+g)k$；交点决定每效率工人资本的稳态。根据课件第 9 页重绘，引用许可待核对。</figcaption>
 </figure>
@@ -322,7 +322,6 @@ $$
       <line x1="105" y1="95" x2="390" y2="305" stroke="#2563eb" stroke-width="3"/>
       <g fill="#64748b"><circle cx="115" cy="105" r="6"/><circle cx="145" cy="132" r="6"/><circle cx="166" cy="125" r="6"/><circle cx="190" cy="170" r="6"/><circle cx="218" cy="178" r="6"/><circle cx="245" cy="220" r="6"/><circle cx="272" cy="210" r="6"/><circle cx="300" cy="252" r="6"/><circle cx="330" cy="270" r="6"/><circle cx="370" cy="292" r="6"/></g>
       <text x="230" y="375" text-anchor="middle" font-size="16" fill="#52606d">初始人均收入</text><text x="24" y="205" transform="rotate(-90 24 205)" text-anchor="middle" font-size="16" fill="#52606d">随后增长率</text>
-
       <text x="675" y="30" text-anchor="middle" font-size="20" font-weight="700" fill="#243b53">条件差异较大的经济体：关系不明显</text>
       <line x1="520" y1="335" x2="870" y2="335" stroke="#334e68" stroke-width="2"/><line x1="520" y1="335" x2="520" y2="65" stroke="#334e68" stroke-width="2"/>
       <line x1="550" y1="205" x2="835" y2="235" stroke="#dc2626" stroke-width="3" stroke-dasharray="7 5"/>
@@ -570,7 +569,6 @@ $$
       <rect x="275" y="45" width="130" height="55" rx="6" fill="#fef3c7" stroke="#d97706"/><text x="340" y="79" font-size="19" fill="#92400e">地理</text>
       <rect x="435" y="45" width="130" height="55" rx="6" fill="#fef3c7" stroke="#d97706"/><text x="500" y="79" font-size="19" fill="#92400e">文化</text>
       <rect x="595" y="45" width="130" height="55" rx="6" fill="#fef3c7" stroke="#d97706"/><text x="660" y="79" font-size="19" fill="#92400e">制度</text>
-
       <rect x="55" y="180" width="150" height="58" rx="6" fill="#dcfce7" stroke="#15803d" stroke-width="2"/><text x="130" y="216" font-size="20" fill="#14532d">直接因素</text>
       <rect x="275" y="180" width="130" height="55" rx="6" fill="#ede9fe" stroke="#7c3aed"/><text x="340" y="214" font-size="19" fill="#5b21b6">资本</text>
       <rect x="435" y="180" width="130" height="55" rx="6" fill="#ede9fe" stroke="#7c3aed"/><text x="500" y="214" font-size="19" fill="#5b21b6">劳动</text>
