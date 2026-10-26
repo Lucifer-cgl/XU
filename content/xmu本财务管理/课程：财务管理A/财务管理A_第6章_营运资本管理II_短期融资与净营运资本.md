@@ -303,26 +303,26 @@ $$
 <figure style="margin:1.5rem auto;max-width:900px;text-align:center;">
   <svg viewBox="0 0 900 390" role="img" aria-labelledby="ca-cost-title ca-cost-desc" style="width:100%;height:auto;background:#fbfcfe;border:1px solid #d9e2ec;border-radius:12px;">
     <title id="ca-cost-title">流动资产持有成本与短缺成本权衡图</title>
-    <desc id="ca-cost-desc">左右两个子图均以流动资产规模为横轴、成本为纵轴。持有成本向右上升，短缺成本向右下降，总成本呈U形；左图最低点对应较高流动资产规模的弹性政策，右图对应较低规模的紧缩政策。</desc>
+    <desc id="ca-cost-desc">左右两个子图均以流动资产规模为横轴、成本为纵轴。持有成本随流动资产增加而上升，短缺成本下降，总成本位于两者上方并呈U形。弹性政策的总成本最低点偏右，紧缩政策的最低点偏左。</desc>
     <defs><marker id="cost-axis-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#334e68"/></marker></defs>
     <g font-family="Arial, sans-serif">
       <text x="225" y="30" text-anchor="middle" font-size="21" font-weight="700" fill="#243b53">弹性政策：最低点偏右</text>
       <line x1="70" y1="320" x2="410" y2="320" stroke="#334e68" stroke-width="2" marker-end="url(#cost-axis-arrow)"/><line x1="70" y1="320" x2="70" y2="65" stroke="#334e68" stroke-width="2" marker-end="url(#cost-axis-arrow)"/>
-      <path d="M90 295 Q200 270 273 210 Q330 150 385 92" fill="none" stroke="#16a34a" stroke-width="4"/><text x="315" y="125" font-size="16" fill="#15803d">持有成本</text>
-      <path d="M90 90 Q180 165 273 210 Q330 260 385 295" fill="none" stroke="#2563eb" stroke-width="4"/><text x="95" y="112" font-size="16" fill="#1d4ed8">短缺成本</text>
-      <path d="M92 95 Q180 250 273 270 Q330 255 387 105" fill="none" stroke="#dc2626" stroke-width="4"/><text x="310" y="90" font-size="16" fill="#dc2626">总成本</text>
-      <line x1="273" y1="320" x2="273" y2="210" stroke="#64748b" stroke-dasharray="5 4"/><text x="238" y="346" font-size="16" fill="#52606d">最优规模</text>
-
+      <path d="M90 295 Q205 275 285 210 Q340 150 385 92" fill="none" stroke="#16a34a" stroke-width="4"/><text x="315" y="125" font-size="16" fill="#15803d">持有成本</text>
+      <path d="M90 90 Q185 165 285 210 Q340 265 385 295" fill="none" stroke="#dc2626" stroke-width="4"/><text x="95" y="112" font-size="16" fill="#b91c1c">短缺成本</text>
+      <path d="M92 68 Q185 135 285 150 Q345 138 387 72" fill="none" stroke="#f59e0b" stroke-width="4"/><text x="315" y="70" font-size="16" fill="#b45309">总成本</text>
+      <line x1="285" y1="320" x2="285" y2="150" stroke="#64748b" stroke-dasharray="5 4"/><circle cx="285" cy="150" r="5" fill="#111827"/><text x="250" y="346" font-size="16" fill="#52606d">最优规模</text>
       <text x="675" y="30" text-anchor="middle" font-size="21" font-weight="700" fill="#243b53">紧缩政策：最低点偏左</text>
       <line x1="520" y1="320" x2="860" y2="320" stroke="#334e68" stroke-width="2" marker-end="url(#cost-axis-arrow)"/><line x1="520" y1="320" x2="520" y2="65" stroke="#334e68" stroke-width="2" marker-end="url(#cost-axis-arrow)"/>
-      <path d="M540 295 Q600 270 650 210 Q740 145 835 92" fill="none" stroke="#16a34a" stroke-width="4"/><text x="765" y="125" font-size="16" fill="#15803d">持有成本</text>
-      <path d="M540 90 Q590 160 650 210 Q740 275 835 295" fill="none" stroke="#2563eb" stroke-width="4"/><text x="545" y="112" font-size="16" fill="#1d4ed8">短缺成本</text>
-      <path d="M542 95 Q600 250 650 270 Q730 265 837 115" fill="none" stroke="#dc2626" stroke-width="4"/><text x="760" y="99" font-size="16" fill="#dc2626">总成本</text>
-      <line x1="650" y1="320" x2="650" y2="210" stroke="#64748b" stroke-dasharray="5 4"/><text x="615" y="346" font-size="16" fill="#52606d">最优规模</text>
+      <path d="M540 295 Q585 265 625 210 Q720 140 835 92" fill="none" stroke="#16a34a" stroke-width="4"/><text x="765" y="125" font-size="16" fill="#15803d">持有成本</text>
+      <path d="M540 90 Q580 150 625 210 Q720 280 835 295" fill="none" stroke="#dc2626" stroke-width="4"/><text x="545" y="112" font-size="16" fill="#b91c1c">短缺成本</text>
+      <path d="M542 68 Q585 135 625 150 Q720 137 837 80" fill="none" stroke="#f59e0b" stroke-width="4"/><text x="760" y="82" font-size="16" fill="#b45309">总成本</text>
+      <line x1="625" y1="320" x2="625" y2="150" stroke="#64748b" stroke-dasharray="5 4"/><circle cx="625" cy="150" r="5" fill="#111827"/><text x="590" y="346" font-size="16" fill="#52606d">最优规模</text>
+      <text x="42" y="195" transform="rotate(-90 42 195)" text-anchor="middle" font-size="16" fill="#52606d">成本</text><text x="492" y="195" transform="rotate(-90 492 195)" text-anchor="middle" font-size="16" fill="#52606d">成本</text>
       <text x="450" y="378" text-anchor="middle" font-size="17" fill="#52606d">流动资产规模增加 → 持有成本上升、短缺成本下降</text>
     </g>
   </svg>
-  <figcaption style="margin-top:.55rem;color:#52606d;font-size:.92rem;">图 2：流动资产成本权衡图。两幅子图都展示持有成本、短缺成本和总成本；最优流动资产规模位于总成本最低点。根据课件 PDF 第 4 页重绘，引用许可待核对。</figcaption>
+  <figcaption style="margin-top:.55rem;color:#52606d;font-size:.92rem;">图 2：流动资产成本权衡图。持有成本上升、短缺成本下降，两者之和形成位于二者上方的 U 形总成本；弹性政策的最低点偏右，紧缩政策的最低点偏左。根据课件 PDF 第 4 页左上幻灯片重绘，引用许可待核对。</figcaption>
 </figure>
 
 > [!warning] 并非流动资产越少越好
@@ -359,33 +359,32 @@ $$
 <figure style="margin:1.5rem auto;max-width:960px;text-align:center;">
   <svg viewBox="0 0 960 470" role="img" aria-labelledby="financing-strategy-title financing-strategy-desc" style="width:100%;height:auto;background:#fbfcfe;border:1px solid #d9e2ec;border-radius:12px;">
     <title id="financing-strategy-title">流动资产三种融资策略比较图</title>
-    <desc id="financing-strategy-desc">三个子图从左到右分别为理想期限匹配、保守策略和激进策略。每图横轴为时间、纵轴为金额；蓝线为固定资产，红线为永久性流动资产边界，绿线为流动资产总额，黑色竖向箭头表示长期融资覆盖水平。</desc>
-    <defs><marker id="fs-axis-arrow" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#334e68"/></marker></defs>
+    <desc id="financing-strategy-desc">三个子图从左到右分别为理想期限匹配、保守策略和激进策略。每图横轴为时间、纵轴为金额；蓝线表示固定资产，绿线表示包含暂时性波动的资产需求，红线表示长期融资覆盖边界。保守策略的长期融资边界较高，激进策略的边界较低。</desc>
+    <defs><marker id="fs-axis-arrow" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#334e68"/></marker><marker id="fs-gap-arrow" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto-start-reverse"><path d="M0,0 L0,6 L6,3 z" fill="#111827"/></marker></defs>
     <g font-family="Arial, sans-serif" font-size="14">
       <text x="165" y="28" text-anchor="middle" font-size="19" font-weight="700" fill="#243b53">① 理想的期限匹配</text>
       <line x1="40" y1="385" x2="290" y2="385" stroke="#334e68" stroke-width="2" marker-end="url(#fs-axis-arrow)"/><line x1="40" y1="385" x2="40" y2="65" stroke="#334e68" stroke-width="2" marker-end="url(#fs-axis-arrow)"/>
-      <path d="M55 325 L275 282" fill="none" stroke="#2563eb" stroke-width="3"/><path d="M55 262 L275 210" fill="none" stroke="#dc2626" stroke-width="3"/>
-      <path d="M55 237 C85 190 115 249 145 196 C175 148 205 222 235 157 C250 130 264 132 275 139" fill="none" stroke="#16a34a" stroke-width="4"/>
-      <line x1="228" y1="385" x2="228" y2="220" stroke="#111827" stroke-width="2" marker-end="url(#fs-axis-arrow)"/><text x="151" y="410" text-anchor="middle" fill="#52606d">短期融资覆盖波动部分</text>
-      <text x="60" y="343" fill="#2563eb">固定资产</text><text x="61" y="279" fill="#dc2626">永久性流动资产</text><text x="175" y="171" fill="#15803d">暂时性流动资产</text>
-
+      <path d="M55 325 L275 282" fill="none" stroke="#2563eb" stroke-width="3"/><path d="M55 262 L275 210" fill="none" stroke="#dc2626" stroke-width="3"/><path d="M55 237 C85 190 115 249 145 196 C175 148 205 222 235 157 C250 130 264 132 275 139" fill="none" stroke="#16a34a" stroke-width="4"/>
+      <line x1="235" y1="157" x2="235" y2="219" stroke="#111827" stroke-width="1.8" marker-start="url(#fs-gap-arrow)" marker-end="url(#fs-gap-arrow)"/><text x="205" y="148" fill="#15803d">短期融资</text>
+      <line x1="270" y1="385" x2="270" y2="211" stroke="#111827" stroke-width="1.8" marker-end="url(#fs-axis-arrow)"/><text x="145" y="410" text-anchor="middle" fill="#52606d">长期融资恰好覆盖长期资产需求</text>
+      <text x="60" y="343" fill="#2563eb">固定资产</text><text x="61" y="279" fill="#dc2626">长期融资边界</text><text x="145" y="185" fill="#15803d">资产需求</text>
       <text x="480" y="28" text-anchor="middle" font-size="19" font-weight="700" fill="#243b53">② 保守策略</text>
       <line x1="355" y1="385" x2="605" y2="385" stroke="#334e68" stroke-width="2" marker-end="url(#fs-axis-arrow)"/><line x1="355" y1="385" x2="355" y2="65" stroke="#334e68" stroke-width="2" marker-end="url(#fs-axis-arrow)"/>
-      <path d="M370 325 L590 282" fill="none" stroke="#2563eb" stroke-width="3"/><path d="M370 262 L590 210" fill="none" stroke="#dc2626" stroke-width="3"/>
-      <path d="M370 237 C400 190 430 249 460 196 C490 148 520 222 550 157 C565 130 579 132 590 139" fill="none" stroke="#16a34a" stroke-width="4"/>
-      <line x1="543" y1="385" x2="543" y2="165" stroke="#111827" stroke-width="2" marker-end="url(#fs-axis-arrow)"/><text x="480" y="410" text-anchor="middle" fill="#52606d">长期资金覆盖部分临时需求</text>
-      <text x="375" y="343" fill="#2563eb">固定资产</text><text x="376" y="279" fill="#dc2626">永久性流动资产</text><text x="490" y="171" fill="#15803d">暂时性流动资产</text>
-
+      <path d="M370 325 L590 282" fill="none" stroke="#2563eb" stroke-width="3"/><path d="M370 230 L590 178" fill="none" stroke="#dc2626" stroke-width="3"/><path d="M370 237 C400 190 430 249 460 196 C490 148 520 222 550 157 C565 130 579 132 590 139" fill="none" stroke="#16a34a" stroke-width="4"/>
+      <path d="M370 230 C392 224 412 218 430 216 C438 225 446 234 460 196 L460 209 L370 230 Z" fill="#fecaca" opacity=".8"/><text x="405" y="255" fill="#b91c1c">闲置长期资金</text>
+      <line x1="550" y1="157" x2="550" y2="187" stroke="#111827" stroke-width="1.8" marker-start="url(#fs-gap-arrow)" marker-end="url(#fs-gap-arrow)"/><text x="515" y="147" fill="#15803d">短期融资</text>
+      <line x1="585" y1="385" x2="585" y2="179" stroke="#111827" stroke-width="1.8" marker-end="url(#fs-axis-arrow)"/><text x="480" y="410" text-anchor="middle" fill="#52606d">长期融资覆盖部分暂时性需求</text>
+      <text x="375" y="343" fill="#2563eb">固定资产</text><text x="376" y="219" fill="#dc2626">长期融资边界较高</text><text x="460" y="185" fill="#15803d">资产需求</text>
       <text x="795" y="28" text-anchor="middle" font-size="19" font-weight="700" fill="#243b53">③ 激进策略</text>
       <line x1="670" y1="385" x2="920" y2="385" stroke="#334e68" stroke-width="2" marker-end="url(#fs-axis-arrow)"/><line x1="670" y1="385" x2="670" y2="65" stroke="#334e68" stroke-width="2" marker-end="url(#fs-axis-arrow)"/>
-      <path d="M685 325 L905 282" fill="none" stroke="#2563eb" stroke-width="3"/><path d="M685 262 L905 210" fill="none" stroke="#dc2626" stroke-width="3"/>
-      <path d="M685 237 C715 190 745 249 775 196 C805 148 835 222 865 157 C880 130 894 132 905 139" fill="none" stroke="#16a34a" stroke-width="4"/>
-      <line x1="858" y1="385" x2="858" y2="247" stroke="#111827" stroke-width="2" marker-end="url(#fs-axis-arrow)"/><text x="795" y="410" text-anchor="middle" fill="#52606d">短期资金覆盖部分永久需求</text>
-      <text x="690" y="343" fill="#2563eb">固定资产</text><text x="691" y="279" fill="#dc2626">永久性流动资产</text><text x="805" y="171" fill="#15803d">暂时性流动资产</text>
+      <path d="M685 325 L905 282" fill="none" stroke="#2563eb" stroke-width="3"/><path d="M685 290 L905 245" fill="none" stroke="#dc2626" stroke-width="3"/><path d="M685 237 C715 190 745 249 775 196 C805 148 835 222 865 157 C880 130 894 132 905 139" fill="none" stroke="#16a34a" stroke-width="4"/>
+      <line x1="865" y1="157" x2="865" y2="253" stroke="#111827" stroke-width="1.8" marker-start="url(#fs-gap-arrow)" marker-end="url(#fs-gap-arrow)"/><text x="830" y="147" fill="#15803d">短期融资</text>
+      <line x1="900" y1="385" x2="900" y2="246" stroke="#111827" stroke-width="1.8" marker-end="url(#fs-axis-arrow)"/><text x="795" y="410" text-anchor="middle" fill="#52606d">短期融资覆盖部分永久性需求</text>
+      <text x="690" y="343" fill="#2563eb">固定资产</text><text x="691" y="280" fill="#dc2626">长期融资边界较低</text><text x="775" y="185" fill="#15803d">资产需求</text>
       <text x="480" y="451" text-anchor="middle" font-size="16" fill="#52606d">从保守到激进：长期融资占比下降，短期再融资风险上升</text>
     </g>
   </svg>
-  <figcaption style="margin-top:.55rem;color:#52606d;font-size:.92rem;">图 4：流动资产融资策略三联比较图。左图为理想期限匹配，中图为保守策略，右图为激进策略；三图均区分固定资产、永久性流动资产和暂时性流动资产。根据课件 PDF 第 4—5 页重绘，引用许可待核对。</figcaption>
+  <figcaption style="margin-top:.55rem;color:#52606d;font-size:.92rem;">图 4：流动资产融资策略三联比较图。红线表示长期融资覆盖边界：期限匹配策略恰好覆盖长期资产需求，保守策略提高该边界并可能产生闲置长期资金，激进策略降低该边界并让短期融资承担部分永久性需求。根据课件 PDF 第 4 页右下和第 5 页左上幻灯片重绘，引用许可待核对。</figcaption>
 </figure>
 
 三种策略的含义：
@@ -512,7 +511,6 @@ $$
       <rect x="230" y="80" width="110" height="132" fill="#ef4444" rx="6"/><text x="285" y="120" text-anchor="middle" font-size="17" fill="white">负债</text><text x="285" y="148" text-anchor="middle" font-size="19" font-weight="700" fill="white">$436万</text>
       <rect x="230" y="212" width="110" height="56" fill="#dc2626" rx="4"/><text x="285" y="246" text-anchor="middle" font-size="16" fill="white">权益 $185万</text>
       <rect x="230" y="268" width="110" height="42" fill="#facc15" rx="4"/><text x="285" y="295" text-anchor="middle" font-size="16" font-weight="700" fill="#713f12">EFN $142万</text>
-
       <text x="605" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#243b53">改善营运资本管理后</text>
       <rect x="485" y="96" width="110" height="214" fill="#f97316" rx="6"/><text x="540" y="140" text-anchor="middle" font-size="18" fill="white">资产</text><text x="540" y="170" text-anchor="middle" font-size="21" font-weight="700" fill="white">$707万</text>
       <rect x="620" y="96" width="110" height="130" fill="#ef4444" rx="6"/><text x="675" y="135" text-anchor="middle" font-size="17" fill="white">负债</text><text x="675" y="163" text-anchor="middle" font-size="19" font-weight="700" fill="white">$428万</text>
